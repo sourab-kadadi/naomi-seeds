@@ -1,0 +1,57 @@
+// // ion-card{
+// //   display: flex;
+// //   flex-direction: column;
+// //   height: 180px;
+// //   position: center;
+//   // margin: 0 !important;
+// // }
+
+ion-img{
+  // //   --size: 4em;  // this should take effect but doesn't
+  // //   --border-radius: 12px;
+    width: 100px !important;
+    height: 100px !important;
+  //   // display: block;
+  //   // overflow: hidden;
+  //   // vertical-align: middle;
+  }
+
+  :host {
+    padding-inline: 0px
+  }
+
+  .ion-padding {
+    padding-inline-start: var(--ion-padding, 0px);
+  }
+
+  .ion-padding-top {
+    padding-top: var(--ion-padding, 100px);
+  }
+
+  .margin-top-product-name {
+    margin-top: -5px;
+  }
+
+  .header-margin-left{
+    margin-left: -3rem;
+  }
+
+  .dummyImage-Style {
+    opacity: 6%;
+  margin-right:5%;
+    // margin-left: 28%;
+    // margin-top:10%;
+    // width: 50%;
+  }
+
+  .image-margin-right {
+    margin-right:5%;
+  }
+
+  .margin-left {
+    margin-left: 1em;
+  }
+
+  .sc-ion-searchbar-md {
+    padding-right:0px;
+  }

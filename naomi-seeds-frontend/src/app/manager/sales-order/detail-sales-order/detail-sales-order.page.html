@@ -1,0 +1,551 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/manager/sales-order"></ion-back-button>
+    </ion-buttons>
+    <!-- <ion-menu-button slot="start"></ion-menu-button> -->
+    <ion-title class="ion-text-center">Sales Order Details</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content fullscreen>
+  <ngx-ui-loader [loaderId]="'loader-detail'"></ngx-ui-loader>
+
+  <div *ngIf="isLoading" class="ion-padding-top">
+    <ion-card>
+      <ion-item>
+        <ion-col size="3" size-md="6">
+          <ion-card-header class="ion-padding">
+            <ion-label>
+              <h3>
+                <ion-skeleton-text animated style="width: 60%"></ion-skeleton-text>
+              </h3>
+              <p>
+                <ion-skeleton-text animated style="width: 60%"></ion-skeleton-text>
+              </p>
+              <p>
+                <ion-skeleton-text animated style="width: 60%"></ion-skeleton-text>
+              </p>
+              <p>
+                <ion-skeleton-text animated style="width: 60%"></ion-skeleton-text>
+              </p>
+            </ion-label>
+          </ion-card-header>
+        </ion-col>
+        <ion-col size="9" size-md="6" class="card-margin-left">
+          <ion-card-header class="ion-padding">
+            <ion-label>
+              <h3>
+                <ion-skeleton-text animated style="width: 90%"></ion-skeleton-text>
+              </h3>
+              <p>
+                <ion-skeleton-text animated style="width: 90%"></ion-skeleton-text>
+              </p>
+              <p>
+                <ion-skeleton-text animated style="width: 40%"></ion-skeleton-text>
+              </p>
+              <p>
+                <ion-skeleton-text animated style="width: 45%"></ion-skeleton-text>
+              </p>
+            </ion-label>
+          </ion-card-header>
+        </ion-col>
+      </ion-item>
+    </ion-card>
+  </div>
+
+  <ion-refresher slot="fixed" pullFactor="0.9" pullMin="60" pullMax="200" (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content pullingIcon="chevron-down-circle-outline" pullingText="Pull to refresh"
+      refreshingSpinner="circles" refreshingText="Refreshing..." class="ion-padding-top-refresh">
+    </ion-refresher-content>
+  </ion-refresher>
+
+  <ion-card *ngIf="!inActive" class="padding-top padding-bottom">
+    <!-- <ion-item lines="none"> -->
+        <!-- <ion-card-header class="header-margin-left"> -->
+          <!-- <ion-card-header > -->
+          <ion-item lines="none" class="item-margins">
+            <ion-col size="3" size-md="6" class="col-margin-right">
+              <ion-card-subtitle>
+                <b>Txn No.:</b>
+              </ion-card-subtitle>
+            </ion-col>
+            <ion-col size="9" size-md="6" class="col-margin-left">
+              <ion-card-subtitle>
+                {{ salesOrder?.salesOrderNumber }}
+              </ion-card-subtitle>
+            </ion-col>
+          </ion-item>
+
+
+          <ion-item lines="none" class="item-margins">
+            <ion-col size="3" size-md="6" class="col-margin-right">
+              <ion-card-subtitle>
+                <b> From: </b>
+              </ion-card-subtitle>
+            </ion-col>
+            <ion-col size="9" size-md="6" class="col-margin-left ion-text-wrap">
+              <ion-card-subtitle>
+                {{ salesOrder?.fromDistributorName }}
+              </ion-card-subtitle>
+            </ion-col>
+          </ion-item>
+
+
+          <ion-item lines="none" class="item-margins">
+            <ion-col size="3" size-md="6" class="col-margin-right">
+              <ion-card-subtitle>
+                <b> To: </b>
+              </ion-card-subtitle>
+            </ion-col>
+            <ion-col size="9" size-md="6" class="col-margin-left">
+              <ion-card-subtitle>
+                 {{ salesOrder?.toDistributorName }}
+              </ion-card-subtitle>
+            </ion-col>
+          </ion-item>
+
+          <ion-item lines="none" class="item-margins">
+            <ion-col size="3" size-md="6" class="col-margin-right">
+              <ion-card-subtitle>
+                <b> Sales Rep: </b>
+              </ion-card-subtitle>
+            </ion-col>
+            <ion-col size="9" size-md="6" class="col-margin-left">
+              <ion-card-subtitle>
+                 {{ salesOrder?.salesPersonName }}
+              </ion-card-subtitle>
+            </ion-col>
+          </ion-item>
+
+          <ion-item lines="none" class="item-margins">
+            <ion-col size="3" size-md="6" class="col-margin-right">
+              <ion-card-subtitle>
+                <b> Txn Date: </b>
+              </ion-card-subtitle>
+            </ion-col>
+            <ion-col size="9" size-md="6" class="col-margin-left">
+              <ion-card-subtitle>
+                 {{ salesOrder?.salesOrderDate | date }}
+              </ion-card-subtitle>
+            </ion-col>
+          </ion-item>
+        <!-- </ion-card-header> -->
+
+    <!-- </ion-item> -->
+  </ion-card>
+
+  <!-- skeleton text -->
+  <ion-card *ngIf="isLoading">
+    <ion-grid>
+      <ion-row class="ion-row" class="line-divider">
+        <ion-col size="6">
+          <ion-skeleton-text animated style="width: 45%"></ion-skeleton-text>
+        </ion-col>
+
+        <ion-col size="2">
+          <ion-skeleton-text animated style="width: 45%"></ion-skeleton-text>
+          <ion-skeleton-text animated style="width: 45%"></ion-skeleton-text>
+        </ion-col>
+        <ion-col size="3" class="ion-align-center">
+          <ion-skeleton-text animated style="width: 65%"></ion-skeleton-text>
+          <ion-skeleton-text animated style="width: 65%"></ion-skeleton-text>
+        </ion-col>
+      </ion-row>
+      <br />
+      <ion-row class="ion-row" *ngFor="let number of [0,1,2,3]" class="line-divider">
+
+        <ion-col size="6">
+          <ion-label class="ion-text-wrap">
+            <ion-skeleton-text animated style="width: 65%"></ion-skeleton-text>
+            <ion-skeleton-text animated style="width: 65%"></ion-skeleton-text>
+            <ion-skeleton-text animated style="width: 65%"></ion-skeleton-text>
+          </ion-label>
+        </ion-col>
+
+        <ion-col size="2">
+          <ion-skeleton-text animated style="width: 45%"></ion-skeleton-text>
+        </ion-col>
+
+        <ion-col size="3">
+          <ion-skeleton-text animated style="width: 65%"></ion-skeleton-text>
+        </ion-col>
+
+        <ion-col size="1">
+          <ion-skeleton-text animated style="width: 65%"></ion-skeleton-text>
+        </ion-col>
+
+      </ion-row>
+
+      <br />
+      <ion-row>
+        <ion-col size="5" offset="1">
+          <ion-skeleton-text animated style="width: 65%"></ion-skeleton-text>
+        </ion-col>
+        <ion-col size="2">
+          <ion-skeleton-text animated style="width: 45%"></ion-skeleton-text>
+        </ion-col>
+
+        <ion-col size="3">
+          <ion-skeleton-text animated style="width: 75%"></ion-skeleton-text>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-card>
+
+  <ion-card *ngIf="!inActive">
+    <ion-card-subtitle class="ion-text-center">
+      <h5> <b>Item Details</b> </h5>
+    </ion-card-subtitle>
+    <ion-grid>
+      <ion-row class="ion-row" class="line-divider">
+        <ion-col size="5">
+          <b>Items</b>
+        </ion-col>
+        <ion-col size="2" class="ion-align-center-amount">
+          <td>
+            <b>      Qty </b></td>
+      <td>      Kgs</td>
+        </ion-col>
+        <ion-col size="4" class="ion-align-center-amount">
+          <td>
+          <b>      Amount </b></td>
+    <td>      &#8377;</td>
+        </ion-col>
+        <ion-col size="1"></ion-col>
+      </ion-row>
+      <br />
+      <ion-row class="ion-row" *ngFor="let item of items; let i = index" class="line-divider">
+
+        <ion-col size="5">
+          <ion-label class="ion-text-wrap">
+            <b> {{item?.productName}}</b><br>
+             {{item?.crop}}
+            <br> &#8377;{{item?.rate}}/Kg
+            <br> Lot - {{item?.lotNumber}}
+          </ion-label>
+        </ion-col>
+
+        <ion-col size="2" class="ion-item-center-content"> {{item?.quantity.toLocaleString("en-IN")}} </ion-col>
+
+        <ion-col size="4" class="ion-item-center-content"> {{item?.amount.toLocaleString("en-IN")}} </ion-col>
+
+        <ion-col size="1" class="ion-item-center-content">
+
+          <ion-button size="small" color="danger" fill="clear" [routerLink]="['./', item._id]">
+            <ion-icon name="open-outline"></ion-icon>
+          </ion-button>
+
+        </ion-col>
+        <!-- <ion-icon name="open-outline"></ion-icon> -->
+      </ion-row>
+
+      <br />
+      <ion-row>
+        <ion-col size="5" >
+          <b>Total</b>
+        </ion-col>
+        <ion-col size="2" class="ion-item-center-content"> {{salesOrder?.totalQuantity.toLocaleString("en-IN")}} </ion-col>
+
+        <ion-col size="4" class="ion-item-center-content">
+          &#8377; {{salesOrder?.totalValue.toLocaleString("en-IN")}}
+        </ion-col>
+<ion-col size="1"></ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-card>
+
+
+
+  <ion-card *ngIf="isLoading">
+    <ion-skeleton-text animated style="width: 45%"></ion-skeleton-text>
+  </ion-card>
+
+
+
+  <ion-card *ngIf="!inActive">
+    <ion-accordion-group>
+      <ion-accordion value="colors">
+        <ion-item slot="header">
+          <ion-card-subtitle class="ion-text-center">
+            <h5> <b>Transport Details</b> </h5>
+          </ion-card-subtitle>
+        </ion-item>
+
+        <ion-list slot="content" lines="none">
+          <ion-item>
+            <ion-col size="5" md="6">
+              <ion-card-subtitle><b> RR LR Number:</b></ion-card-subtitle>
+            </ion-col>
+
+            <ion-col size="7" md="6">
+              <ion-card-subtitle> {{salesOrder?.rrOrLrNum}}</ion-card-subtitle>
+            </ion-col>
+          </ion-item>
+
+          <ion-item>
+            <ion-col size="5" md="6">
+              <ion-card-subtitle><b> Transport:</b></ion-card-subtitle>
+            </ion-col>
+
+            <ion-col size="7" md="6">
+              <ion-card-subtitle>
+                {{ salesOrder?.transport }}</ion-card-subtitle>
+            </ion-col>
+          </ion-item>
+
+
+
+          <ion-item>
+            <ion-col size="5" md="6">
+              <ion-card-subtitle><b> Vehicle Number:</b></ion-card-subtitle>
+            </ion-col>
+
+            <ion-col size="7" md="6">
+              <ion-card-subtitle>
+                {{ salesOrder?.vehicleNo }}</ion-card-subtitle>
+            </ion-col>
+          </ion-item>
+
+
+          <ion-item>
+            <ion-col size="5" md="6">
+              <ion-card-subtitle><b> Freight Total:</b></ion-card-subtitle>
+            </ion-col>
+
+            <ion-col size="7" md="6">
+              <ion-card-subtitle>
+                {{ salesOrder?.freightTotal }}
+              </ion-card-subtitle>
+            </ion-col>
+          </ion-item>
+
+          <ion-item>
+            <ion-col size="5" md="6">
+              <ion-card-subtitle><b> Freight Paid:</b></ion-card-subtitle>
+            </ion-col>
+
+            <ion-col size="7" md="6">
+              <ion-card-subtitle>
+                {{ salesOrder?.frightPaidAdvance }}</ion-card-subtitle>
+            </ion-col>
+          </ion-item>
+
+
+          <ion-item>
+            <ion-col size="5" md="6">
+              <ion-card-subtitle><b> Freight Pending Amt:</b></ion-card-subtitle>
+            </ion-col>
+
+            <ion-col size="7" md="6">
+              <ion-card-subtitle>
+                {{ salesOrder?.frightToPay }}</ion-card-subtitle>
+            </ion-col>
+          </ion-item>
+        </ion-list>
+      </ion-accordion>
+    </ion-accordion-group>
+  </ion-card>
+
+
+
+  <ion-card *ngIf="isLoading">
+    <ion-skeleton-text animated style="width: 45%"></ion-skeleton-text>
+  </ion-card>
+
+  <ion-card *ngIf="!inActive">
+    <ion-accordion-group>
+      <ion-accordion value="colors">
+        <ion-item slot="header" class="ion-item-margin">
+          <ion-card-subtitle class="ion-text-center">
+            <h5><b>Work-Flow Status</b> </h5>
+          </ion-card-subtitle>
+        </ion-item>
+
+        <ion-list slot="content" lines="none" class="ion-item-margin">
+
+
+          <ion-item *ngIf="salesOrder?.typeOfSale ==='IPT'">
+            <ion-col size="7" md="6">
+              <ion-card-subtitle ><b> Approval from <br> {{salesOrder?.fromDistributorName}} </b></ion-card-subtitle>
+            </ion-col>
+
+            <ion-col size="5" md="6">
+              <ion-card-subtitle> {{salesOrder?.fromDistributorApproval}}</ion-card-subtitle>
+            </ion-col>
+          </ion-item>
+
+          <ion-item>
+            <ion-col size="7" md="6">
+              <ion-card-subtitle><b> Manager's Approval <br>for Delivery Challan: </b></ion-card-subtitle>
+            </ion-col>
+
+            <ion-col size="5" md="6">
+              <ion-card-subtitle> {{salesOrder?.managerApprovalGenerateDC}}</ion-card-subtitle>
+            </ion-col>
+          </ion-item>
+
+          <ion-item>
+            <ion-col size="7" md="6">
+              <ion-card-subtitle><b> Sales Officer <br> Update on Shipment of Goods
+
+                </b></ion-card-subtitle>
+            </ion-col>
+
+            <ion-col size="5" md="6">
+              <ion-card-subtitle> {{salesOrder?.salesOfficerApprovalStatus}}</ion-card-subtitle>
+            </ion-col>
+          </ion-item>
+
+
+          <ion-item>
+            <ion-col size="7" md="6">
+              <ion-card-subtitle><b> Status from Receipent <br> {{salesOrder?.toDistributorName}}
+
+                </b></ion-card-subtitle>
+            </ion-col>
+
+            <ion-col size="5" md="6">
+              <ion-card-subtitle> {{salesOrder?.toDistributorConfirmation}}</ion-card-subtitle>
+            </ion-col>
+          </ion-item>
+
+
+          <ion-item>
+            <ion-col size="7" md="6">
+              <ion-card-subtitle><b> Manager's Final Approval <br> to Complete Txn: </b></ion-card-subtitle>
+            </ion-col>
+
+            <ion-col size="5" md="6">
+              <ion-card-subtitle> {{salesOrder?.managerFinalApproval}}</ion-card-subtitle>
+            </ion-col>
+          </ion-item>
+          <ion-item lines="none">
+
+
+            <ion-col size="3">
+              <ion-card-subtitle class="item-margin-left"><b>DC</b> </ion-card-subtitle>
+            </ion-col>
+            <ion-col size="2">
+              <ion-icon name="checkmark-circle-outline" color="success"
+                *ngIf="salesOrder?.managerApprovalGenerateDC === 'APPROVED'"></ion-icon>
+              <ion-icon name="close-circle-outline" color="danger"
+                *ngIf="salesOrder?.managerApprovalGenerateDC === 'PENDING'"></ion-icon>
+            </ion-col>
+
+            <ion-col size="4">
+              <ion-card-subtitle *ngIf="salesOrder?.typeOfSale ==='IPT'"><b>Invoice &<br> Credit Note</b> </ion-card-subtitle>
+              <ion-card-subtitle *ngIf="salesOrder?.typeOfSale ==='COMPANY_SALE'"><b>Invoice</b> </ion-card-subtitle>
+            </ion-col>
+            <ion-col size="3">
+              <ion-icon name="checkmark-circle-outline" color="success"
+                *ngIf="salesOrder?.managerFinalApproval === 'APPROVED'"></ion-icon>
+              <ion-icon name="close-circle-outline" color="danger"
+                *ngIf="salesOrder?.managerFinalApproval === 'PENDING'"></ion-icon>
+            </ion-col>
+
+          </ion-item>
+
+        </ion-list>
+      </ion-accordion>
+    </ion-accordion-group>
+
+
+    <!-- <ion-card-subtitle
+        ><b>DC created at: </b> {{ salesOrder?.createdAt }}</ion-card-subtitle
+      >
+      <ion-card-subtitle
+        ><b>DC updated at: </b> {{ salesOrder?.updatedAt }}</ion-card-subtitle
+      > -->
+
+  </ion-card>
+
+<!-- 1st stage approval manager -->
+  <div *ngIf="salesOrder?.fromDistributorApproval === 'APPROVED' &&
+    salesOrder?.managerApprovalGenerateDC === 'PENDING'">
+    <ion-card *ngIf="!inActive">
+      <ion-card-subtitle class="ion-text-center">
+        <h5> <b>Update Approval</b> </h5>
+      </ion-card-subtitle>
+      <ion-card-header>
+        <ion-row class="ion-text-center">
+          <ion-col>
+            <ion-card-subtitle>
+              Please confirm to generate Delivery Challan
+            </ion-card-subtitle>
+          </ion-col>
+          <ion-col>
+            <ion-button color="primary" (click)="onApproveByManagerDC()">
+              Approve
+              <!-- <ion-icon name="checkmark-done-outline"></ion-icon> -->
+            </ion-button>
+            <!-- <ion-button color="Danger" (click)="onRejectByManagerDC()"> -->
+              <!-- Reject -->
+              <!-- <ion-icon name="checkmark-done-outline"></ion-icon> -->
+            <!-- </ion-button> -->
+
+          </ion-col>
+        </ion-row>
+      </ion-card-header>
+    </ion-card>
+  </div>
+
+<!-- second stage approval manager -->
+<div *ngIf="salesOrder?.fromDistributorApproval === 'APPROVED' &&
+salesOrder?.managerApprovalGenerateDC === 'APPROVED' &&
+salesOrder?.salesOfficerApprovalStatus === 'SHIPPED' &&
+salesOrder?.toDistributorConfirmation === 'RECEIVED' &&
+salesOrder?.managerFinalApproval === 'PENDING'  ">
+<ion-card *ngIf="!inActive">
+  <ion-card-subtitle class="ion-text-center">
+    <h5> <b>Update Approval</b> </h5>
+  </ion-card-subtitle>
+  <ion-card-header>
+    <ion-row class="ion-text-center">
+      <ion-col>
+        <ion-card-subtitle *ngIf="salesOrder?.typeOfSale ==='IPT'">
+          Approve the Transaction and generate Invoice and Credit Note?
+        </ion-card-subtitle>
+        <ion-card-subtitle *ngIf="salesOrder?.typeOfSale ==='COMPANY_SALE'">
+          Approve the Transaction and generate Invoice?
+        </ion-card-subtitle>
+      </ion-col>
+      <ion-col>
+        <ion-button *ngIf="salesOrder?.typeOfSale ==='COMPANY_SALE'" color="primary" (click)="onApproveByManagerFinalSales()">
+          Approve
+          <!-- <ion-icon name="checkmark-done-outline"></ion-icon> -->
+        </ion-button>
+
+        <ion-button *ngIf="salesOrder?.typeOfSale ==='IPT'" color="primary" (click)="onApproveByManagerFinalIPT()">
+          Approve
+          <!-- <ion-icon name="checkmark-done-outline"></ion-icon> -->
+        </ion-button>
+
+        <!-- <ion-button color="danger" (click)="onRejectByManagerFinal()">
+          Reject -->
+          <!-- <ion-icon name="checkmark-done-outline"></ion-icon> -->
+        <!-- </ion-button> -->
+
+      </ion-col>
+    </ion-row>
+  </ion-card-header>
+
+</ion-card>
+</div>
+</ion-content>
+
+
+<ion-footer >
+  <ion-grid>
+
+
+    <ion-row class="pdf-buttons" *ngIf="!inActive">
+
+      <div *ngIf="salesOrder?.dcPdfFileName">    <a href="{{ this.s3path + salesOrder?.dcPdfFileName }}" target="_blank"><ion-button color="primary">    <ion-icon name="download"></ion-icon>DC</ion-button></a></div>
+      <div *ngIf="salesOrder?.invoicePdfFileName"> <a href="{{ this.s3path + salesOrder?.invoicePdfFileName }}" target="_blank"><ion-button color="primary">    <ion-icon name="download"></ion-icon>Invoice</ion-button></a></div>
+   <div *ngIf="salesOrder?.creditNotePdfFileName">   <a href="{{ this.s3path + salesOrder?.creditNotePdfFileName }}" target="_blank"><ion-button color="primary">    <ion-icon name="download"></ion-icon>Credit Note</ion-button></a></div>
+
+  </ion-row>
+
+  </ion-grid>
+  </ion-footer>

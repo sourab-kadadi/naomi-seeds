@@ -1,0 +1,139 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/app/orders/manage"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Add Line Item</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" class="ion-padding">
+  <ngx-ui-loader [loaderId]="'loader-order-add-line-items'"></ngx-ui-loader>
+
+  <ion-item>
+    <ion-label>Product</ion-label>
+    <ionic-selectable #selectComponentProduct item-content [(ngModel)]="product" itemValueField="_id"
+      itemTextField="name" [items]="productsList" [canSearch]="true" (onChange)="itemChange($event)">
+    </ionic-selectable>
+  </ion-item>
+
+  <ion-item>
+    <ion-label>Lot Details</ion-label>
+    <ionic-selectable #selectComponentLot item-content [(ngModel)]="selectedProductLot" itemValueField="_id"
+      itemTextField="lotNo" [items]="productsLotList" [canSearch]="true" (onChange)="itemChangeLotNumber($event)">
+    </ionic-selectable>
+  </ion-item>
+
+  <div *ngIf="!showPageDetails" class="margin-center">
+    <h6><b> Please Select Product and Lot Details </b></h6>
+  </div>
+  <div *ngIf="showPageDetails">
+      <ion-card class="margin-inline-card">
+        <ion-row>
+          <ion-col size="12" size-md="6">
+            <ion-card-title class="ion-text-center">
+              <h5><b>Selected Product & Lot Details</b></h5>
+            </ion-card-title>
+            <ion-text>
+              <div class="margin-left-post-card">
+              <p> <b>Product Name: </b>{{this.lineItemForm?.value.productName}}
+              <p>
+              <p class="ion-text-wrap"> <b>Crop:</b> {{this.productDetailsForDisplay?.cropName}}</p>
+              <p class="ion-text-wrap"> <b>Lot Number:</b> {{this.lineItemForm?.value.lotNumber}}</p>
+              <p class="ion-text-wrap"> <b>HSN Code:</b> {{this.productDetailsForDisplay?.hsnCode}}</p>
+              <p class="ion-text-wrap"> <b>Packet Packing Size:</b> {{this.lineItemForm?.value.packingQty}}
+                {{this.lineItemForm?.value.packingUnit}}</p>
+              </div>
+              </ion-text>
+          </ion-col>
+        </ion-row>
+      </ion-card>
+
+      <ion-card class="margin-inline-card" *ngIf="useReturnBlock">
+        <ion-row>
+          <ion-col size="12" size-md="6">
+            <ion-card-title class="ion-text-center">
+              <h5><b>Return Pricing Details</b></h5>
+            </ion-card-title>
+            <ion-text>
+              <div><p><i>The pricing is based on the previous sale data</i></p> </div>
+              <div class="margin-left-post-card">
+              <p  class="ion-text-wrap"> <b>Packet Invoice Price:</b> ₹ 
+                {{this.lineItemForm?.value?.packetInvoicePriceForReturn?.toLocaleString("en-IN")}} </p>
+              <p class="ion-text-wrap"> <b>Packet Effective Rate per Kg:</b> ₹
+                {{this.lineItemForm?.value?.effectiveRatePerKgForReturn?.toLocaleString("en-IN")}}</p>
+              </div>
+              </ion-text>
+              
+          </ion-col>
+        </ion-row>
+          <ion-row>
+            <div class="margin-left-post-card">
+            <h5> <b>Item Amount Return(₹): </b> {{this.itemAmountForReturn?.toLocaleString("en-IN")}}</h5>
+          </div>
+          </ion-row>
+
+      </ion-card>
+
+      <ion-card class="margin-inline-card" *ngIf="useSalesBlock"> 
+        <ion-row>
+          <ion-col size="12" size-md="6">
+            <ion-card-title class="ion-text-center">
+              <h5><b>Sales Pricing Details</b></h5>
+            </ion-card-title>
+            <ion-text>
+              <div class="margin-left-post-card">
+              <p  class="ion-text-wrap"> <b>Packet Invoice Price:</b> ₹ 
+                {{this.lineItemForm?.value?.packetInvoicePriceForSale?.toLocaleString("en-IN")}} </p>
+              <p class="ion-text-wrap"> <b>Packet Effective Rate per Kg:</b> ₹
+                {{this.lineItemForm?.value?.effectiveRatePerKgForSale?.toLocaleString("en-IN")}}</p>
+              </div>
+              </ion-text>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <div class="margin-left-post-card">
+          <h5> <b>Item Amount Sale (₹): </b> {{this.itemAmountForSale?.toLocaleString("en-IN")}}</h5>
+        </div>
+        </ion-row>
+      </ion-card>
+
+
+    <ion-card class="padding-card margin-inline-card">
+      <ion-row>
+        <ion-col size="12" size-md="6">
+          <ion-card-title class="ion-text-center"><b>Item Billing Details</b></ion-card-title>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+<div class="margin-left-post-card">
+        <h5> <b>Item Quantity (Kgs): </b> {{this.itemQuantityInKgs?.toLocaleString("en-IN")}}</h5>
+      </div>
+      </ion-row>
+      <!-- <ion-row>
+        <div class="margin-left-post-card">
+        <h5> <b>Item Amount (₹): </b> {{this.itemAmountForSale?.toLocaleString("en-IN")}}</h5>
+      </div>
+      </ion-row> -->
+      <ion-row>
+        <ion-col size="12" size-md="6">
+          <ion-item class="formItem">
+            <ion-label class="ion-label" position="floating">Enter the Number of Packets<span
+                class="reqired-field">*</span>
+            </ion-label>
+            <ion-input type="number" [(ngModel)]=numberOfPacketsOrdered placeholder="number of packets"
+              (ionChange)="onNumberOfPacketsInputChange($event)"></ion-input>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+    </ion-card>
+  </div>
+</ion-content>
+<ion-footer>
+  <div class="margin-center-line-item">
+    <ion-button *ngIf="this.numberOfPacketsOrdered > 0" (click)="onAddLineItem()"
+      class="ion-align-items-center" expand="full">
+      Save Line Item
+    </ion-button>
+  </div>
+</ion-footer>

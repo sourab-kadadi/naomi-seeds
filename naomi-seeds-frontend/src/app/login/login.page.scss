@@ -1,0 +1,41 @@
+.login-logo {
+  margin-top: 10%;
+  margin-bottom: 10%;
+  margin-left: 40%;
+  min-height: 150px;
+  text-align: center;
+  display: block;
+  height: 24%;
+  width: 279px;
+}
+
+
+
+
+
+// .login-logo img {
+//   max-width: 150px;
+// }
+
+
+.ion-padding {
+  padding-left: unset;
+  padding-right: unset;
+  padding-inline-start: var(--ion-padding, 0.8em);
+  padding-inline-end: var(--ion-padding, 0.8em);
+  padding-top: 1px;
+}
+
+@media only screen and (max-width: 767px) {
+  .login-logo {
+    margin-top: 39%;
+    margin-bottom: 48%;
+    margin-left: 12%;
+    min-height: 150px;
+    text-align: center;
+    display: block;
+    height: 24%;
+    width: 279px;
+  }
+
+}

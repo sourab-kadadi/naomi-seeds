@@ -1,0 +1,424 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/app/users-management"></ion-back-button>
+    </ion-buttons>
+    <ion-title class="ion-text-center header-margin-left">Add User</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-grid>
+    <ion-card class="background-light">
+      <ngx-ui-loader [loaderId]="'loader-user-management-create-update'"></ngx-ui-loader>
+      <ion-card-header>
+        <ion-card-title class="overview-content">User Type</ion-card-title>
+      </ion-card-header>
+
+      <ion-card-content>
+        <ion-row class="display-flex-adjust">
+          <!-- <ion-col size="5" size-md="3" pull-md="3" size="auto" class="font-size-adjust">
+          <b> Select User Type</b>
+        </ion-col> -->
+          <ion-col size="12" size-md="6" pull-md="3">
+            <ion-card>
+              <ion-select placeholder="Select by User Type" [(ngModel)] = "userTypeInternalOrExternal"
+                (ionChange)="onDropdownSelectionUserTypeInternalExternal($event)">
+                <ion-select-option value="INTERNAL_USER">INTERNAL USER</ion-select-option>
+                <ion-select-option value="EXTERNAL_USER">EXTERNAL USER</ion-select-option>
+                <ion-select-option value="ADMIN">ADMIN</ion-select-option>
+              </ion-select>
+            </ion-card>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col size="12" size-md="6" *ngIf="this.selectCompCompanyName">
+            <ion-card>
+              <ion-item>
+                <ion-label>Select Company/Party</ion-label>
+                <ionic-selectable #selectComponentProfileCompanyName item-content [(ngModel)]="profile"
+                  itemValueField="_id" itemTextField="companyName" [items]="profilesList" [canSearch]="true"
+                  (onChange)="profileCompanyNameSelection($event)">
+                </ionic-selectable>
+              </ion-item>
+            </ion-card></ion-col>
+        </ion-row>
+
+
+        <ion-row>
+          <ion-col size="12" size-md="6">
+            <ion-card>
+              <ion-item>
+                <ion-label>Role</ion-label>
+                <ionic-selectable #selectComponentRole item-content [(ngModel)]="userRoleGroup" itemValueField="_id"
+                  itemTextField="roleName" [items]="userRoleGroups" [canSearch]="true"
+                  (onChange)="itemRoleChange($event)">
+                </ionic-selectable>
+              </ion-item>
+            </ion-card>
+          </ion-col>
+        </ion-row>
+
+        <form [formGroup]="userForm" (ngSubmit)="onSave()" novalidate>
+          <ion-card-header>
+            <ion-card-title class="overview-content">User Details</ion-card-title>
+          </ion-card-header>
+
+
+
+          <ion-row>
+            <ion-col size="12" size-md="6">
+              <ion-item>
+                <ion-label position="floating">First Name <span class="reqired-field">*</span></ion-label>
+                <ion-input formControlName="firstName" type="text"></ion-input>
+                <ion-note *ngIf="
+                !userForm.get('firstName').valid && userForm.get('firstName').touched" userForm="danger"
+                  position="fixed" class="ion-padding-form-data-not-entered">
+                  Please enter First Name.
+                </ion-note>
+              </ion-item>
+            </ion-col>
+            <ion-col size="12" size-md="6">
+              <ion-item>
+                <ion-label position="floating">Last Name <span class="reqired-field">*</span></ion-label>
+                <ion-input formControlName="lastName" type="text"></ion-input>
+                <ion-note *ngIf="
+                !userForm.get('lastName').valid && userForm.get('lastName').touched" userForm="danger" position="fixed"
+                  class="ion-padding-form-data-not-entered">
+                  Please enter Last Name.
+                </ion-note>
+              </ion-item>
+            </ion-col>
+          </ion-row>
+
+          <ion-row>
+            <ion-col size="12" size-md="6">
+              <ion-item>
+                <ion-label position="floating">Email Id <span class="reqired-field">*</span></ion-label>
+                <ion-input formControlName="email" type="email"></ion-input>
+                <ion-note *ngIf="
+                !userForm.get('email').valid && userForm.get('email').touched" userForm="danger" position="fixed"
+                  class="ion-padding-form-data-not-entered">
+                  Please enter Valid Email Id.
+                </ion-note>
+              </ion-item>
+            </ion-col>
+            <ion-col size="12" size-md="6">
+              <ion-item>
+                <ion-label position="floating">Phone Number <span class="reqired-field">*</span></ion-label>
+                <ion-input formControlName="phoneNo" type="number"></ion-input>
+                <ion-note *ngIf="
+                !userForm.get('phoneNo').valid && userForm.get('phoneNo').touched" userForm="danger" position="fixed"
+                  class="ion-padding-form-data-not-entered">
+                  Please enter Valid Phone Number.
+                </ion-note>
+              </ion-item>
+            </ion-col>
+          </ion-row>
+        </form>
+
+        <ion-card-header *ngIf="showEditPermissionsDataButton && this.permissionsData">
+          <ion-card-title class="overview-content">Page Permission Details</ion-card-title>
+        </ion-card-header>
+        <ion-row class="display-flex-adjust" *ngIf="showEditPermissionsDataButton && this.permissionsData">
+          <ion-col size="9" size-md="4" pull-md="2.75">
+            <ion-card-subtitle>
+              <h5><b>Do you want to edit the Page level permission of this user?</b></h5>
+            </ion-card-subtitle>
+          </ion-col>
+          <ion-col size="3" size-md="2" pull-md="3">
+            <ion-button (click)="editPermissionsButton()" color="danger" expand="block">
+              Edit
+            </ion-button>
+          </ion-col>
+        </ion-row>
+        <ion-card class="padding-card">
+
+
+          <div *ngIf="permissionsData && !showEditPermissionsDataButton">
+            <ion-row>
+              <ion-col size="12">
+                <div class="ion-text-center">
+                  <ion-card-subtitle>
+                    <h6><b>Permission Details</b></h6>
+                  </ion-card-subtitle>
+                </div>
+              </ion-col>
+            </ion-row>
+
+            <ion-row>
+              <ion-col size="4">
+              </ion-col>
+              <ion-col size="2">
+                <h6 class="font-sizing"><b>Create</b></h6>
+              </ion-col>
+              <ion-col size="2">
+                <h6 class="font-sizing"><b>Edit</b></h6>
+              </ion-col>
+              <ion-col size="2">
+                <h6 class="font-sizing"><b>Read</b></h6>
+              </ion-col>
+              <ion-col size="2">
+                <h6 class="font-sizing"><b>Delete</b></h6>
+              </ion-col>
+            </ion-row>
+
+            <ion-row>
+              <ion-col size="4">
+                <h6><b>Products</b></h6>
+              </ion-col>
+              <ion-col size="2">
+                <ion-item class="checkbox-width" lines="none">
+                  <ion-checkbox [(ngModel)]="permissionsData.products.CAN_CREATE"> </ion-checkbox>
+                </ion-item>
+              </ion-col>
+              <ion-col size="2">
+                <ion-item class="checkbox-width" lines="none">
+                  <ion-checkbox [(ngModel)]="permissionsData.products.CAN_EDIT"></ion-checkbox>
+                </ion-item>
+              </ion-col>
+              <ion-col size="2">
+                <ion-item class="checkbox-width" lines="none">
+                  <ion-checkbox [(ngModel)]="permissionsData.products.CAN_READ"></ion-checkbox>
+                </ion-item>
+              </ion-col>
+              <ion-col size="2">
+                <ion-item class="checkbox-width" lines="none">
+                  <ion-checkbox [(ngModel)]="permissionsData.products.CAN_DELETE"></ion-checkbox>
+                </ion-item>
+              </ion-col>
+            </ion-row>
+
+            <ion-row>
+              <ion-col size="4">
+                <h6><b>Products Category</b></h6>
+              </ion-col>
+              <ion-col size="2">
+                <ion-item class="checkbox-width" lines="none">
+                  <ion-checkbox [(ngModel)]="permissionsData.productsCategory.CAN_CREATE"> </ion-checkbox>
+                </ion-item>
+              </ion-col>
+              <ion-col size="2">
+                <ion-item class="checkbox-width" lines="none">
+                  <ion-checkbox [(ngModel)]="permissionsData.productsCategory.CAN_EDIT"></ion-checkbox>
+                </ion-item>
+              </ion-col>
+              <ion-col size="2">
+                <ion-item class="checkbox-width" lines="none">
+                  <ion-checkbox [(ngModel)]="permissionsData.productsCategory.CAN_READ"></ion-checkbox>
+                </ion-item>
+              </ion-col>
+              <ion-col size="2">
+                <ion-item class="checkbox-width" lines="none">
+                  <ion-checkbox [(ngModel)]="permissionsData.productsCategory.CAN_DELETE"></ion-checkbox>
+                </ion-item>
+              </ion-col>
+            </ion-row>
+
+            <ion-row>
+              <ion-col size="4">
+                <h6><b>Lot Data</b></h6>
+              </ion-col>
+              <ion-col size="2">
+                <ion-item class="checkbox-width" lines="none">
+                  <ion-checkbox [(ngModel)]="permissionsData.lotData.CAN_CREATE"> </ion-checkbox>
+                </ion-item>
+              </ion-col>
+              <ion-col size="2">
+                <ion-item class="checkbox-width" lines="none">
+                  <ion-checkbox [(ngModel)]="permissionsData.lotData.CAN_EDIT"></ion-checkbox>
+                </ion-item>
+              </ion-col>
+              <ion-col size="2">
+                <ion-item class="checkbox-width" lines="none">
+                  <ion-checkbox [(ngModel)]="permissionsData.lotData.CAN_READ"></ion-checkbox>
+                </ion-item>
+              </ion-col>
+              <ion-col size="2">
+                <ion-item class="checkbox-width" lines="none">
+                  <ion-checkbox [(ngModel)]="permissionsData.lotData.CAN_DELETE"></ion-checkbox>
+                </ion-item>
+              </ion-col>
+            </ion-row>
+
+            <ion-row>
+              <ion-col size="4">
+                <h6><b>Sales Orders</b></h6>
+              </ion-col>
+              <ion-col size="2">
+                <ion-item class="checkbox-width" lines="none">
+                  <ion-checkbox [(ngModel)]="permissionsData.salesOrders.CAN_CREATE"> </ion-checkbox>
+                </ion-item>
+              </ion-col>
+              <ion-col size="2">
+                <ion-item class="checkbox-width" lines="none">
+                  <ion-checkbox [(ngModel)]="permissionsData.salesOrders.CAN_EDIT"></ion-checkbox>
+                </ion-item>
+              </ion-col>
+              <ion-col size="2">
+                <ion-item class="checkbox-width" lines="none">
+                  <ion-checkbox [(ngModel)]="permissionsData.salesOrders.CAN_READ"></ion-checkbox>
+                </ion-item>
+              </ion-col>
+              <ion-col size="2">
+                <ion-item class="checkbox-width" lines="none">
+                  <ion-checkbox [(ngModel)]="permissionsData.salesOrders.CAN_DELETE"></ion-checkbox>
+                </ion-item>
+              </ion-col>
+            </ion-row>
+
+            <ion-row>
+              <ion-col size="4">
+                <h6><b>Requirement Data</b></h6>
+              </ion-col>
+              <ion-col size="2">
+                <ion-item class="checkbox-width" lines="none">
+                  <ion-checkbox [(ngModel)]="permissionsData.requirementData.CAN_CREATE"> </ion-checkbox>
+                </ion-item>
+              </ion-col>
+              <ion-col size="2">
+                <ion-item class="checkbox-width" lines="none">
+                  <ion-checkbox [(ngModel)]="permissionsData.requirementData.CAN_EDIT"></ion-checkbox>
+                </ion-item>
+              </ion-col>
+              <ion-col size="2">
+                <ion-item class="checkbox-width" lines="none">
+                  <ion-checkbox [(ngModel)]="permissionsData.requirementData.CAN_READ"></ion-checkbox>
+                </ion-item>
+              </ion-col>
+              <ion-col size="2">
+                <ion-item class="checkbox-width" lines="none">
+                  <ion-checkbox [(ngModel)]="permissionsData.requirementData.CAN_DELETE"></ion-checkbox>
+                </ion-item>
+              </ion-col>
+            </ion-row>
+
+            <ion-row>
+              <ion-col size="4">
+                <h6><b>Payments Received</b></h6>
+              </ion-col>
+              <ion-col size="2">
+                <ion-item class="checkbox-width" lines="none">
+                  <ion-checkbox [(ngModel)]="permissionsData.paymentsReceived.CAN_CREATE"> </ion-checkbox>
+                </ion-item>
+              </ion-col>
+              <ion-col size="2">
+                <ion-item class="checkbox-width" lines="none">
+                  <ion-checkbox [(ngModel)]="permissionsData.paymentsReceived.CAN_EDIT"></ion-checkbox>
+                </ion-item>
+              </ion-col>
+              <ion-col size="2">
+                <ion-item class="checkbox-width" lines="none">
+                  <ion-checkbox [(ngModel)]="permissionsData.paymentsReceived.CAN_READ"></ion-checkbox>
+                </ion-item>
+              </ion-col>
+              <ion-col size="2">
+                <ion-item class="checkbox-width" lines="none">
+                  <ion-checkbox [(ngModel)]="permissionsData.paymentsReceived.CAN_DELETE"></ion-checkbox>
+                </ion-item>
+              </ion-col>
+            </ion-row>
+
+            <ion-row>
+              <ion-col size="4">
+                <h6><b>Users Page</b></h6>
+              </ion-col>
+              <ion-col size="2">
+                <ion-item class="checkbox-width" lines="none">
+                  <ion-checkbox [(ngModel)]="permissionsData.users.CAN_CREATE"> </ion-checkbox>
+                </ion-item>
+              </ion-col>
+              <ion-col size="2">
+                <ion-item class="checkbox-width" lines="none">
+                  <ion-checkbox [(ngModel)]="permissionsData.users.CAN_EDIT"></ion-checkbox>
+                </ion-item>
+              </ion-col>
+              <ion-col size="2">
+                <ion-item class="checkbox-width" lines="none">
+                  <ion-checkbox [(ngModel)]="permissionsData.users.CAN_READ"></ion-checkbox>
+                </ion-item>
+              </ion-col>
+              <ion-col size="2">
+                <ion-item class="checkbox-width" lines="none">
+                  <ion-checkbox [(ngModel)]="permissionsData.users.CAN_DELETE"></ion-checkbox>
+                </ion-item>
+              </ion-col>
+            </ion-row>
+
+            <ion-row>
+              <ion-col size="4">
+                <h6><b>Profile Page</b></h6>
+              </ion-col>
+              <ion-col size="2">
+                <ion-item class="checkbox-width" lines="none">
+                  <ion-checkbox [(ngModel)]="permissionsData.profilePage.CAN_CREATE"> </ion-checkbox>
+                </ion-item>
+              </ion-col>
+              <ion-col size="2">
+                <ion-item class="checkbox-width" lines="none">
+                  <ion-checkbox [(ngModel)]="permissionsData.profilePage.CAN_EDIT"></ion-checkbox>
+                </ion-item>
+              </ion-col>
+              <ion-col size="2">
+                <ion-item class="checkbox-width" lines="none">
+                  <ion-checkbox [(ngModel)]="permissionsData.profilePage.CAN_READ"></ion-checkbox>
+                </ion-item>
+              </ion-col>
+              <ion-col size="2">
+                <ion-item class="checkbox-width" lines="none">
+                  <ion-checkbox [(ngModel)]="permissionsData.profilePage.CAN_DELETE"></ion-checkbox>
+                </ion-item>
+              </ion-col>
+            </ion-row>
+
+            <ion-row>
+              <ion-col size="4">
+                <h6><b>Roles & Permission Group</b></h6>
+              </ion-col>
+              <ion-col size="2">
+                <ion-item class="checkbox-width" lines="none">
+                  <ion-checkbox [(ngModel)]="permissionsData.rolesAndPermissionsPageAccess.CAN_CREATE"> </ion-checkbox>
+                </ion-item>
+              </ion-col>
+              <ion-col size="2">
+                <ion-item class="checkbox-width" lines="none">
+                  <ion-checkbox [(ngModel)]="permissionsData.rolesAndPermissionsPageAccess.CAN_EDIT"></ion-checkbox>
+                </ion-item>
+              </ion-col>
+              <ion-col size="2">
+                <ion-item class="checkbox-width" lines="none">
+                  <ion-checkbox [(ngModel)]="permissionsData.rolesAndPermissionsPageAccess.CAN_READ"></ion-checkbox>
+                </ion-item>
+              </ion-col>
+              <ion-col size="2">
+                <ion-item class="checkbox-width" lines="none">
+                  <ion-checkbox [(ngModel)]="permissionsData.rolesAndPermissionsPageAccess.CAN_DELETE"></ion-checkbox>
+                </ion-item>
+              </ion-col>
+            </ion-row>
+          </div>
+        </ion-card>
+
+
+
+
+
+
+
+
+
+
+
+      </ion-card-content>
+    </ion-card>
+
+
+  </ion-grid>
+</ion-content>
+
+<ion-footer>
+  <ion-button type="submit" [disabled]="!userForm.valid" expand="block" (click)="onSave()">
+    <ion-icon name="checkmark" slot="icon-only"> </ion-icon>
+    Save Data
+  </ion-button>
+</ion-footer>

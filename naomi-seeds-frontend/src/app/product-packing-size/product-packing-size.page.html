@@ -1,0 +1,136 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-menu-button slot="start"></ion-menu-button>
+    </ion-buttons>
+    <ion-title class="ion-text-center header-margin-left">Packing Size</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-grid>
+    <ngx-ui-loader *ngIf="isLoading" [loaderId]="'loader-product-packing-size-list'"></ngx-ui-loader>
+    <ion-row class="sticky">
+      <ion-col size="12">
+        <ion-card>
+          <ion-item>
+            <ion-label>Select Product</ion-label>
+            <ionic-selectable #selectComponentProduct item-content [(ngModel)]="product" itemValueField="_id"
+              itemTextField="name" [items]="products" [canSearch]="true" (onChange)="onProductSelection($event)">
+            </ionic-selectable>
+          </ion-item>
+        </ion-card></ion-col>
+    </ion-row>
+
+    <ion-refresher slot="fixed" pullFactor="0.9" pullMin="60" pullMax="200" (ionRefresh)="doRefresh($event)">
+      <ion-refresher-content pullingIcon="chevron-down-circle-outline" pullingText="Pull to refresh"
+        refreshingSpinner="circles" refreshingText="Refreshing..." class="ion-padding-top-refresh">
+      </ion-refresher-content>
+    </ion-refresher>
+
+    <div class="product-not-selected" *ngIf="!productId">
+      <ion-text class="color-select-product"> Please select a product from the dropdown above </ion-text>
+    </div>
+    <div *ngIf="active" class="top-padding-post-sticky-header">
+      <h6 *ngIf="active && productId" class="font-total-indication zmdi"> Total Packing Sizes for selected product:
+        {{totalCount}}</h6>
+      <ion-card *ngFor="let item of productPackingSizeList" routerDirection="forward"
+        [routerLink]="['./', 'update', item._id]">
+        <ion-item>
+          <ion-card-header class="ion-padding header-width">
+            <ion-row>
+              <ion-col size="8" size-md="6">
+                <ion-card-subtitle><b>Packing Quantity: </b> </ion-card-subtitle>
+              </ion-col>
+              <ion-col size="4" size-md="6">
+                <ion-card-subtitle> {{ item?.packingQty }}</ion-card-subtitle>
+              </ion-col>
+            </ion-row>
+
+
+            <ion-row>
+              <ion-col size="8" size-md="6">
+                <ion-card-subtitle><b>Packing Unit: </b> </ion-card-subtitle>
+              </ion-col>
+              <ion-col size="4" size-md="6">
+                <ion-card-subtitle> {{ item?.packingUnit }}</ion-card-subtitle>
+              </ion-col>
+            </ion-row>
+
+            <ion-row>
+              <ion-col size="8" size-md="6">
+                <ion-card-subtitle><b>Packet Invoice Price(&#8377;): </b> </ion-card-subtitle>
+              </ion-col>
+              <ion-col size="4" size-md="6">
+                <ion-card-subtitle> {{ item?.packetInvoicePrice }}</ion-card-subtitle>
+              </ion-col>
+            </ion-row>
+
+            <ion-row>
+              <ion-col size="8" size-md="6">
+                <ion-card-subtitle><b>Packet effective Rate(&#8377;/Kg): </b> </ion-card-subtitle>
+              </ion-col>
+              <ion-col size="4" size-md="6">
+                <ion-card-subtitle> {{ item?.effectiveRatePerKg }}</ion-card-subtitle>
+              </ion-col>
+            </ion-row>
+
+            <ion-row>
+              <ion-col size="8" size-md="6">
+                <ion-card-subtitle><b>Packing MRP: </b> </ion-card-subtitle>
+              </ion-col>
+              <ion-col size="4" size-md="6">
+                <ion-card-subtitle> {{ item?.packetMRPPrice }}</ion-card-subtitle>
+              </ion-col>
+            </ion-row>
+
+            <ion-row>
+              <ion-col size="8" size-md="6">
+                <ion-card-subtitle><b>Locked for editing by others: </b> </ion-card-subtitle>
+              </ion-col>
+              <ion-col size="4" size-md="6">
+                <ion-card-subtitle> {{ item?.lockedForEditingExceptAdmin }}</ion-card-subtitle>
+              </ion-col>
+            </ion-row>
+
+            <ion-row>
+              <ion-col size="8" size-md="6">
+                <ion-card-subtitle><b>Status: </b> </ion-card-subtitle>
+              </ion-col>
+              <ion-col size="4" size-md="6">
+                <ion-card-subtitle> {{ item?.status }}</ion-card-subtitle>
+              </ion-col>
+            </ion-row>
+
+
+            <ion-row>
+              <ion-col size="8" size-md="6">
+                <ion-card-subtitle><b>Created At: </b> </ion-card-subtitle>
+              </ion-col>
+              <ion-col size="4" size-md="6">
+                <ion-card-subtitle> {{ item?.createdAt | date:'medium' }}</ion-card-subtitle>
+              </ion-col>
+            </ion-row>
+
+            <ion-row>
+              <ion-col size="8" size-md="6">
+                <ion-card-subtitle><b>Updated At: </b> </ion-card-subtitle>
+              </ion-col>
+              <ion-col size="4" size-md="6">
+                <ion-card-subtitle> {{ item?.updatedAt | date:'medium' }}</ion-card-subtitle>
+              </ion-col>
+            </ion-row>
+          </ion-card-header>
+        </ion-item>
+      </ion-card>
+    </div>
+  </ion-grid>
+
+
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed" routerLink="./create" *ngxPermissionsOnly="'CAN_CREATE'">
+    <ion-fab-button>
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+
+</ion-content>

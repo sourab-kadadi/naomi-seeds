@@ -1,0 +1,143 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title class="ion-text-center header-margin-left">Add/Edit Product Packing Size</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+
+
+<ion-content [fullscreen]="true">
+  <ngx-ui-loader [loaderId]="'loader-product-packing-size-create-update'" class="full"></ngx-ui-loader>
+  <ion-grid *ngIf="active">
+
+
+  <!-- <ion-grid> -->
+    <ion-row *ngIf="this.mode === 'create'">
+      <ion-col size="12">
+        <ion-card>
+          <ion-item>
+            <ion-label>Select Product</ion-label>
+            <ionic-selectable #selectComponentProduct item-content [(ngModel)]="product" itemValueField="_id"
+              itemTextField="name" [items]="products" [canSearch]="true" (onChange)="onProductSelection($event)">
+            </ionic-selectable>
+          </ion-item>
+        </ion-card></ion-col>
+    </ion-row>
+
+    <ion-card *ngIf="this.mode === 'update' ">
+    <ion-row class="margin-left-post-card">
+  <ion-card-title><h5><b>Product Name: {{this.product?.name}}</b></h5></ion-card-title>   
+  <ion-card-title><h5><b>Packing Size: {{this.productPackingSizeForm?.value.packingQty}} {{this.productPackingSizeForm?.value.packingUnit}}</b></h5></ion-card-title>   
+
+    </ion-row>
+  </ion-card>
+    <form [formGroup]="productPackingSizeForm" (ngSubmit)="onSave()">
+      <ion-card class="padding-card">
+        <ion-row *ngIf="this.mode === 'create'">
+          <ion-col size="12" size-md="6">
+            <ion-item class="Form-Item">
+              <ion-label class="ion-label" position="floating">Packing Quantity<span class="reqired-field">*</span>
+              </ion-label>
+              <ion-input type="number" formControlName="packingQty"
+                placeholder="Packing Quantity(eg. 1, 500 etc)" ></ion-input>
+              <ion-note
+                *ngIf="!productPackingSizeForm.get('packingQty').valid && productPackingSizeForm.get('packingQty').touched"
+                color="danger" position="fixed" class="ion-padding">
+                please enter data.
+              </ion-note>
+            </ion-item>
+          </ion-col>
+          <ion-col size="12" size-md="6">
+            <ion-item class="Form-Item">
+              <ion-label>Packing Unit</ion-label>
+              <ion-select placeholder="Select One" formControlName="packingUnit">
+                <ion-select-option value="GMS">GMS</ion-select-option>
+                <ion-select-option value="KGS">KGS</ion-select-option>
+                <ion-select-option value="QUINTAL">QUINTAL</ion-select-option>
+                <ion-select-option value="TONNE">TONNE</ion-select-option>
+              </ion-select>
+              <ion-note *ngIf="
+                !productPackingSizeForm.get('packingUnit').valid && productPackingSizeForm.get('packingUnit').touched"
+                color="danger" position="floating" class="ion-padding">
+                please select packing unit.
+              </ion-note>
+            </ion-item>
+          </ion-col>
+          </ion-row>
+          <ion-row>
+          <ion-col size="12" size-md="6">
+          <ion-item class="Form-Item">
+            <ion-label class="ion-label" position="floating">Effective Rate per Kg(based on Invoice price -
+              &#8377;/Kg)<span class="reqired-field">*</span>
+            </ion-label>
+            <ion-input type="number" formControlName="effectiveRatePerKg"
+              placeholder="effective invoice price per Kg"></ion-input>
+            <ion-note
+              *ngIf="
+                !productPackingSizeForm.get('effectiveRatePerKg').valid && productPackingSizeForm.get('effectiveRatePerKg').touched"
+              color="danger" position="fixed" class="ion-padding">
+              please enter data.
+            </ion-note>
+          </ion-item>
+</ion-col>
+          <ion-col size="12" size-md="6">
+            <ion-item class="Form-Item">
+              <ion-label class="ion-label" position="floating">Invoice price per packet in &#8377;<span
+                  class="reqired-field">*</span>
+              </ion-label>
+              <ion-input type="number" formControlName="packetInvoicePrice"
+                placeholder="Invoice price per packet"></ion-input>
+              <ion-note
+                *ngIf="
+                !productPackingSizeForm.get('packetInvoicePrice').valid && productPackingSizeForm.get('packetInvoicePrice').touched"
+                color="danger" position="fixed" class="ion-padding">
+                please enter data.
+              </ion-note>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col size="12" size-md="6">
+            <ion-item class="Form-Item">
+              <ion-label class="ion-label" position="floating">MRP price of the packet in &#8377;
+              </ion-label>
+              <ion-input type="number" formControlName="packetMRPPrice"
+                placeholder="MRP price of the packet"></ion-input>
+              <ion-note
+                *ngIf="
+                !productPackingSizeForm.get('packetMRPPrice').valid && productPackingSizeForm.get('packetMRPPrice').touched"
+                color="danger" position="fixed" class="ion-padding">
+                please enter data.
+              </ion-note>
+            </ion-item>
+          </ion-col>
+          </ion-row>
+          <ion-row>
+          <ion-col size="12">
+            <ion-item size="12" class="status-design Form-Item">
+              Locked for editing for other than admin ?
+              <ion-toggle formControlName="lockedForEditingExceptAdmin" color="primary"></ion-toggle>
+            </ion-item>
+          </ion-col>
+          <ion-col size="12">
+            <ion-item size="12" class="status-design Form-Item">
+              Packing Size Active ?
+              <ion-toggle formControlName="status" color="primary"></ion-toggle>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+      </ion-card>
+    </form>
+  </ion-grid>
+</ion-content>
+  <ion-footer>
+          <ion-button type="submit" [disabled]="!productPackingSizeForm.valid" expand="full" (click)="onSave()">
+            <ion-icon name="checkmark" slot="icon-only"> </ion-icon>
+            Save Packing Size Details
+          </ion-button>
+    </ion-footer>
+
+

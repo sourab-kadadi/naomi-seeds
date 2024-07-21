@@ -1,0 +1,590 @@
+<style>
+    .invoice-box {
+        max-width: 800px;
+        font-size: 11px;
+        line-height: 13px;
+        font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;
+        color: #555;
+    }
+
+    .invoice-box table {
+        width: 100%;
+        line-height: inherit;
+        text-align: left;
+        font-size: 10px;
+        border: 1px solid #eee;
+    }
+
+    .invoice-box table td {
+        padding: 5px;
+        vertical-align: top;
+        border: solid 1px #eee;
+    }
+
+    .invoice-box table tr.top table td {
+        padding-bottom: 20px;
+
+    }
+
+    .invoice-box table tr.top table td.title {
+        font-size: 45px;
+        line-height: 45px;
+        color: #333;
+
+    }
+
+    .invoice-box table tr.information table td {
+        padding-bottom: 40px;
+    }
+
+    .invoice-box table tr.heading td {
+        background: #eee;
+        border-bottom: 1px solid #ddd;
+        font-weight: bold;
+    }
+
+    .invoice-box table tr.details td {
+        padding-bottom: 20px;
+    }
+
+    .invoice-box table tr.item td {
+        border-bottom: 1px solid #eee;
+    }
+
+    .invoice-box table tr.item.last td {
+        border-bottom: none;
+    }
+
+    .invoice-box table tr.total td:nth-child(2) {
+        border-top: 2px solid #eee;
+        font-weight: bold;
+    }
+
+
+    .item-box {
+        max-width: 800px;
+        font-size: 11px;
+        line-height: 11px;
+        font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;
+        color: #555;
+    }
+
+    .item-box table {
+        width: 100%;
+        line-height: inherit;
+        text-align: left;
+        font-size: 10px;
+        border: 1px solid #eee;
+    }
+
+    .item-box table td {
+        padding: 5px;
+        vertical-align: top;
+        border: solid 1px #eee;
+    }
+
+    .item-box table tr.top table td {
+        padding-bottom: 20px;
+
+    }
+
+    .item-box table tr.top table td.title {
+        font-size: 45px;
+        line-height: 45px;
+        color: #333;
+
+    }
+
+    .item-box table tr.information table td {
+        padding-bottom: 40px;
+    }
+
+    .item-box table tr.heading td {
+        background: #eee;
+        border-bottom: 1px solid #ddd;
+        font-weight: bold;
+    }
+
+    .item-box table tr.details td {
+        padding-bottom: 20px;
+    }
+
+    .item-box table tr.item td {
+        border-bottom: 1px solid #eee;
+    }
+
+    .item-box table tr.item.last td {
+        border-bottom: none;
+    }
+
+    .item-box table tr.total td:nth-child(2) {
+        border-top: 2px solid #eee;
+        font-weight: bold;
+    }
+
+
+
+    .footer-box {
+        max-width: 800px;
+        font-size: 12px;
+        line-height: 15px;
+        font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;
+        color: #555;
+    }
+
+    .footer-box table {
+        width: 100%;
+        line-height: inherit;
+        text-align: left;
+        font-size: 10px;
+    }
+
+    .footer-box table td {
+        padding: 5px;
+        vertical-align: top;
+    }
+
+    .footer-box table tr.top table td {
+        padding-bottom: 20px;
+
+    }
+
+    .footer-box table tr.top table td.title {
+        font-size: 45px;
+        line-height: 45px;
+        color: #333;
+
+    }
+
+    .footer-box table tr.information table td {
+        padding-bottom: 40px;
+    }
+
+    .footer-box table tr.heading td {
+        background: #eee;
+        font-weight: bold;
+    }
+
+    .footer-box table tr.details td {
+        padding-bottom: 10px;
+    }
+
+    .footer-box table tr.footer.last td {
+        border-bottom: none;
+    }
+
+    .footer-box table tr.total td:nth-child(2) {
+        font-weight: bold;
+    }
+
+
+
+    @media only screen and (max-width: 600px) {
+        .invoice-box table tr.top table td {
+            width: 100%;
+            display: block;
+            text-align: center;
+        }
+
+        .invoice-box table tr.information table td {
+            width: 100%;
+            display: block;
+            text-align: center;
+        }
+    }
+</style>
+<div>
+
+
+
+    <div class="invoice-box">
+        <table style="border:0px; margin-bottom:0px;" cellpadding="0" cellspacing="0">
+            <tr>
+                <td colspan="2" style="border:0px; margin-bottom:0px;">
+
+                </td>
+                <td colspan="5" style="border:0px;">
+                    <h2
+                        style="text-align: left; font-size:19px; padding-top:12px; line-height:8px; padding-bottom:0px;">
+                        NAOMI SEEDS PRIVATE LIMITED</h2>
+                    <p style="text-align: left; line-height: 5px; padding-left:4px; padding-top:0px;">#205, VSS
+                        Nandadeep, N.H.-44, Beside RTA Office,
+                        Hyd-500 055 </p>
+                    <p style="text-align: left; line-height: 5px; padding-left:20px; margin-bottom:0px;">
+                        Office: +91 96662 68384, E-mail: contact@naomiseeds.com
+                    </p>
+                </td>
+            </tr>
+            <tr style="margin-top:0px; line-height:0px; padding-bottom:0px;">
+
+                <td colspan="9" style="border:0px; font-size:12px; line-height: 0px;">
+
+                    <h3 style="text-align: center; border:0px; padding:0px; margin-top:0px; line-height: 0px;">DELIVERY
+                        CHALLAN</h3>
+                </td>
+            </tr>
+        </table>
+        <table cellpadding="0" cellspacing="0" style="border:0px; padding-top:0px; margin-top:0px;">
+
+            <td colspan="3">
+                <p><strong>GST No. 36AAECN9743J1ZZ</strong> </p>
+            </td>
+            <td colspan="6">
+                <p>Seed License No.: <strong>1518 dated</strong>: 03.06.2016 </p>
+            </td>
+
+            <tr>
+                <td colspan="3" rowspan="6" style="line-height:8px">
+                    <p>Consignee</p>
+                    <p>To, M/s</p>
+                    <p><strong>
+                            <%= deliveryChallan.toDistributorName %>
+                        </strong> </p>
+
+            </tr>
+            <tr>
+                <td colspan="1" style="width:fit-content;">
+                    <p>D.C No. </p>
+                </td>
+                <td colspan="5" style="color: red">
+                    <%= deliveryChallan.delivaryChallanNumber %>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td colspan="1" style="width:25px;">
+                    <p>Date:</p>
+                </td>
+                <td colspan="5">
+                    <%= deliveryChallan.orderDate.toDateString().split(' ').slice(1).join(' ')  %>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="1">
+                    <p>RR/LR Number</p>
+                </td>
+                <td colspan="5">
+                    <%= deliveryChallan.rrOrLrNum %>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="1">
+                    <p>Lorry Number</p>
+                </td>
+                <td colspan="5">
+                    <%= deliveryChallan.vehicleNo %>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="1">
+                    <p>Transport</p>
+                </td>
+                <td colspan="5">
+                    <%= deliveryChallan.transport %>
+                </td>
+            </tr>
+
+            <tr>
+                <td colspan="1">
+                    <p>GST No.</p>
+                </td>
+                <td colspan="2"><%= deliveryChallan.toProfileInfoTxn.gstin %></td>
+                <td colspan="1">
+                    <p>Freight Total</p>
+                </td>
+                <td colspan="5">&#8377 <%= deliveryChallan.freightTotal.toLocaleString("en-IN") %>
+                </td>
+
+            </tr>
+
+            <tr>
+                <td colspan="1">
+                    <p>CST No.</p>
+                </td>
+                <td colspan="2"></td>
+                <td colspan="1">
+                    <p>Freight Advance Paid</p>
+                </td>
+                <td colspan="5">&#8377 <%= deliveryChallan.frightPaidAdvance.toLocaleString("en-IN") %>
+                </td>
+
+            </tr>
+
+            <tr>
+                <td colspan="1">
+                    <p>SL. No.</p>
+                </td>
+                <td colspan="2"></td>
+                <td colspan="1">
+                    <p>Freight to Pay</p>
+                </td>
+                <td colspan="5">&#8377 <%= deliveryChallan.frightToPay.toLocaleString("en-IN") %>
+                </td>
+
+            </tr>
+        </table>
+    </div>
+
+    <div class="item-box" style="padding-top:2px;">
+        <table cellpadding="0" cellspacing="0" style="border:0px;">
+
+
+
+
+            <thead>
+                <tr>
+                    <td colspan="1" style="width:2px;"><b>S.<br>No</b></td>
+                    <td colspan="1" style="width:190px; text-align:center;"><b>Product</b></td>
+                    <td colspan="1" style="width:50px; text-align:center;"><b>Lot <br>Number</b></td>
+                    <td colspan="1" style="width:70px; text-align:center;"><b>Date of Packing</b></td>
+                    <td colspan="1" style="width:70px; text-align:center;"><b>Valid <br>Upto</b></td>
+                    <td colspan="1" style="width:70px; text-align:center;"><b>Packing Size</b></td>
+                    <td colspan="1" style="width:70px; text-align:center;"><b>No. of Units</b></td>
+                    <td colspan="1" style="width:70px; text-align:center;"><b>Quantity Kgs/Pkts</b></td>
+                    <td colspan="1" style="width:90px; text-align:center;"><b>Approx <br>Value in &#8377</b></td>
+                </tr>
+            </thead>
+
+
+            <tbody>
+
+
+                <% deliveryChallan.items.forEach((item,index)=> {%>
+                    <tr>
+                        <td colspan="1" style="width:2px; text-align:center;">
+                            <%= index+1 %>
+                        </td>
+                        <td colspan="1" style="width:190px; text-align:center;">
+                            <%= item.crop %><br>
+                                <%= item.productName %> <br>
+                                    <!-- HSN: <%= item.hnsNumber %> -->
+                        </td>
+                        <td colspan="1" style="width:50px; text-align:center;">
+                            <%= item.lotNumber %>
+                        </td>
+                        <td colspan="1" style="width:70px; text-align:center;">
+                        </td>
+                        <td colspan="1" style="width:70px; text-align:center;">
+                        </td>
+                        <td colspan="1" style="width:70px; text-align:center;">
+                        </td>
+                        <td colspan="1" style="width:70px; text-align:center;">
+                       </td>
+                        <td colspan="1" style="width:70px; text-align:center;">
+                       </td>
+                        <td colspan="1" style="width:90px; text-align:center;">
+                        </td>
+                    </tr>
+
+                    <% }); %>
+
+                    
+
+                        <% if (deliveryChallan.items.length==1) {%>
+                            <tr>
+                                <td colspan="1" style="width:2px;"></td>
+                                <td colspan="1" style="width:190px; text-align:center;"><br><br><br><br></td>
+                                <td colspan="1" style="width:50px; text-align:center;"></td>
+                                <td colspan="1" style="width:70px; text-align:center;"></td>
+                                <td colspan="1" style="width:70px; text-align:center;"></td>
+                                <td colspan="1" style="width:70px; text-align:center;"></td>
+                                <td colspan="1" style="width:70px; text-align:center;"></td>
+                                <td colspan="1" style="width:70px; text-align:center;"></td>
+                                <td colspan="1" style="width:90px; text-align:center;"></td>
+                            </tr>
+                            <tr>
+                                <td colspan="1" style="width:2px;"></td>
+                                <td colspan="1" style="width:190px; text-align:center;"><br><br><br><br></td>
+                                <td colspan="1" style="width:50px; text-align:center;"></td>
+                                <td colspan="1" style="width:70px; text-align:center;"></td>
+                                <td colspan="1" style="width:70px; text-align:center;"></td>
+                                <td colspan="1" style="width:70px; text-align:center;"></td>
+                                <td colspan="1" style="width:70px; text-align:center;"></td>
+                                <td colspan="1" style="width:70px; text-align:center;"></td>
+                                <td colspan="1" style="width:90px; text-align:center;"></td>
+                            </tr>
+                            <tr>
+                                <td colspan="1" style="width:2px;"></td>
+                                <td colspan="1" style="width:190px; text-align:center;"><br><br><br><br></td>
+                                <td colspan="1" style="width:50px; text-align:center;"></td>
+                                <td colspan="1" style="width:70px; text-align:center;"></td>
+                                <td colspan="1" style="width:70px; text-align:center;"></td>
+                                <td colspan="1" style="width:70px; text-align:center;"></td>
+                                <td colspan="1" style="width:70px; text-align:center;"></td>
+                                <td colspan="1" style="width:70px; text-align:center;"></td>
+                                <td colspan="1" style="width:90px; text-align:center;"></td>
+                            </tr>
+                            <tr>
+                                <td colspan="1" style="width:2px;"></td>
+                                <td colspan="1" style="width:190px; text-align:center;"><br><br><br><br></td>
+                                <td colspan="1" style="width:50px; text-align:center;"></td>
+                                <td colspan="1" style="width:70px; text-align:center;"></td>
+                                <td colspan="1" style="width:70px; text-align:center;"></td>
+                                <td colspan="1" style="width:70px; text-align:center;"></td>
+                                <td colspan="1" style="width:70px; text-align:center;"></td>
+                                <td colspan="1" style="width:70px; text-align:center;"></td>
+                                <td colspan="1" style="width:90px; text-align:center;"></td>
+                            </tr>
+                            <% }%>
+
+
+
+                                <% if (deliveryChallan.items.length==2) {%>
+                                    <tr>
+                                        <td colspan="1" style="width:2px;"></td>
+                                        <td colspan="1" style="width:190px; text-align:center;"><br><br><br><br></td>
+                                        <td colspan="1" style="width:50px; text-align:center;"></td>
+                                        <td colspan="1" style="width:70px; text-align:center;"></td>
+                                        <td colspan="1" style="width:70px; text-align:center;"></td>
+                                        <td colspan="1" style="width:70px; text-align:center;"></td>
+                                        <td colspan="1" style="width:70px; text-align:center;"></td>
+                                        <td colspan="1" style="width:70px; text-align:center;"></td>
+                                        <td colspan="1" style="width:90px; text-align:center;"></td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="1" style="width:2px;"></td>
+                                        <td colspan="1" style="width:190px; text-align:center;"><br><br><br><br></td>
+                                        <td colspan="1" style="width:50px; text-align:center;"></td>
+                                        <td colspan="1" style="width:70px; text-align:center;"></td>
+                                        <td colspan="1" style="width:70px; text-align:center;"></td>
+                                        <td colspan="1" style="width:70px; text-align:center;"></td>
+                                        <td colspan="1" style="width:70px; text-align:center;"></td>
+                                        <td colspan="1" style="width:70px; text-align:center;"></td>
+                                        <td colspan="1" style="width:90px; text-align:center;"></td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="1" style="width:2px;"></td>
+                                        <td colspan="1" style="width:190px; text-align:center;"><br><br><br><br></td>
+                                        <td colspan="1" style="width:50px; text-align:center;"></td>
+                                        <td colspan="1" style="width:70px; text-align:center;"></td>
+                                        <td colspan="1" style="width:70px; text-align:center;"></td>
+                                        <td colspan="1" style="width:70px; text-align:center;"></td>
+                                        <td colspan="1" style="width:70px; text-align:center;"></td>
+                                        <td colspan="1" style="width:70px; text-align:center;"></td>
+                                        <td colspan="1" style="width:90px; text-align:center;"></td>
+                                    </tr>
+                                    <% }%>
+
+                                        <% if (deliveryChallan.items.length==3) {%>
+                                            <tr>
+                                                <td colspan="1" style="width:2px;"></td>
+                                                <td colspan="1" style="width:190px; text-align:center;"><br><br><br><br>
+                                                </td>
+                                                <td colspan="1" style="width:50px; text-align:center;"></td>
+                                                <td colspan="1" style="width:70px; text-align:center;"></td>
+                                                <td colspan="1" style="width:70px; text-align:center;"></td>
+                                                <td colspan="1" style="width:70px; text-align:center;"></td>
+                                                <td colspan="1" style="width:70px; text-align:center;"></td>
+                                                <td colspan="1" style="width:70px; text-align:center;"></td>
+                                                <td colspan="1" style="width:90px; text-align:center;"></td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="1" style="width:2px;"></td>
+                                                <td colspan="1" style="width:190px; text-align:center;"><br><br><br><br>
+                                                </td>
+                                                <td colspan="1" style="width:50px; text-align:center;"></td>
+                                                <td colspan="1" style="width:70px; text-align:center;"></td>
+                                                <td colspan="1" style="width:70px; text-align:center;"></td>
+                                                <td colspan="1" style="width:70px; text-align:center;"></td>
+                                                <td colspan="1" style="width:70px; text-align:center;"></td>
+                                                <td colspan="1" style="width:70px; text-align:center;"></td>
+                                                <td colspan="1" style="width:90px; text-align:center;"></td>
+                                            </tr>
+                                            <% }%>
+
+                                                <% if (deliveryChallan.items.length==4) {%>
+                                                    <tr>
+                                                        <td colspan="1" style="width:2px;"></td>
+                                                        <td colspan="1" style="width:190px; text-align:center;">
+                                                            <br><br><br><br>
+                                                        </td>
+                                                        <td colspan="1" style="width:50px; text-align:center;"></td>
+                                                        <td colspan="1" style="width:70px; text-align:center;"></td>
+                                                        <td colspan="1" style="width:70px; text-align:center;"></td>
+                                                        <td colspan="1" style="width:70px; text-align:center;"></td>
+                                                        <td colspan="1" style="width:70px; text-align:center;"></td>
+                                                        <td colspan="1" style="width:70px; text-align:center;"></td>
+                                                        <td colspan="1" style="width:90px; text-align:center;"></td>
+                                                    </tr>
+                                                    <% }%>
+
+
+
+                                                        <tr>
+                                                            <td colspan="6" style="text-align:center; width:320px;">
+                                                                Total
+                                                            </td>
+
+                                                            <td colspan="1" style="width:70px; text-align:center;">
+                                                                <%= deliveryChallan.totalUnits.toLocaleString("en-IN") %>
+                                                            </td>
+                                                            <td colspan="1" style="width:70px; text-align:center;">
+                                                                <%= deliveryChallan.totalQuantity.toLocaleString("en-IN") %>
+                                                            </td>
+                                                            <td colspan="1" style="width:60px; text-align:center;">&#8377
+                                                                <%= deliveryChallan.totalValueSale.toLocaleString("en-IN") %>/-</td>
+                                                        </tr>
+
+            </tbody>
+
+
+
+        </table>
+    </div>
+
+
+
+
+
+    <div style=" padding-top:5px;" class="footer-box">
+        <table cellpadding="0" cellspacing="0" style="border:0px; ">
+        <tr>
+            <td colspan="100%" rowspan="2"  style="border-right:0px; border-bottom:0px; font-size: 9px; line-height: 9px;">
+                Amount (in Words): <b><%= amountInWords %> </b>
+            </td>
+        </tr>
+    </table>
+        <table cellpadding="0" cellspacing="0" style="border:0px; ">
+
+
+            <tr>
+                <td colspan="4" rowspan="4">
+
+                    <div class="multiline-left" style="color: black; font-size: 8px; line-height:8px;">
+                        Note:<br>
+                        1. Certified/Truthfully Labelled Seeds for
+                        <br>
+                        Agricultual Purposes
+                        <br>
+                        2. Seeds Treated with Poison
+                        <br>
+                        I confirm that seeds received by me as per
+                        <br>
+                        Delivery challan are in good condition and I am
+                        <br>
+                        authorised to receive the same on behalf of the
+                        <br>
+                        mentioned herein.
+                    </div>
+
+                </td>
+
+                <td colspan="3" rowspan="3" style="padding-top:40px;">
+                    <strong>Signature of the <br>Party representative</strong>
+                </td>
+
+
+
+                <td colspan="3" rowspan="3" style="padding-top:15px;">
+                    <p class="right"><strong>For Naomi Seeds Pvt. Ltd.</strong></p>
+                    <br>
+                    <strong>Authorised Signatory</strong>
+                </td>
+
+
+            </tr>
+
+        </table>
+    </div>
+</div>

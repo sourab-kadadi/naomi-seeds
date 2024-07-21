@@ -1,0 +1,297 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/admin/user-management"></ion-back-button>
+    </ion-buttons>
+    <ion-title class="ion-text-center header-margin-left">Add User</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-card class="background-light"> 
+    <!-- <ngx-ui-loader [loaderId]="'loader-03'" [fgsType]="spinner"></ngx-ui-loader> -->
+      <ion-card-header>
+        <ion-card-title class="overview-header">ADD NEW USER</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <form [formGroup]="userForm" (ngSubmit)="submitForm()" novalidate>
+        <ion-grid>
+          <ion-row>
+            <ion-col size="12" size-md="6">
+              <ion-item >
+                <ion-label position="floating">First Name <span class="reqired-field">*</span></ion-label>
+                <ion-input formControlName="firstName" type="text"></ion-input>
+              </ion-item>
+              <span class="error ion-padding" *ngIf="isSubmitted && errorControl.firstName.errors?.required">
+                First Name is required.
+              </span>
+              <span class="error ion-padding" *ngIf="isSubmitted && errorControl.firstName.errors?.minlength">
+                First Name should be min 2 chars long.
+              </span>
+            </ion-col>
+            <ion-col size="12" size-md="6">
+              <ion-item>
+                <ion-label position="floating">Last Name <span class="reqired-field">*</span></ion-label>
+                <ion-input  formControlName="lastName"></ion-input>
+              </ion-item>
+              <span class="error ion-padding" *ngIf="isSubmitted && errorControl.lastName.errors?.required">
+                Last Name is required.
+              </span>
+              <span class="error ion-padding" *ngIf="isSubmitted && errorControl.lastName.errors?.minlength">
+                Last Name should be min 2 chars long.
+              </span>
+            </ion-col>
+          </ion-row>
+
+
+          <ion-row>
+            <ion-col size="12" size-md="6">
+              <ion-item>
+                <ion-label position="floating" >Email Id <span class="reqired-field">*</span></ion-label>
+                <ion-input formControlName="email" type="email"></ion-input>
+              </ion-item>
+              <span class="error ion-padding" *ngIf="isSubmitted && errorControl.email.errors?.required">
+                Email is required.
+              </span>
+              <span class="error ion-padding" *ngIf="isSubmitted && errorControl.email.errors?.pattern">
+                Please provide valid email id.
+              </span>
+            </ion-col>
+            <!-- <ion-col size="12" size-md="6">
+              <ion-item>
+                <ion-label position="floating" >Password <span class="reqired-field">*</span></ion-label>
+                <ion-input formControlName="psw"></ion-input>
+              </ion-item>
+              <span class="error ion-padding" *ngIf="isSubmitted && errorControl.psw.errors?.required">
+                Password is required.
+              </span>
+              <span class="error ion-padding" *ngIf="isSubmitted && errorControl.psw.errors?.pattern">
+                Please provide valid 6 letter password.
+              </span>
+            </ion-col> -->
+            <ion-col size="12" size-md="6">
+              <ion-item>
+                <ion-label position="floating" >Mobile Number <span class="reqired-field">*</span></ion-label>
+                <ion-input formControlName="phoneNo" type="number"></ion-input>
+              </ion-item>
+              <span class="error ion-padding" *ngIf="isSubmitted && errorControl.phoneNo.errors?.required">
+                Mobile number is required.
+              </span>
+              <span class="error ion-padding" *ngIf="isSubmitted && errorControl.phoneNo.errors?.pattern">
+                Please enter valid phone Number.
+              </span>
+            </ion-col>
+            <ion-col>
+              <ion-item button="true" id="open-date-input1">
+                <ion-label>Birth Day</ion-label>
+                <ion-text slot="end">{{ userForm.get('birthDay').value  || null }}</ion-text>
+                <ion-icon icon="calendar" slot="end"></ion-icon>
+                <ion-popover trigger="open-date-input1" show-backdrop="false">
+                  <ng-template>
+                    <ion-datetime
+                      #popoverDatetime2
+                      presentation="date"
+                      (ionChange)="dateValue1 = formatDatebirthDay(popoverDatetime2.value)"
+                      formControlName="birthDay"
+                    ></ion-datetime>
+                    <!-- <span class="error ion-padding" *ngIf="isSubmitted && userForm.get('profile').get('joinDate').hasError('required')">
+                      Please select the correct date.
+                    </span> -->
+                  </ng-template>
+                </ion-popover>
+              </ion-item>
+            </ion-col>
+
+
+            <!-- <ion-col *ngIf="userForm.get('profile').get('joinDate')">
+              <ion-item button="true" id="open-date-input">
+                <ion-label>Join Date <span class="reqired-field">*</span></ion-label>
+                <ion-text slot="end">{{ userForm.get('profile').get('joinDate').value  || null }}</ion-text>
+                <ion-icon icon="calendar" slot="end"></ion-icon>
+                <ion-popover trigger="open-date-input" show-backdrop="false">
+                  <ng-template>
+                    <ion-datetime
+                      #popoverDatetime
+                      presentation="date"
+                      (ionChange)="dateValue = formatDate(popoverDatetime.value)"
+                      formControlName="joinDate"
+                    ></ion-datetime>
+                    <span class="error ion-padding" *ngIf="isSubmitted && userForm.get('profile').get('joinDate').hasError('required')">
+                      Join Date is required.
+                    </span>
+                  </ng-template>
+                </ion-popover>
+              </ion-item>
+            </ion-col> -->
+
+
+          </ion-row>
+
+          <form formGroupName="profile">
+          <ion-row>
+            <ion-col>
+              <ion-item button="true" id="open-date-input">
+                <ion-label>Join Date</ion-label>
+                <ion-text slot="end">{{ userForm.get('profile').get('joinDate').value  || null }}</ion-text>
+                <ion-icon icon="calendar" slot="end"></ion-icon>
+                <ion-popover trigger="open-date-input" show-backdrop="false">
+                  <ng-template>
+                    <ion-datetime
+                      #popoverDatetime
+                      presentation="date"
+                      (ionChange)="dateValue = formatDate(popoverDatetime.value)"
+                      formControlName="joinDate"
+                    ></ion-datetime>
+                    <span class="error ion-padding" *ngIf="isSubmitted && userForm.get('profile').get('joinDate').hasError('required')">
+                      Please select the correct date.
+                    </span>
+                  </ng-template>
+                </ion-popover>
+              </ion-item>
+            </ion-col>
+
+            <ion-col size="12" size-md="6">
+              <ion-item>
+                <ion-label>Role <span class="reqired-field">*</span></ion-label>
+                <ion-select placeholder="Select" formControlName="roles" (ionChange)="onSelection($event)">
+                  <ion-select-option *ngFor="let role of roles" [value]="role.value">{{role.key}}</ion-select-option>
+                </ion-select>
+              </ion-item>
+              <span class="error ion-padding" *ngIf="isSubmitted && userForm.get('profile').get('roles').hasError('required')">
+                Role is required.
+              </span>
+            </ion-col>
+
+          </ion-row>
+
+          <ion-row>
+            <ion-col size="12" size-md="6" *ngIf="userForm.get('profile').get('areasCovered')">
+              <ion-item>
+                <ion-label position="floating">Areas Covered <span class="reqired-field">*</span></ion-label>
+                <ion-input formControlName="areasCovered"></ion-input>
+              </ion-item>
+              <span class="error ion-padding" *ngIf="isSubmitted && isSubmitted && userForm.get('profile').get('areasCovered').hasError('required')">
+                Areas Covered is required.
+              </span>
+            </ion-col>
+          </ion-row>
+
+          <!-- Distributor Details -->
+          <ion-row>
+                          <ion-col size="12" size-md="6" *ngIf="userForm.get('profile').get('companyName')">
+              <ion-item>
+                <ion-label position="floating">Firm Name <span class="reqired-field">*</span></ion-label>
+                <ion-input formControlName="companyName"></ion-input>
+              </ion-item>
+              <span class="error ion-padding" *ngIf="isSubmitted && isSubmitted && userForm.get('profile').get('companyName').hasError('required')">
+                Firm Name is required.
+              </span>
+            </ion-col>
+            <ion-col size="12" size-md="6" *ngIf="userForm.get('profile').get('gstin')">
+              <ion-item>
+                <ion-label position="floating">GSTIN</ion-label>
+                <ion-input formControlName="gstin"></ion-input>
+              </ion-item>
+            </ion-col>
+            </ion-row>
+
+          <ion-row>
+            <ion-col size="12" size-md="6" *ngIf="userForm.get('profile').get('profileReportsToName')">
+              <!-- <ion-col size="12" size-md="6" *ngIf="this.assignToDisplay"> -->
+              <ion-item>
+                <ion-label>Assign to</ion-label>
+                <ionic-selectable #selectComponentProduct item-content (ngModel)="reportsTo" itemValueField="_id" itemTextField="name" [items]="reportsTo"
+                  [canSearch]="true" (onChange)="itemChange($event)">
+                </ionic-selectable>
+              </ion-item>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col size="12" size-md="6">
+              <ion-item>
+                <ion-label position="floating">Complete Address(used for communication etc.) <span class="reqired-field">*</span></ion-label>
+                <ion-textarea formControlName="completeAddress"></ion-textarea>
+              </ion-item>
+              <span class="error ion-padding" *ngIf="isSubmitted && userForm.get('profile').get('completeAddress').hasError('required')">
+                Complete Address is required.
+               </span>
+            </ion-col>
+            </ion-row>
+
+          <ng-container formGroupName="addressDetails">
+            <ion-row>
+            <ion-col size="12" size-md="6">
+              <ion-item>
+                <ion-label position="floating">Building and Street </ion-label>
+                <ion-input formControlName="address1"></ion-input>
+              </ion-item>
+              <span class="error ion-padding" *ngIf="isSubmitted && userForm.get('profile').get('addressDetails').get('address1').hasError('required')">
+                Address Building and Street is required.
+               </span>
+            </ion-col>
+          <!-- </ion-row>
+
+          <ion-row> -->
+            <ion-col size="12" size-md="6">
+              <ion-item>
+                <ion-label position="floating">City</ion-label>
+                <ion-input formControlName="city"></ion-input>
+              </ion-item>
+            </ion-col>
+            <ion-col size="12" size-md="6">
+              <ion-item>
+                <ion-label position="floating">Taluka</ion-label>
+                <ion-input formControlName="taluka"></ion-input>
+              </ion-item>
+            </ion-col>
+          <!-- </ion-row>
+
+          <ion-row> -->
+            <ion-col size="12" size-md="6">
+              <ion-item>
+                <ion-label position="floating">District</ion-label>
+                <ion-input formControlName="district"></ion-input>
+              </ion-item>
+            </ion-col>
+            <ion-col size="12" size-md="6">
+              <ion-item>
+                <ion-label position="floating">State</ion-label>
+                <ion-input formControlName="state"></ion-input>
+              </ion-item>
+            </ion-col>
+            <ion-col size="12" size-md="6">
+              <ion-item>
+                <ion-label position="floating">Pincode</ion-label>
+                <ion-input formControlName="pincode"></ion-input>
+              </ion-item>
+            </ion-col>
+          </ion-row>
+          </ng-container>
+          <!-- <ion-row formGroupName="location" *ngIf="userForm.get('profile').get('location')">
+            <ion-col size="12" size-md="6">
+              <ion-item>
+                <ion-label position="floating">Latitude</ion-label>
+                <ion-input formControlName="latitude" ></ion-input>
+              </ion-item>
+            </ion-col>
+            <ion-col size="12" size-md="6">
+              <ion-item>
+                <ion-label position="floating">Langitude</ion-label>
+                <ion-input formControlName="longitude"></ion-input>
+              </ion-item>
+            </ion-col>
+          </ion-row> -->
+          </form>
+
+          <ion-row class="form-action-button ion-justify-content-center">
+          <ion-button color="danger" shape="round">Cancel</ion-button>
+          <ion-button shape="round" type="submit">Submit</ion-button>
+          </ion-row>
+        </ion-grid>
+        </form>
+      </ion-card-content>
+
+
+
+    </ion-card>
+</ion-content>

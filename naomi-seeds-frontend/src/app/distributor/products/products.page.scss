@@ -1,0 +1,25 @@
+// // ion-card{
+// //   display: flex;
+// //   flex-direction: column;
+// //   height: 180px;
+// //   position: center;
+//   // margin: 0 !important;
+// // }
+
+ion-img{
+  // //   --size: 4em;  // this should take effect but doesn't
+  // //   --border-radius: 12px;
+    width: 100px !important;
+    height: 100px !important;
+  //   // display: block;
+  //   // overflow: hidden;
+  //   // vertical-align: middle;
+  }
+
+  :host {
+    padding-inline: 0px
+  }
+
+  .ion-padding {
+    padding-inline-start: var(--ion-padding, 0px);
+  }

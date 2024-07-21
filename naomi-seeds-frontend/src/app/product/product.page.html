@@ -1,0 +1,72 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+
+    </ion-buttons>
+    <ion-title class="ion-text-center header-margin-left">Crops</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content fullscreen>
+  <ngx-ui-loader *ngIf="!isLoading" [loaderId]="'loader-product-page-category-list'"></ngx-ui-loader>
+  <div *ngIf="isLoading" class="ion-padding-top">
+    <ion-card *ngFor="let number of [0,1,2,3,4,5,6,7,8,9,10]">
+      <ion-item>
+        <ion-thumbnail slot="start" style="width: 100px; height: 60px">
+          <ion-skeleton-text animated="true" style="width: 100px; height: 60px"></ion-skeleton-text>
+        </ion-thumbnail>
+        <ion-label>
+          <h3>
+            <ion-skeleton-text animated style="width: 60%"></ion-skeleton-text>
+          </h3>
+          <h2>
+            <ion-skeleton-text animated style="width: 70%"></ion-skeleton-text>
+          </h2>
+          <h2>
+            <ion-skeleton-text animated style="width: 45%"></ion-skeleton-text>
+          </h2>
+        </ion-label>
+      </ion-item>
+    </ion-card>
+  </div>
+
+  <ion-refresher slot="fixed" pullFactor="0.9" pullMin="60" pullMax="200" (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content pullingIcon="chevron-down-circle-outline" pullingText="Pull to refresh"
+      refreshingSpinner="circles" refreshingText="Refreshing..." class="ion-padding-top-refresh">
+    </ion-refresher-content>
+  </ion-refresher>
+
+  <ion-toolbar slot="fixed">
+    <ion-searchbar #search placeholder="Search for Product Category" enterkeyhint="enter"
+      (ionChange)="onSearchChange($event)" debounce="200"></ion-searchbar>
+  </ion-toolbar>
+
+  <div *ngxPermissionsOnly="'CAN_READ'">
+    <div class="ion-padding-top">
+      <h6 *ngIf="active" class="font-total-indication zmdi"> Total crops {{totalCount}}</h6>      
+      <ion-card *ngFor="let productCategory of productsCategoryList" routerDirection="forward"
+        [routerLink]="['./', 'product-list', productCategory._id]">
+        <ion-item lines="none" class="card-margin-bottom" *ngIf="active">
+          <div *ngIf="productCategory.image && productCategory.image?.filePath" class="image-margin-right">
+            <ion-img src="{{ s3path + productCategory?.image?.filePath }}"></ion-img>
+          </div>
+          <div *ngIf="!productCategory.image || !productCategory.image?.filePath" class="image-margin-right"
+            style="opacity: 6%">
+            <ion-img src="../../../../assets/image-not-found.svg"></ion-img>
+          </div>
+          <ion-list text-wrap>
+            <ion-card-subtitle>{{ productCategory?.cropType }}</ion-card-subtitle>
+            <ion-card-subtitle class="margin-top-product-name">
+              <h4>{{ productCategory?.cropName }}</h4>
+            </ion-card-subtitle>
+          </ion-list>
+        </ion-item>
+      </ion-card>
+    </div>
+    <ion-infinite-scroll threshold="25%" position="bottom" (ionInfinite)="loadData($event)">
+      <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="Loading more data...">
+      </ion-infinite-scroll-content>
+    </ion-infinite-scroll>
+  </div>
+</ion-content>

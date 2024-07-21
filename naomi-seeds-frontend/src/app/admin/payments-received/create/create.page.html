@@ -1,0 +1,162 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/sales-officer/payments"></ion-back-button>
+    </ion-buttons>
+    <ion-title class="ion-text-center"> Create Payment Receipt </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <!-- <ngx-ui-loader [loaderId]="'loader-create-requirement'"></ngx-ui-loader> -->
+
+<!-- <ion-grid> -->
+<ion-card>
+
+  <ion-item>
+    <ion-label>Distributor</ion-label>
+    <ionic-selectable #selectComponentTo item-content [(ngModel)]="toDistributor" itemValueField="_id" itemTextField="companyName"
+    [items]="toDistributors" [canSearch]="true"
+     (onChange)="toDistributorChange($event)"
+     searchFailText="No Distributors found. Please check!!">>
+    </ionic-selectable>
+  </ion-item>
+
+  <!-- <ion-item>
+    <ion-label>Sales Person</ion-label>
+    <ionic-selectable item-content [(ngModel)]="salesPerson" itemValueField="id" itemTextField="_id"
+    [items]="salesPersons" [canSearch]="true"
+     (onChange)="salesPersonChange($event)">
+    </ionic-selectable>
+  </ion-item> -->
+
+<!-- formControlName="challanDate" -->
+
+</ion-card>
+<!-- </ion-grid> -->
+
+
+<ion-card>
+  <ion-item>
+    <ion-label>Business Category</ion-label>
+    <ionic-selectable #selectComponentProduct item-content [(ngModel)]="businessCategory" itemValueField="_id" itemTextField="name"
+    [items]="businessCategories" [canSearch]="true"
+     (onChange)="onChangeCategory($event)"
+     searchFailText="No Category found. Please check!!">>
+    </ionic-selectable>
+  </ion-item>
+
+  <!-- <ion-select placeholder="Business Category" (ionChange)="onChangeCategory($event)">
+    <ion-select-option value="final_payment">Final Payment</ion-select-option>
+    <ion-select-option value="advance_payment">Advance Payment</ion-select-option>
+
+  </ion-select> -->
+
+  <form [formGroup]="modelForm" (ngSubmit)="onCreateChallan()">
+
+        <ion-item class="formItem">
+          <ion-label class="ion-label" position="floating">Amount in Rs.<span class="reqired-field">*</span>
+          </ion-label>
+          <ion-input type="number" formControlName="amount" placeholder="Amount"
+            > </ion-input>
+          <ion-note *ngIf="
+          !modelForm.get('amount').valid && modelForm.get('amount').touched"
+            color="danger" position="floating" class="ion-padding">
+            Please provide valid Amount.
+          </ion-note>
+        </ion-item>
+
+
+
+
+        <ion-item class="formItem">
+          <ion-label class="ion-label" position="floating">Note
+          </ion-label>
+          <ion-input type="text" formControlName="salesOfficerNote" placeholder="Note"
+            > </ion-input>
+          <ion-note *ngIf="
+          !modelForm.get('salesOfficerNote').valid && modelForm.get('salesOfficerNote').touched"
+            color="danger" position="floating" class="ion-padding">
+            Please provide valid Note.
+          </ion-note>
+        </ion-item>
+
+<!-- display -->
+<ion-item *ngFor="let img of imagesPaths; let i = index">
+  <div class="imageDisplay"  >
+    <img [src]="s3path + img.filePath"></div>
+<div>
+    <ion-fab-button color="danger" size="small" horizontal="end" slot="fixed" (click)="deleteImage(i)">
+      <ion-icon name="trash-outline"></ion-icon>
+    </ion-fab-button></div>
+</ion-item>
+<!-- display end -->
+
+
+<label for="uploadImage">
+<div class="initImgMain">
+<!-- <span class="material-icons"> icon </span> -->
+<ion-icon class="icon-size" size="small" name="image-outline"></ion-icon>
+<p>Add Image</p>
+</div>
+</label>
+<input type="file" name="uploadImage" id="uploadImage" (change)="uploadFileToS3($event)"
+accept=".png, .jpg, .jpeg" />
+<!--  -->
+
+
+
+
+
+</form>
+</ion-card>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- <ion-button  expand="block" fill="outline" class="ion-button-item" (click)="clearCart()">
+  <ion-icon name="add"></ion-icon>
+  <b>Save Data </b>
+  </ion-button> -->
+
+
+
+
+
+
+
+</ion-content>
+
+
+<ion-footer>
+  <form [formGroup]="modelForm" (ngSubmit)="onCreateChallan()" novalidate>
+
+
+
+
+    <!-- <div class="margin-center-line-item" *ngIf="itemsCart?.length > 0"> -->
+
+
+
+          <ion-button type="submit" [disabled]="!modelForm.valid" class="ion-align-items-center" expand="full">
+
+            Save form
+          </ion-button>
+
+        <!-- </div> -->
+
+
+
+
+        </form>
+</ion-footer>

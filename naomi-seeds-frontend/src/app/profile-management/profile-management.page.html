@@ -1,0 +1,88 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title class="ion-text-center header-margin-left">Registered Companies/Parties </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content fullscreen>
+  <ngx-ui-loader [loaderId]="'loader-profile-management-page'"></ngx-ui-loader>
+
+  <div *ngIf="isLoading" class="ion-padding-top">
+    <ion-card *ngFor="let number of [0,1,2,3,4,5,6,7,8,9,10]">
+      <ion-item>
+        <ion-thumbnail slot="start" style="width: 100px; height: 60px">
+          <ion-skeleton-text animated="true" style="width: 100px; height: 60px"></ion-skeleton-text>
+        </ion-thumbnail>
+        <ion-label>
+          <h3>
+            <ion-skeleton-text animated style="width: 60%"></ion-skeleton-text>
+          </h3>
+          <h2>
+            <ion-skeleton-text animated style="width: 70%"></ion-skeleton-text>
+          </h2>
+          <h2>
+            <ion-skeleton-text animated style="width: 45%"></ion-skeleton-text>
+          </h2>
+        </ion-label>
+      </ion-item>
+    </ion-card>
+  </div>
+
+  <ion-refresher slot="fixed" pullFactor="0.9" pullMin="60" pullMax="200" (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content pullingIcon="chevron-down-circle-outline" pullingText="Pull to refresh"
+      refreshingSpinner="circles" refreshingText="Refreshing..." class="ion-padding-top-refresh">
+    </ion-refresher-content>
+  </ion-refresher>
+
+    <ion-toolbar slot="fixed">
+      <ion-grid>
+      <ion-row>
+        <ion-col size="12" size-md="6" class="margin-and-padding">
+          <ion-searchbar #search placeholder="Search for Name, company name" enterkeyhint="enter"
+            (ionChange)="onSearchChange($event)" debounce="200"></ion-searchbar>
+        </ion-col>
+        <ion-col size="12" size-md="6" class="margin-and-padding">
+          <ion-card class="Form-Item">
+            <!-- <ion-select placeholder="Filter by role" (ionChange)="onDropdownSelection($event)">
+              <ion-select-option *ngFor="let role of userRoleGroups" [value]="role.roleName">{{
+                role.roleName.replaceAll('_',' ') }}</ion-select-option>
+            </ion-select> -->
+          </ion-card>
+        </ion-col>
+      </ion-row>
+      </ion-grid>
+    </ion-toolbar>
+
+    <div class="ion-padding-top" *ngIf="active">
+      <ion-item *ngFor="let profile of profilesList" routerDirection="forward" [routerLink]="['./', 'update', profile._id]" lines="full" 
+        class="card-margin-bottom">
+        <!-- <div *ngIf="profile.image && profile.image.filePath" class="image-margin-right">
+          <ion-img src="{{ s3path + profile?.image?.filePath }}"></ion-img>
+        </div>
+        <div *ngIf="!profile.image || !profile.image.filePath || profile.image.filePath === 'string' || profile.image.filePath === null" class="dummyImage-Style">
+          <ion-img src="../../../../assets/image-not-found.svg"></ion-img>
+        </div> -->
+
+        <ion-label text-wrap class="margin-left">
+          <h2>{{ profile?.companyName}}</h2>
+          <h3>{{ profile?.addressDetails?.city}}</h3>
+        </ion-label>
+        <ion-badge color="primary">{{ profile?.profileRole }}</ion-badge>
+      </ion-item>
+    </div>
+
+    <ion-infinite-scroll threshold="25%" position="bottom" (ionInfinite)="loadData($event)">
+      <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="Loading more data...">
+      </ion-infinite-scroll-content>
+    </ion-infinite-scroll>
+
+    <ion-fab vertical="bottom" horizontal="end" slot="fixed" routerLink="./create">
+      <ion-fab-button>
+        <ion-icon name="add"></ion-icon>
+      </ion-fab-button>
+    </ion-fab>
+  
+</ion-content>

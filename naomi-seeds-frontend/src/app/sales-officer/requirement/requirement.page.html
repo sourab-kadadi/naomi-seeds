@@ -1,0 +1,227 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-menu-button slot="start"></ion-menu-button>
+    <ion-title class="ion-text-center">Requirement</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content fullscreen>
+
+  <ngx-ui-loader [loaderId]="'loader-requirementService'"></ngx-ui-loader>
+
+  <!-- <div *ngIf="isLoading" class="ion-padding-top">
+    <ion-card *ngFor="let number of [0,1,2,3,4,5,6,7,8]">
+      <ion-item>
+        <ion-col size="3" size-md="6">
+          <ion-card-header class="ion-padding">
+            <ion-label>
+              <h3>
+                <ion-skeleton-text animated style="width: 60%"></ion-skeleton-text>
+              </h3>
+              <p>
+                <ion-skeleton-text animated style="width: 60%"></ion-skeleton-text>
+              </p>
+              <p>
+                <ion-skeleton-text animated style="width: 60%"></ion-skeleton-text>
+              </p>
+              <p>
+                <ion-skeleton-text animated style="width: 60%"></ion-skeleton-text>
+              </p>
+            </ion-label>
+          </ion-card-header>
+        </ion-col>
+        <ion-col size="9" size-md="6" class="card-margin-left">
+          <ion-card-header class="ion-padding">
+            <ion-label>
+              <h3>
+                <ion-skeleton-text animated style="width: 90%"></ion-skeleton-text>
+              </h3>
+              <p>
+                <ion-skeleton-text animated style="width: 90%"></ion-skeleton-text>
+              </p>
+              <p>
+                <ion-skeleton-text animated style="width: 40%"></ion-skeleton-text>
+              </p>
+              <p>
+                <ion-skeleton-text animated style="width: 45%"></ion-skeleton-text>
+              </p>
+            </ion-label>
+          </ion-card-header>
+        </ion-col>
+      </ion-item>
+      <ion-item lines="none">
+        <ion-col size="4" offset="1">
+          <ion-label>
+            <h3>
+              <ion-skeleton-text animated style="width: 30%"></ion-skeleton-text>
+            </h3>
+          </ion-label>
+        </ion-col>
+        <ion-col size="7">
+          <ion-label>
+            <h3>
+              <ion-skeleton-text animated style="width: 45%"></ion-skeleton-text>
+              <ion-skeleton-text animated style="width: 45%"></ion-skeleton-text>
+            </h3>
+          </ion-label>
+        </ion-col>
+      </ion-item>
+    </ion-card>
+  </div> -->
+
+  <ion-refresher slot="fixed" pullFactor="0.9" pullMin="60" pullMax="200" (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content pullingIcon="chevron-down-circle-outline" pullingText="Pull to refresh"
+      refreshingSpinner="circles" refreshingText="Refreshing..." class="ion-padding-top-refresh">
+    </ion-refresher-content>
+  </ion-refresher>
+
+  <ion-toolbar slot="fixed">
+    <!-- <ion-grid> -->
+<!-- <ion-row> -->
+  <!-- <ion-col size="9"> -->
+    <ion-searchbar #search placeholder="Search by Distributor, Product" enterkeyhint="enter"
+      (ionChange)="onSearchChange($event)" debounce="200"></ion-searchbar>
+  <!-- </ion-col> -->
+  <!-- <ion-col size="3"> -->
+    <ion-card>
+    <ion-select placeholder="Filter by Status"  (ionChange)="onDropdownSelectionStatus($event)" value="PENDING">
+      <ion-select-option value="PENDING" >Pending</ion-select-option>
+      <ion-select-option value="DISPATCHED">Dispatched</ion-select-option>
+      <ion-select-option value="REJECTED">Rejected</ion-select-option>
+      <ion-select-option value="ALL">All Requirements</ion-select-option>
+    </ion-select>
+  </ion-card>
+  <!-- </ion-col> -->
+<!-- </ion-row> -->
+    <!-- </ion-grid> -->
+
+
+
+
+
+    </ion-toolbar>
+
+  <div class="ion-padding-top" *ngIf="!inActive">
+    <ion-card *ngFor="let salesOrder of salesOrders" routerDirection="forward" >
+      <ion-item lines="none" class="card-margin-bottom" >
+         <ion-card-header class="ion-padding">
+            <ion-card-subtitle class="ion-text-left"><b>Distributor: {{ salesOrder?.toDistributorName }}</b>
+            </ion-card-subtitle>
+          </ion-card-header>
+        <!-- <ion-col size="10" size-md="6" class="card-margin-left">
+          <ion-card-header class="ion-padding">
+            <ion-card-subtitle class="ion-text-left">{{ salesOrder?.fromDistributorName }}</ion-card-subtitle>
+            <ion-card-subtitle class="ion-text-left">{{ salesOrder?.toDistributorName }}</ion-card-subtitle>
+            <ion-card-subtitle>
+              {{ salesOrder?.salesOrderDate | date }}</ion-card-subtitle>
+            <ion-card-subtitle>&#8377; {{ salesOrder?.totalValue.toLocaleString("en-IN")}}
+            </ion-card-subtitle>
+          </ion-card-header>
+        </ion-col> -->
+      </ion-item>
+      <!-- <div *ngIf="itemsCart.length>0"> -->
+        <div>
+        <ion-grid>
+          <ion-row class="ion-row" >
+
+            <ion-col size="2" >
+              <b>Date</b>
+                  </ion-col>
+            <ion-col size="4" >
+        <b>Product</b>
+            </ion-col>
+            <ion-col size="3" >
+              <b>Qty</b>
+                  </ion-col>
+            <ion-col size="3" class="ion-align-center-amount">
+                <b>      Status </b>
+            </ion-col>
+          </ion-row>
+
+
+          <ion-row class="ion-row" *ngFor="let item of salesOrder.itemsDetails; let i = index">
+
+
+          <ion-col size="2" >
+            <!-- <ion-label class="ion-text-wrap"> -->
+              <b> {{item?.requirementDate | date}}</b>
+             <!-- </ion-label> -->
+          </ion-col>
+            <ion-col size="4" >
+            <ion-label class="ion-text-wrap">
+             <b> {{item?.productName}}</b><br>
+             <p *ngIf="item && item.packingSize"> {{item?.packingSize}} packets</p>
+            </ion-label>
+            </ion-col>
+
+          <ion-col size="3" class="ion-align-center-amount" >
+            <!-- <ion-text slot="end" color="dark" class="price ion-text-right"> -->
+              {{item?.quantity.toLocaleString("en-IN")}} {{item?.quantityUnit}}
+            <!-- </ion-text> -->
+          </ion-col>
+
+          <ion-col size="3" class="ion-align-center-amount font-size-small" >
+            <!-- <ion-text slot="end" color="dark" class="price ion-text-right"> -->
+              {{item?.dispatchedStatus}}
+            <!-- </ion-text> -->
+          </ion-col>
+        <!-- </ion-item> -->
+
+
+
+
+        </ion-row>
+
+
+
+
+
+        </ion-grid>
+
+
+        </div>
+
+
+
+
+
+
+
+
+
+      <!-- <ion-item lines="none" *ngIf="!inActive">
+        <ion-col size="3">
+          <ion-card-subtitle class="item-margin-left"><b>DC</b>
+          </ion-card-subtitle>
+        </ion-col>
+        <ion-col size="2">
+          <ion-icon name="checkmark-circle-outline" color="success"
+            *ngIf="salesOrder?.managerApprovalGenerateDC === 'APPROVED'"></ion-icon>
+          <ion-icon name="close-circle-outline" color="danger"
+            *ngIf="salesOrder?.managerApprovalGenerateDC === 'PENDING'"></ion-icon>
+        </ion-col>
+        <ion-col size="4">
+          <ion-card-subtitle><b>Invoice &<br />
+              Credit Note</b>
+          </ion-card-subtitle>
+        </ion-col>
+        <ion-col size="3">
+          <ion-icon name="checkmark-circle-outline" color="success"
+            *ngIf="salesOrder?.managerFinalApproval === 'APPROVED'"></ion-icon>
+          <ion-icon name="close-circle-outline" color="danger" *ngIf="salesOrder?.managerFinalApproval === 'PENDING'">
+          </ion-icon>
+        </ion-col>
+      </ion-item> -->
+    </ion-card>
+  </div>
+  <ion-infinite-scroll threshold="25%" position="bottom" (ionInfinite)="getAllSalesOrdersOnScroll(true, $event)">
+    <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="Loading more data...">
+    </ion-infinite-scroll-content>
+  </ion-infinite-scroll>
+
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed" routerLink="./create">
+    <ion-fab-button>
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+</ion-content>

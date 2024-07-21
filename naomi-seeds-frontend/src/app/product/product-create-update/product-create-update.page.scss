@@ -1,0 +1,156 @@
+.productImagePosition {
+    position: absolute;
+    top: 115px;
+    z-index: 996;
+    left: 5%;
+    background-color: #fff;
+  }
+  
+  .imageSection {
+    margin-bottom: 50px;
+  }
+  
+  .drop-down-form {
+    margin-top: 25px;
+  }
+  
+  
+  .Form-Item {
+    margin-left: 20px;
+    margin-right: 30px;
+  }
+  
+  .padding-card {
+   padding-bottom: 15px;
+  }
+  
+  .ion-label {
+    padding-top: 3px;
+  }
+  
+  .card-title-padding {
+    margin-top: 20px;
+    padding-left: 30px;
+   }
+  
+   ion-toggle {
+    // --handle-spacing: 0px;
+    // --handle-height: 100%;
+    margin-left: 30px;
+  }
+  
+  .status-design {
+    margin-top: 20px;
+  }
+  
+  
+  .buttom-margin-left {
+    margin-left: 25%;
+    margin-right: auto;
+  }
+  
+  
+  .ion-padding {
+    padding-left: unset;
+    padding-right: unset;
+    padding-inline-start: var(--ion-padding, 0.2em);
+    padding-inline-end: var(--ion-padding, 0.8em);
+    padding-top: 1px;
+  }
+  
+  .bottom-border {
+    border-bottom: 1px solid rgba(68, 68, 68, 0.877);
+    margin-top: 15px;
+    // margin-bottom: 15px;
+  }
+  
+  
+  .ion-padding-left {
+  padding-left: 10px;
+  }
+  
+  .remove-margin {
+    margin-left: 0px;
+    margin-right: 0px;
+  }
+  
+  .margin-left-toCenter {
+    margin-right: 10%;
+  }
+  
+  //image component
+  
+  .initImgMain, .imageMain {
+    height: 78px;
+    width: 100%;
+    display: flex;
+    justify-content: space-evenly;
+    flex-direction: row;
+    align-items: center;
+    cursor: pointer;
+    border: 2px dashed gainsboro;
+    position: relative;
+    padding: 30px;
+  }
+  
+  .icon-inner {
+    width: 84%;
+  }
+  
+  .imageDisplay {
+    width: 90%;
+    height: 100%;
+    // position: relative;
+    display: flex;
+    justify-content: space-around;
+  }
+  
+  .full {
+    height: 900px;
+  }
+  .initImgSpan {
+    font-size: 150px;
+    color: gainsboro;
+  }
+  
+  input[type="file"] {
+    display: none;
+    cursor: pointer;
+  }
+  
+  
+  .cancelButton{
+    position: absolute;
+    top: 0;
+    right: 0;
+  
+  }
+  
+  .icon-size {
+    height:65px;
+    width:65px;
+  }
+  
+  .remove-padding-bottom {
+    padding-bottom: 0px;
+  }
+  
+  .header-margin-left{
+    margin-left: -3rem;
+  }
+  
+
+  .margin-div {
+    margin-left: 35px;
+    
+  }
+
+  .margin-crop {
+    margin-left: 19px;
+    margin-right: 11px;
+  }
+
+  .max-width-selectable{
+    max-width: 66%;
+  }
+

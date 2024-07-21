@@ -1,0 +1,257 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <!-- <ion-back-button></ion-back-button> -->
+      <ion-back-button defaultHref="/app/profile-management"></ion-back-button>
+    </ion-buttons>
+    <ion-title class="ion-text-center header-margin-left">Add/Update Profile</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ngx-ui-loader [loaderId]="'loader-profile-create-update'"></ngx-ui-loader>
+  <div *ngIf="active">
+    <form [formGroup]="profileForm" (ngSubmit)="onSave()">
+      <ion-grid>
+        <ion-card class="background-light">
+          <ion-card-header>
+            <ion-card-title class="overview-content">Basic Details</ion-card-title>
+          </ion-card-header>
+          <ion-row>
+            <ion-col size="12" size-md="6">
+              <ion-item class="Form-Item">
+                <ion-label class="ion-label" position="floating">Company/Distributor Name<span
+                    class="reqired-field">*</span>
+                </ion-label>
+                <ion-input type="text" formControlName="companyName" placeholder="Company Name"></ion-input>
+                <ion-note *ngIf="
+              !profileForm.get('companyName').valid && profileForm.get('companyName').touched" color="danger"
+                  position="fixed" class="ion-padding">
+                  Please enter Company Name.
+                </ion-note>
+              </ion-item>
+            </ion-col>
+
+            <ion-col size="12" size-md="6">
+              <ion-item class="Form-Item">
+                <ion-label>Profile Role<span class="reqired-field">*</span></ion-label>
+                <ion-select placeholder="Select One" formControlName="profileRole"
+                  (ionChange)="onProfileRoleSelection($event)">
+                  <!-- <ion-select-option value="COMPANY">COMPANY</ion-select-option> -->
+                  <ion-select-option value="DISTRIBUTOR">DISTRIBUTOR</ion-select-option>
+                  <ion-select-option value="STORAGE">STORAGE</ion-select-option>
+                </ion-select>
+                <ion-note *ngIf="
+          !profileForm.get('profileRole').valid && profileForm.get('profileRole').touched" color="danger"
+                  position="floating" class="ion-padding">
+                  please select role.
+                </ion-note>
+              </ion-item>
+            </ion-col>
+          </ion-row>
+
+          <ion-row>
+
+            <!-- add joinging date -->
+
+            <ion-col size="12" size-md="6">
+              <ion-item>
+                <ion-label>Select Zone</ion-label>
+                <ionic-selectable #selectComponentZone item-content [(ngModel)]="zone" itemValueField="name"
+                  itemTextField="displayName" [items]="zones" [canSearch]="true" (onChange)="onZoneChange($event)"
+                  [ngModelOptions]="{standalone: true}">
+                </ionic-selectable>
+              </ion-item>
+            </ion-col>
+          </ion-row>
+
+          <ion-row>
+            <ion-col size="12" size-md="6">
+              <ion-item class="Form-Item">
+                <ion-label class="ion-label" position="floating">GSTIN<span class="reqired-field">*</span>
+                </ion-label>
+                <ion-input type="text" formControlName="gstin" placeholder="GSTIN"></ion-input>
+                <ion-note *ngIf="!profileForm.get('gstin').valid && profileForm.get('gstin').touched" color="danger"
+                  position="fixed" class="ion-padding">
+                  Please enter GST number.
+                </ion-note>
+              </ion-item>
+            </ion-col>
+          </ion-row>
+        </ion-card>
+
+
+        <ion-card class="background-light">
+          <ion-card-header>
+            <ion-card-title class="overview-content">Address </ion-card-title>
+          </ion-card-header>
+          <ion-row>
+            <ion-col size="12" size-md="6">
+              <ion-item class="Form-Item">
+                <ion-label class="ion-label" position="floating">Complete Address<br>(used for communication etc.)<span
+                    class="reqired-field">*</span>
+                </ion-label>
+                <ion-input type="text" formControlName="completeAddress" placeholder="Complete Address"></ion-input>
+                <ion-note
+                  *ngIf="!profileForm.get('completeAddress').valid && profileForm.get('completeAddress').touched"
+                  color="danger" position="fixed" class="ion-padding">
+                  Please enter Complete Address.
+                </ion-note>
+              </ion-item>
+            </ion-col>
+          </ion-row>
+
+          <ng-container formGroupName="addressDetails">
+
+            <ion-col size="12" size-md="6">
+              <ion-item>
+                <ion-label position="floating">Building and Street </ion-label>
+                <ion-input formControlName="address1"></ion-input>
+              </ion-item>
+              <span class="error ion-padding"
+                *ngIf="profileForm.get('addressDetails').get('address1').hasError('required')">
+                Address Building and Street is required.
+              </span>
+            </ion-col>
+            <!-- </ion-row>
+
+<ion-row> -->
+            <ion-col size="12" size-md="6">
+              <ion-item>
+                <ion-label position="floating">City</ion-label>
+                <ion-input formControlName="city"></ion-input>
+              </ion-item>
+            </ion-col>
+            <ion-col size="12" size-md="6">
+              <ion-item>
+                <ion-label position="floating">Taluka</ion-label>
+                <ion-input formControlName="taluka"></ion-input>
+              </ion-item>
+            </ion-col>
+            <!-- </ion-row>
+
+<ion-row> -->
+
+            <ion-col size="12" size-md="6">
+              <ion-item>
+                <ion-label>Select State<span class="reqired-field">*</span></ion-label>
+                <ionic-selectable #selectComponentState item-content [(ngModel)]="state" itemValueField="name"
+                  itemTextField="displayName" [items]="states" [canSearch]="true" (onChange)="onStateChange($event)"
+                  [ngModelOptions]="{standalone: true}">
+                </ionic-selectable>
+              </ion-item>
+            </ion-col>
+
+            <ion-col size="12" size-md="6" *ngIf="this.state">
+              <ion-item>
+                <ion-label>Select District<span class="reqired-field">*</span></ion-label>
+                <ionic-selectable #selectComponentDistrict item-content [(ngModel)]="district" itemValueField="name"
+                  itemTextField="displayName" [items]="districts" [canSearch]="true"
+                  (onChange)="onDistrictChange($event)" [ngModelOptions]="{standalone: true}">
+                </ionic-selectable>
+              </ion-item>
+            </ion-col>
+
+            <ion-col size="12" size-md="6">
+              <ion-item>
+                <ion-label position="floating">Pincode</ion-label>
+                <ion-input type="number" formControlName="pincode"></ion-input>
+              </ion-item>
+            </ion-col>
+          </ng-container>
+        </ion-card>
+
+
+        <!-- for Distributor -->
+        <ion-card class="background-light" *ngIf="profileForm.get('firstLevelReportingUserName')">
+          <div>
+            <ion-card-header>
+              <ion-card-title class="overview-content">Access Controls & Allotment of Employees</ion-card-title>
+            </ion-card-header>
+            <ion-row>
+
+              <ion-col size="12" size-md="6" *ngIf="profileForm.get('firstLevelReportingUserName')">
+                <ion-item>
+                  <ion-label>Select Sales Officer<span class="reqired-field">*</span></ion-label>
+                  <ionic-selectable #selectComponentSalesOfficer item-content [(ngModel)]="salesOfficer"
+                    itemValueField="_id" itemTextField="name" [items]="salesOfficers" [canSearch]="true"
+                    (onChange)="onSalesOfficerChange($event)" [ngModelOptions]="{standalone: true}">
+                  </ionic-selectable>
+                </ion-item>
+              </ion-col>
+
+              <ion-col size="12" size-md="6" *ngIf="profileForm.get('secondLevelReportingUserName')">
+                <ion-item>
+                  <ion-label>Select Manager<span class="reqired-field">*</span></ion-label>
+                  <ionic-selectable #selectComponentManager item-content [(ngModel)]="manager" itemValueField="_id"
+                    itemTextField="name" [items]="managers" [canSearch]="true" (onChange)="onManagerChange($event)"
+                    [ngModelOptions]="{standalone: true}">
+                  </ionic-selectable>
+                </ion-item>
+              </ion-col>
+            </ion-row>
+          </div>
+        </ion-card>
+
+
+ 
+        <ion-card class="background-light" *ngIf="profileRoleSelected ==='DISTRIBUTOR'">
+          <!-- <form [formGroup]="accountingInfo">     -->
+            <ng-container formGroupName="accountingInfo">
+          <ion-card-header>
+            <ion-card-title class="overview-content">Accounting Details</ion-card-title>
+          </ion-card-header>
+          <ion-row>
+            <ion-col size="12" size-md="6">
+              <ion-item button="true" id="open-date-input-1">
+                <ion-label class="ion-padding-left">Closing Balance Date</ion-label>
+                <!-- <ion-text slot="end">{{ this.profileForm?.value.accountInfo?.openingAccountStatementDate }}</ion-text> -->
+                <ion-text slot="end">{{ accountingClosingDateSelected.split("T")[0]}}</ion-text>
+                <!-- <ion-popover trigger="open-date-input-1" show-backdrop="false" positionSide="top"
+                  class="ion-popover-pop">
+                  <ng-template>
+                    <ion-datetime [showDefaultTitle]="false" #popoverDatetime1 presentation="date"
+                      [showDefaultButtons]="false"
+                      (ionChange)="accountingClosingDateSelected = formatDate1(popoverDatetime1.value)"
+                      show-default-title="true" showDefaultButtons="true"
+                      defaultValue="2023-03-31T07:07:00+05:30"></ion-datetime>
+                  </ng-template>
+                </ion-popover> -->
+              </ion-item>
+            </ion-col>
+          </ion-row>
+
+          <ion-row>
+            <ion-col size="12" size-md="6">
+              <ion-item class="Form-Item">
+                <ion-label class="ion-label" position="floating">Closing Balance as on March 31, 2023
+                </ion-label>
+                <!-- <ion-input type="number" [(ngModel)]="profileForm.get('accountingInfo').get('openingAccountStatementAmount').value" placeholder="Closing Balance"></ion-input> -->
+               
+                <ion-input type="number" formControlName="openingAccountStatementAmount" placeholder="Closing Balance"></ion-input>
+              </ion-item>
+            </ion-col>
+
+            <ion-col size="12" size-md="6">
+              <ion-item class="Form-Item">
+                <ion-label>Type<span class="reqired-field">*</span></ion-label>
+                <ion-select placeholder="Select One" formControlName="openingAccountStatementAmountCrDr" (ionChange)="onAccountingTypeSelection($event)">
+                  <ion-select-option value="CR">Cr</ion-select-option>
+                  <ion-select-option value="DR">Dr</ion-select-option>
+                </ion-select>
+              </ion-item>
+            </ion-col>
+          </ion-row>
+          </ng-container>
+        <!-- </form> -->
+      
+        </ion-card>
+      </ion-grid>
+    </form>
+  </div>
+
+  <ion-button *ngIf="active" type="submit" [disabled]="!profileForm.valid" expand="block" (click)="onSave()">
+    <ion-icon name="checkmark" slot="icon-only"> </ion-icon>
+    Save data
+  </ion-button>
+</ion-content>

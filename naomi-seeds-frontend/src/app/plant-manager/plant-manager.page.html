@@ -1,0 +1,62 @@
+<!-- <ion-header>
+  <ion-toolbar>
+    <ion-title>sales-officer</ion-title>
+  </ion-toolbar>
+</ion-header> -->
+
+<!-- <ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons> -->
+    <!-- <ion-title>{{ folder }}</ion-title> -->
+
+
+  <!-- </ion-toolbar> -->
+
+<!-- </ion-header> -->
+
+
+<!-- <ion-content>
+
+</ion-content> -->
+
+
+
+
+<ion-split-pane contentId="main-content">
+  <ion-menu contentId="main-content" type="overlay">
+    <ion-content>
+      <ion-list id="inbox-list">
+        <app-split-menu-profile-data></app-split-menu-profile-data>
+        <ion-menu-toggle auto-hide="false" *ngFor="let p of appPages; let i = index">
+            <ion-item routerDirection="root" [routerLink]="[p.url]" lines="none" detail="false" routerLinkActive="selected">
+            <ion-icon slot="start" [ios]="p.icon + '-outline'" [md]="p.icon + '-sharp'"></ion-icon>
+            <ion-label>{{ p.title }}</ion-label>
+          </ion-item>
+        </ion-menu-toggle>
+      </ion-list>
+    </ion-content>
+  </ion-menu>
+  <ion-router-outlet id="main-content"></ion-router-outlet>
+</ion-split-pane>
+
+  <!-- <ion-split-pane contentId="main-content">
+  <ion-menu contentId="main-content">
+      <ion-content>
+        <ion-item  routerLink="/sales-officer/delivery-challan" routerDirection="root" routerLinkActive="selected">
+          <ion-label>Delivery Challan</ion-label>
+        </ion-item>
+        <ion-item  routerLink="/sales-officer/invoice" routerDirection="root" routerLinkActive="selected">
+          <ion-label>Invoice</ion-label>
+        </ion-item>
+        <ion-item  routerLink="/sales-officer/ipt" routerDirection="root" routerLinkActive="selected">
+          <ion-label>Delivery Challan</ion-label>
+        </ion-item>
+    </ion-content>
+  </ion-menu>
+  <ion-router-outlet id="main-content"></ion-router-outlet>
+</ion-split-pane> -->
+
+
+

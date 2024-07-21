@@ -1,0 +1,286 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-menu-button slot="start"></ion-menu-button>
+    <ion-title class="ion-text-center">Payments Status</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content fullscreen>
+
+  <ngx-ui-loader [loaderId]="'loader-payments-service-accountant'"></ngx-ui-loader>
+
+  <!-- <div *ngIf="isLoading" class="ion-padding-top">
+    <ion-card *ngFor="let number of [0,1,2,3,4,5,6,7,8]">
+      <ion-item>
+        <ion-col size="3" size-md="6">
+          <ion-card-header class="ion-padding">
+            <ion-label>
+              <h3>
+                <ion-skeleton-text animated style="width: 60%"></ion-skeleton-text>
+              </h3>
+              <p>
+                <ion-skeleton-text animated style="width: 60%"></ion-skeleton-text>
+              </p>
+              <p>
+                <ion-skeleton-text animated style="width: 60%"></ion-skeleton-text>
+              </p>
+              <p>
+                <ion-skeleton-text animated style="width: 60%"></ion-skeleton-text>
+              </p>
+            </ion-label>
+          </ion-card-header>
+        </ion-col>
+        <ion-col size="9" size-md="6" class="card-margin-left">
+          <ion-card-header class="ion-padding">
+            <ion-label>
+              <h3>
+                <ion-skeleton-text animated style="width: 90%"></ion-skeleton-text>
+              </h3>
+              <p>
+                <ion-skeleton-text animated style="width: 90%"></ion-skeleton-text>
+              </p>
+              <p>
+                <ion-skeleton-text animated style="width: 40%"></ion-skeleton-text>
+              </p>
+              <p>
+                <ion-skeleton-text animated style="width: 45%"></ion-skeleton-text>
+              </p>
+            </ion-label>
+          </ion-card-header>
+        </ion-col>
+      </ion-item>
+      <ion-item lines="none">
+        <ion-col size="4" offset="1">
+          <ion-label>
+            <h3>
+              <ion-skeleton-text animated style="width: 30%"></ion-skeleton-text>
+            </h3>
+          </ion-label>
+        </ion-col>
+        <ion-col size="7">
+          <ion-label>
+            <h3>
+              <ion-skeleton-text animated style="width: 45%"></ion-skeleton-text>
+              <ion-skeleton-text animated style="width: 45%"></ion-skeleton-text>
+            </h3>
+          </ion-label>
+        </ion-col>
+      </ion-item>
+    </ion-card>
+  </div> -->
+
+  <ion-refresher slot="fixed" pullFactor="0.9" pullMin="60" pullMax="200" (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content pullingIcon="chevron-down-circle-outline" pullingText="Pull to refresh"
+      refreshingSpinner="circles" refreshingText="Refreshing..." class="ion-padding-top-refresh">
+    </ion-refresher-content>
+  </ion-refresher>
+
+  <ion-toolbar slot="fixed">
+    <ion-grid>
+<!-- <ion-row> -->
+  <!-- <ion-col size="9"> -->
+    <ion-searchbar #search placeholder="Search by Distributor, category type" enterkeyhint="enter"
+      (ionChange)="onSearchChange($event)" debounce="200"></ion-searchbar>
+  <!-- </ion-col> -->
+  <!-- <ion-col size="3"> -->
+    <ion-card>
+
+<ion-row>
+      <!-- <ion-item button="true" id="open-date-input-from">
+        <ion-label class="ion-padding-left">Date From</ion-label>
+        <ion-text slot="end">{{ this.filter.dateFrom | date }}</ion-text>
+        <ion-popover trigger="open-date-input-from" show-backdrop="false" positionSide="top" class="ion-popover-pop">
+          <ng-template>
+            <ion-datetime #popoverDatetimeFrom presentation="date"
+              (ionChange)="this.filter.dateFrom = formatDateFrom(popoverDatetimeFrom.value)" size="cover" show-default-title="true"
+              showDefaultButtons="true" min="2022-03-14"></ion-datetime>
+          </ng-template>
+        </ion-popover>
+      </ion-item>
+
+      <ion-item button="true" id="open-date-input-to">
+        <ion-label class="ion-padding-left">Date To</ion-label>
+        <ion-text slot="end">{{ this.filter.dateTo | date }}</ion-text>
+        <ion-popover trigger="open-date-input-to" show-backdrop="false" positionSide="top" class="ion-popover-pop">
+          <ng-template>
+            <ion-datetime #popoverDatetimeTo presentation="date"
+              (ionChange)="this.filter.dateTo = formatDateTo(popoverDatetimeTo.value)" size="cover" show-default-title="true"
+              showDefaultButtons="true" min="2022-03-14"></ion-datetime>
+          </ng-template>
+        </ion-popover>
+      </ion-item> -->
+
+      <ion-item button="true" id="open-date-input" class="date-time-item">
+        <div class="date-padding-left date-padding-right"><ion-icon name="calendar"></ion-icon></div>
+        <div class="date-padding-left date-padding-right"><ion-label>
+<div *ngIf="!dateValue && !dateValue1">
+           Select Date Range
+</div>
+
+<div *ngIf="dateValue && !dateValue1">{{dateValue}} to ___ </div>
+<div *ngIf="!dateValue && dateValue1">___ to {{dateValue1}} </div>
+        <div *ngIf="dateValue && dateValue1">{{dateValue}} to {{dateValue1}}</div>
+
+
+        </ion-label></div>
+        <ion-popover trigger="open-date-input" show-backdrop="true" class="ion-popover-pop">
+          <ng-template >
+            <div>
+            <ion-item>
+            <ion-datetime #popoverDatetime presentation="date"
+              (ionChange)="dateValue = formatDate(popoverDatetime.value)" size="cover"
+              showDefaultButtons="false" min="2015-03-14" [max]="toDateMax" first-day-of-week="1"><span slot="title">From Date</span></ion-datetime>
+            </ion-item>
+
+            <ion-item>
+              <ion-datetime #popoverDatetime1 presentation="date"
+              (ionChange)="dateValue1 = formatDate1(popoverDatetime1.value); popoverDatetime1.confirm(true);" size="cover"
+              showDefaultButtons="false" [max]="toDateMax" first-day-of-week="1"><span slot="title">To Date</span></ion-datetime>
+            </ion-item>
+          </div>
+            </ng-template>
+        </ion-popover>
+      </ion-item>
+
+
+    <ion-select placeholder="Filter by Status"  (ionChange)="onDropdownSelectionStatus($event)" value="PENDING">
+      <ion-select-option value="PENDING" >Pending</ion-select-option>
+      <ion-select-option value="RECEIVED">Received</ion-select-option>
+      <ion-select-option value="REJECTED">Rejected</ion-select-option>
+      <ion-select-option value="ALL">All Payments</ion-select-option>
+    </ion-select>
+  </ion-row>
+  </ion-card>
+  <!-- </ion-col> -->
+<!-- </ion-row> -->
+    </ion-grid>
+
+    </ion-toolbar>
+
+
+    <div class="ion-padding-top" *ngIf="!inActive">
+      <ion-card *ngFor="let salesOrder of salesOrders" routerDirection="forward" [routerLink]="['./', salesOrder._id]" >
+        <ion-item lines="none" class="card-margin-bottom" >
+           <ion-card-header class="ion-padding">
+              <ion-card-subtitle class="ion-text-left"><b>Distributor: {{ salesOrder?.distributorName }}</b>
+              </ion-card-subtitle>
+            </ion-card-header>
+          <!-- <ion-col size="10" size-md="6" class="card-margin-left">
+            <ion-card-header class="ion-padding">
+              <ion-card-subtitle class="ion-text-left">{{ salesOrder?.fromDistributorName }}</ion-card-subtitle>
+              <ion-card-subtitle class="ion-text-left">{{ salesOrder?.toDistributorName }}</ion-card-subtitle>
+              <ion-card-subtitle>
+                {{ salesOrder?.salesOrderDate | date }}</ion-card-subtitle>
+              <ion-card-subtitle>&#8377; {{ salesOrder?.totalValue.toLocaleString("en-IN")}}
+              </ion-card-subtitle>
+            </ion-card-header>
+          </ion-col> -->
+        </ion-item>
+        <!-- <div *ngIf="itemsCart.length>0"> -->
+          <div>
+          <ion-grid>
+            <ion-row class="ion-row" >
+
+              <ion-col size="4" >
+                <b>Payment Date</b>
+                    </ion-col>
+                    <ion-col size="8" >
+                      <!-- <ion-label class="ion-text-wrap"> -->
+                        <b> {{salesOrder?.paymentReceivedDate | date}}</b>
+                       <!-- </ion-label> -->
+                    </ion-col>
+
+                    <ion-col size="4" >
+                      <b>Created Date</b>
+                          </ion-col>
+                          <ion-col size="8" >
+                            <!-- <ion-label class="ion-text-wrap"> -->
+                              <b> {{salesOrder?.createdAt | date}}</b>
+                             <!-- </ion-label> -->
+                          </ion-col>                    </ion-row>
+                    <ion-row>
+                      <ion-col size="4" >
+                        <b>Amount</b>
+                            </ion-col>
+                            <ion-col size="8" >
+                              <!-- <ion-label class="ion-text-wrap"> -->
+                                <b> &#8377; {{salesOrder?.amount.toLocaleString("en-IN")}}</b>
+                               <!-- </ion-label> -->
+                            </ion-col>
+                    </ion-row>
+
+                  <ion-row>
+                    <ion-col size="4" >
+                      <b>Approval Status</b>
+                          </ion-col>
+                          <ion-col size="8" >
+                            <!-- <ion-label class="ion-text-wrap"> -->
+                              <b> {{salesOrder?.approvalStatus}}</b>
+                             <!-- </ion-label> -->
+                          </ion-col>
+                  </ion-row>
+
+
+
+
+
+
+
+          </ion-grid>
+
+
+          </div>
+
+
+
+
+
+
+
+
+
+        <!-- <ion-item lines="none" *ngIf="!inActive">
+          <ion-col size="3">
+            <ion-card-subtitle class="item-margin-left"><b>DC</b>
+            </ion-card-subtitle>
+          </ion-col>
+          <ion-col size="2">
+            <ion-icon name="checkmark-circle-outline" color="success"
+              *ngIf="salesOrder?.managerApprovalGenerateDC === 'APPROVED'"></ion-icon>
+            <ion-icon name="close-circle-outline" color="danger"
+              *ngIf="salesOrder?.managerApprovalGenerateDC === 'PENDING'"></ion-icon>
+          </ion-col>
+          <ion-col size="4">
+            <ion-card-subtitle><b>Invoice &<br />
+                Credit Note</b>
+            </ion-card-subtitle>
+          </ion-col>
+          <ion-col size="3">
+            <ion-icon name="checkmark-circle-outline" color="success"
+              *ngIf="salesOrder?.managerFinalApproval === 'APPROVED'"></ion-icon>
+            <ion-icon name="close-circle-outline" color="danger" *ngIf="salesOrder?.managerFinalApproval === 'PENDING'">
+            </ion-icon>
+          </ion-col>
+        </ion-item> -->
+      </ion-card>
+    </div>
+
+
+
+
+
+
+
+
+
+  <ion-infinite-scroll threshold="25%" position="bottom" (ionInfinite)="getAllSalesOrdersOnScroll(true, $event)">
+    <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="Loading more data...">
+    </ion-infinite-scroll-content>
+  </ion-infinite-scroll>
+
+  <!-- <ion-fab vertical="bottom" horizontal="end" slot="fixed" routerLink="./create">
+    <ion-fab-button>
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+  </ion-fab> -->
+</ion-content>

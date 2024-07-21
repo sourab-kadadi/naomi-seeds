@@ -1,0 +1,265 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-menu-button slot="start"></ion-menu-button>
+    <ion-title class="ion-text-center">Orders</ion-title>
+    <ion-buttons slot="end">
+      <ion-icon class="button-size-adjust" name="filter-circle-outline" *ngIf="!showFilter"
+        (click)="filterToggle()"></ion-icon>
+      <ion-icon class="button-size-adjust" name="close-circle-outline" *ngIf="showFilter"
+        (click)="filterToggle()"></ion-icon>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content fullscreen>
+  <ngx-ui-loader [loaderId]="'loader-orders-list-page'"></ngx-ui-loader>
+  <ion-refresher slot="fixed" pullFactor="0.9" pullMin="60" pullMax="200" (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content pullingIcon="chevron-down-circle-outline" pullingText="Pull to refresh"
+      refreshingSpinner="circles" refreshingText="Refreshing..." class="ion-padding-top-refresh">
+    </ion-refresher-content>
+  </ion-refresher>
+
+  <div class="container" *ngxPermissionsOnly="'CAN_READ'">
+    <ng-container *ngIf=" showFilter">
+      <ion-toolbar slot="fixed">
+        <ion-row>
+          <ion-col size="12">
+            <div class="card-ionic-selectable-dropdown">
+              <ion-label>Select Distributor</ion-label>
+              <ionic-selectable #selectComponentDistributor item-content [(ngModel)]="selectedDistributor"
+                itemValueField="_id" itemTextField="companyName" [items]="allotedDistributors" [canSearch]="true"
+                (onChange)="onDistributorSelection($event)">
+              </ionic-selectable>
+            </div>
+          </ion-col>
+        </ion-row>
+
+
+        <ion-row>
+          <ion-col size="6" size-md="6">
+            <div class="ion-select-card">
+              <ion-label>Order Type</ion-label>
+              <ion-select label="Alert Interface" [(ngModel)]="orderTypeSelection"
+                (ionChange)="orderTypeSelect($event)">
+                <ion-select-option value="SALES">Sales</ion-select-option>
+                <ion-select-option value="IPT">IPT</ion-select-option>
+                <ion-select-option value="RETURN">Return</ion-select-option>
+                <ion-select-option value="ALL">All</ion-select-option>
+              </ion-select>
+            </div>
+          </ion-col>
+
+          <ion-col size="6" size-md="6">
+            <div class="ion-select-card">
+              <ion-label>Order Status</ion-label>
+              <ion-select label="Alert Interface" [(ngModel)]="this.filter.orderStatusSelection"
+                (ionChange)="orderStatusSelect($event)">
+                <ion-select-option value="PENDING_AT_MY_END">Pending</ion-select-option>
+                <ion-select-option value="ORDER_IN_PROCESS">In Process</ion-select-option>
+                <ion-select-option value="COMPLETED">Completed</ion-select-option>
+                <ion-select-option value="ALL">All</ion-select-option>
+              </ion-select>
+            </div>
+          </ion-col>
+        </ion-row>
+
+
+        <ion-row class="margin-bottom">
+          <div class="card-datetime-filter">
+            <ion-col size="3">
+              <ion-icon name="calendar-outline"></ion-icon> &nbsp;
+              <ion-label>Filter</ion-label>
+            </ion-col>
+            <ion-col size="3.5" class="element-flex-center">
+              <!-- <ion-label>From</ion-label> -->
+              <div button="true" id="open-date-input">
+                <ion-label class="ion-padding-left" *ngIf="!this.filter?.dateFrom">From Date</ion-label>
+                <ion-text slot="end">{{ this.filter?.dateFrom }}</ion-text>
+                <ion-popover trigger="open-date-input" show-backdrop="false" positionSide="top" class="ion-popover-pop">
+                  <ng-template>
+                    <ion-datetime #popoverDatetime presentation="date"
+                      (ionChange)="dateFrom = formatDateFrom(popoverDatetime.value)" size="cover"
+                      show-default-title="true" showDefaultButtons="true" min="2022-03-14"></ion-datetime>
+                  </ng-template>
+                </ion-popover>
+              </div>
+            </ion-col>
+
+            <ion-col size="1" class="element-flex-center">
+              <ion-label *ngIf="!this.filter?.dateFrom || !this.filter?.dateTo">-</ion-label>
+              <ion-label *ngIf="this.filter?.dateFrom && this.filter?.dateTo">To</ion-label>
+              <!-- <ion-label *ngIf="dateFrom || !dateTo">-</ion-label> -->
+            </ion-col>
+            <ion-col size="3.5" class="element-flex-center">
+              <div button="true" id="open-date-input-2">
+                <ion-label class="ion-padding-left" *ngIf="!this.filter?.dateTo">To Date</ion-label>
+                <ion-text slot="end">{{ this.filter?.dateTo }}</ion-text>
+                <ion-popover trigger="open-date-input-2" show-backdrop="false" positionSide="top"
+                  class="ion-popover-pop">
+                  <ng-template>
+                    <ion-datetime #popoverDatetime1 presentation="date"
+                      (ionChange)="dateTo = formatDateTo(popoverDatetime1.value)" size="cover" show-default-title="true"
+                      showDefaultButtons="true" min="2022-03-14"></ion-datetime>
+                  </ng-template>
+                </ion-popover>
+              </div>
+            </ion-col>
+
+            <ion-col size="1" class="element-flex-center">
+              <ion-icon name="close-circle-outline" color="danger" *ngIf="this.filter?.dateFrom && this.filter?.dateTo"
+                (click)=removeDate()></ion-icon>
+            </ion-col>
+          </div>
+        </ion-row>
+      </ion-toolbar>
+    </ng-container>
+
+    <!-- [ngClass]="{'ion-margin-top': showFilter }" -->
+    <!-- <div  [style.margin-top.px]="myDiv.offsetHeight"> -->
+    <!-- <div [ngStyle]="{ 'margin-top.px': marginTop }"> -->
+
+    <div *ngIf="isLoading" class="ion-margin-top">
+      <ion-card *ngFor="let number of [0,1,2,3,4,5,6,7,8]">
+        <ion-item>
+          <ion-col size="3" size-md="6">
+            <ion-card-header class="ion-padding">
+              <ion-label>
+                <h3>
+                  <ion-skeleton-text animated style="width: 60%"></ion-skeleton-text>
+                </h3>
+                <p>
+                  <ion-skeleton-text animated style="width: 60%"></ion-skeleton-text>
+                </p>
+                <p>
+                  <ion-skeleton-text animated style="width: 60%"></ion-skeleton-text>
+                </p>
+                <p>
+                  <ion-skeleton-text animated style="width: 60%"></ion-skeleton-text>
+                </p>
+              </ion-label>
+            </ion-card-header>
+          </ion-col>
+          <ion-col size="9" size-md="6" class="card-margin-left">
+            <ion-card-header class="ion-padding">
+              <ion-label>
+                <h3>
+                  <ion-skeleton-text animated style="width: 90%"></ion-skeleton-text>
+                </h3>
+                <p>
+                  <ion-skeleton-text animated style="width: 90%"></ion-skeleton-text>
+                </p>
+                <p>
+                  <ion-skeleton-text animated style="width: 40%"></ion-skeleton-text>
+                </p>
+                <p>
+                  <ion-skeleton-text animated style="width: 45%"></ion-skeleton-text>
+                </p>
+              </ion-label>
+            </ion-card-header>
+          </ion-col>
+        </ion-item>
+        <ion-item lines="none">
+          <ion-col size="4" offset="1">
+            <ion-label>
+              <h3>
+                <ion-skeleton-text animated style="width: 30%"></ion-skeleton-text>
+              </h3>
+            </ion-label>
+          </ion-col>
+          <ion-col size="7">
+            <ion-label>
+              <h3>
+                <ion-skeleton-text animated style="width: 45%"></ion-skeleton-text>
+                <ion-skeleton-text animated style="width: 45%"></ion-skeleton-text>
+              </h3>
+            </ion-label>
+          </ion-col>
+        </ion-item>
+      </ion-card>
+    </div>
+
+
+    <div class="position-fixed">
+
+      <ion-card *ngFor="let item of ordersList" routerDirection="forward"
+        [routerLink]="['./', 'order-detail-page', item._id]">
+        <ion-item lines="none" class="card-margin-bottom" *ngIf="active">
+          <ion-col size="4" size-md="6">
+            <ion-card-header class="ion-padding">
+              <ion-card-subtitle class="ion-text-left"><b>From:</b>
+              </ion-card-subtitle>
+              <ion-card-subtitle class="ion-text-left"><b>To:</b>
+              </ion-card-subtitle>
+              <ion-card-subtitle class="ion-text-left"><b>Order No:</b>
+              </ion-card-subtitle>
+              <ion-card-subtitle> <b>Date:</b> </ion-card-subtitle>
+              <ion-card-subtitle><b>Total Return:</b> </ion-card-subtitle>
+              <ion-card-subtitle><b>Total Sale:</b> </ion-card-subtitle>
+            </ion-card-header>
+          </ion-col>
+          <ion-col size="8" size-md="6" class="card-margin-left">
+            <ion-card-header class="ion-padding">
+              <ion-card-subtitle class="ion-text-left">{{ item?.orderFromProfileName }}</ion-card-subtitle>
+              <ion-card-subtitle class="ion-text-left">{{ item?.orderToProfileName }}</ion-card-subtitle>
+              <ion-card-subtitle class="ion-text-left">{{ item?.orderNumber }}</ion-card-subtitle>
+              <ion-card-subtitle>{{ item?.orderDate | date }}</ion-card-subtitle>
+              <ion-card-subtitle>&#8377; {{ item?.totalValueReturn?.toLocaleString("en-IN")}}</ion-card-subtitle>
+              <ion-card-subtitle>&#8377; {{ item?.totalValueSale?.toLocaleString("en-IN")}}</ion-card-subtitle>
+            </ion-card-header>
+          </ion-col>
+        </ion-item>
+        <ion-item lines="none">
+          <ion-col size="3">
+            <ion-card-subtitle class="item-margin-left"><b>DC</b>
+            </ion-card-subtitle>
+          </ion-col>
+          <ion-col size="2">
+            <ion-icon name="checkmark-circle-outline" color="success"
+              *ngIf="item?.managerApprovalGenerateDC === 'APPROVED'"></ion-icon>
+            <ion-icon name="close-circle-outline" color="danger"
+              *ngIf="item?.managerApprovalGenerateDC === 'PENDING'"></ion-icon>
+          </ion-col>
+          <ion-col size="4">
+            <ion-card-subtitle><b>Invoice &<br />
+                Credit Note</b>
+            </ion-card-subtitle>
+          </ion-col>
+          <ion-col size="3">
+            <ion-icon name="checkmark-circle-outline" color="success"
+              *ngIf="item?.managerFinalApproval === 'APPROVED'"></ion-icon>
+            <ion-icon name="close-circle-outline" color="danger" *ngIf="item?.managerFinalApproval === 'PENDING'">
+            </ion-icon>
+          </ion-col>
+        </ion-item>
+      </ion-card>
+    </div>
+  </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <ion-infinite-scroll threshold="25%" position="bottom" (ionInfinite)="loadMore($event)">
+    <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="Loading more data...">
+    </ion-infinite-scroll-content>
+  </ion-infinite-scroll>
+
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed" routerLink="./manage" *ngxPermissionsOnly="'CAN_CREATE'">
+    <ion-fab-button>
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+</ion-content>

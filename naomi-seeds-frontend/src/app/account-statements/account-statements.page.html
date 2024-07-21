@@ -1,0 +1,186 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-menu-button slot="start"></ion-menu-button>
+    <ion-title class="ion-text-center header-margin-left">Account Statements</ion-title>
+  </ion-toolbar>
+
+
+<!-- <ion-toolbar color="primary">
+  <ion-item button="true" id="open-date-input" color="primary" class="date-time-item">
+    <div class="date-padding-left date-padding-right"><ion-icon name="arrow-back"></ion-icon></div>
+    <div class="date-padding-left date-padding-right"><ion-icon name="calendar"></ion-icon></div>
+    <div class="date-padding-left date-padding-right"><ion-label>
+<div *ngIf="!dateValue && !dateValue1">
+      Select Date Range
+</div>
+
+<div *ngIf="dateValue && !dateValue1">{{dateValue}} to ___ </div>
+<div *ngIf="!dateValue && dateValue1">___ to {{dateValue1}} </div>
+    <div *ngIf="dateValue && dateValue1">{{dateValue}} to {{dateValue1}}</div>
+
+
+    </ion-label></div>
+    <div class="date-padding-left date-padding-right"><ion-icon name="arrow-forward"></ion-icon></div>
+    <ion-popover trigger="open-date-input" show-backdrop="true" class="ion-popover-pop">
+      <ng-template >
+        <div>
+        <ion-item>
+        <ion-datetime #popoverDatetime presentation="date"
+          (ionChange)="dateValue = formatDate(popoverDatetime.value)" size="cover"
+          showDefaultButtons="false" min="2015-03-14" [max]="toDateMax" first-day-of-week="1"><span slot="title">From Date</span></ion-datetime>
+        </ion-item>
+
+        <ion-item>
+          <ion-datetime #popoverDatetime1 presentation="date"
+          (ionChange)="dateValue1 = formatDate1(popoverDatetime1.value); popoverDatetime1.confirm(true);" size="cover"
+          showDefaultButtons="false" [max]="toDateMax" first-day-of-week="1"><span slot="title">To Date</span></ion-datetime>
+        </ion-item>
+      </div>
+        </ng-template>
+    </ion-popover>
+  </ion-item>
+</ion-toolbar> -->
+
+</ion-header>
+
+<ion-content fullscreen>
+  <!-- <ion-item>
+    <ion-label>Distributor</ion-label>
+    <ionic-selectable #selectComponentFrom item-content [(ngModel)]="distributor" itemValueField="_id" itemTextField="companyName"
+    [items]="distributors" [canSearch]="true"
+     (onChange)="distributorChange($event)"
+     searchFailText="No Distributors found. Please check!!">>
+    </ionic-selectable>
+  </ion-item> -->
+
+
+
+
+  <!-- <ngx-ui-loader [loaderId]="'loader-product-1'"></ngx-ui-loader> -->
+  <!-- <div *ngIf="isLoading" class="ion-padding-top">
+    <ion-card *ngFor="let number of [0,1,2,3,4,5,6,7,8,9,10]">
+      <ion-item>
+        <ion-thumbnail slot="start" style="width: 100px; height: 60px">
+          <ion-skeleton-text animated="true" style="width: 100px; height: 60px"></ion-skeleton-text>
+        </ion-thumbnail>
+        <ion-label>
+          <h3>
+            <ion-skeleton-text animated style="width: 60%"></ion-skeleton-text>
+          </h3>
+          <h2>
+            <ion-skeleton-text animated style="width: 70%"></ion-skeleton-text>
+          </h2>
+          <h2>
+            <ion-skeleton-text animated style="width: 45%"></ion-skeleton-text>
+          </h2>
+        </ion-label>
+      </ion-item>
+    </ion-card>
+  </div> -->
+
+  <!-- <ion-refresher slot="fixed" pullFactor="0.9" pullMin="60" pullMax="200" (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content pullingIcon="chevron-down-circle-outline" pullingText="Pull to refresh"
+      refreshingSpinner="circles" refreshingText="Refreshing..." class="ion-padding-top-refresh">
+    </ion-refresher-content>
+  </ion-refresher> -->
+
+  <!-- <ion-toolbar slot="fixed">
+    <ion-searchbar #search placeholder="Search for Product, Crop" enterkeyhint="enter" (ionChange)="onSearchChange($event)"
+      debounce="200"></ion-searchbar>
+  </ion-toolbar> -->
+
+<ion-grid class="font-size">
+  opening account balance is &#8377;{{this.info?.openingAccountStatementAmount.toLocaleString("en-IN")}} {{this.info?.openingAccountStatementAmountCrDr}} as on {{this.info?.openingAccountStatementDate | date}}
+
+
+  <ion-row >
+    <!-- <ion-list class="ion-padding"> -->
+    <ion-col size="2">
+      <ion-list class="ion-text-left"><b>Date</b>
+      </ion-list>
+    </ion-col>
+    <ion-col size="5">
+      <ion-list class="ion-text-left"><b>Particulars Type</b>
+      </ion-list>
+    </ion-col>
+    <ion-col size="2">
+      <ion-list class="ion-text-left"><b>Amount<br>(type)</b>
+      </ion-list>
+    </ion-col>
+    <ion-col size="3">
+      <ion-list class="ion-text-left"><b>Balance</b>
+      </ion-list>
+    </ion-col>
+
+  </ion-row>
+
+
+    <ion-row *ngFor="let ledgerItem of ledgerEntries">
+      <!-- <ion-list class="ion-padding"> -->
+      <ion-col size="2">
+        <ion-list class="ion-text-left">{{ledgerItem.txnDate | date}}
+        </ion-list>
+      </ion-col>
+      <ion-col size="5">
+<ion-row>
+        <ion-list class="ion-text-left"><b> {{ledgerItem.oppositePartyName}}</b><br>
+          <b>({{ledgerItem.particularType}})</b>
+        </ion-list>
+        </ion-row>
+<div *ngIf="ledgerItem.txnRefCollection === 'orders'">
+        <ion-row *ngFor="let item of ledgerItem?.order_details.items">
+
+{{item.productName}}<br>
+Lot: {{item.lotNumber}}<br>
+Rate: &#8377;{{item.effectiveRatePerKgForSale}}/kg<br>
+Qty: {{item.quantity}}<br>
+<!-- Amt: &#8377;{{item.amount.toLocaleString("en-IN")}} -->
+
+</ion-row>
+
+</div>
+<ion-row>
+  {{ledgerItem.narration}}
+</ion-row>
+
+      </ion-col>
+      <ion-col size="2">
+        <ion-list class="ion-text-left" *ngIf="ledgerItem.accountingType ==='DR'" style="color: red">&#8377;{{ledgerItem?.amount?.toLocaleString("en-IN")}} {{ledgerItem.accountingType}}
+        </ion-list>
+        <ion-list class="ion-text-left" *ngIf="ledgerItem.accountingType ==='CR'" style="color: green">&#8377;{{ledgerItem?.amount?.toLocaleString("en-IN")}} {{ledgerItem.accountingType}}
+        </ion-list>
+      </ion-col>
+      <ion-col size="3">
+        <ion-list class="ion-text-left">&#8377;{{ledgerItem?.runningBalance.toLocaleString("en-IN")}} {{ledgerItem.runningBalanceCrDr}}
+        </ion-list>
+
+        <div *ngIf="ledgerItem.txnRefCollection === 'IPT'" >
+        <!-- <ion-button color="primary" size="small" *ngIf="ledgerItem.txnRefCollection === 'IPT'"> -->
+          <ion-icon name="arrow-redo-circle" class="font-size-icon"></ion-icon>
+        <!-- </ion-button> -->
+      </div>
+      </ion-col>
+      <!-- <ion-col size="1" class="align-center">
+
+<div>
+        <ion-button color="primary" size="small" *ngIf="ledgerItem.txnRefCollection === 'IPT'">
+          <ion-icon name="arrow-redo-circle-outline"></ion-icon>
+        </ion-button>
+      </div>
+      </ion-col> -->
+
+
+    </ion-row>
+
+
+
+
+
+
+
+
+
+</ion-grid>
+
+
+</ion-content>

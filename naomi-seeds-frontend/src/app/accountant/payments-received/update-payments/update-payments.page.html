@@ -1,0 +1,177 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/accountant/payments-received"></ion-back-button>
+    </ion-buttons>
+    <ion-title class="ion-text-center" *ngIf="approvalStatus==='PENDING'"> Update Payment Receipt </ion-title>
+    <ion-title class="ion-text-center" *ngIf="approvalStatus==='RECEIVED' || approvalStatus==='REJECTED'"> Payment Receipt Details </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <!-- <ngx-ui-loader [loaderId]="'loader-create-requirement'"></ngx-ui-loader> -->
+
+<ion-card >
+<ion-item><b> Distributor Name:</b> &nbsp;{{this.paymentDetails?.distributorName}}</ion-item>
+<ion-item *ngIf="approvalStatus ==='PENDING'"><b> Sales Officers Name:</b> &nbsp;{{this.paymentDetails?.salesPersonName}} </ion-item>
+<ion-item *ngIf="approvalStatus ==='PENDING' && this.paymentDetails?.salesOfficerNote"><b> Sales Officers Note:</b> &nbsp;{{this.paymentDetails?.salesOfficerNote}} </ion-item>
+
+</ion-card>
+
+<ion-card *ngIf="approvalStatus !=='PENDING'">
+  <ion-item >
+    <b>Business Category: </b>&nbsp; {{ this.paymentDetails?.categoryType}}
+  </ion-item>
+  <ion-item > <b>Amount: </b>&nbsp; {{ this.paymentDetails?.amount}}   </ion-item>
+  <ion-item > <b>Payment received Date: </b>&nbsp; {{ this.paymentDetails?.paymentReceivedDate | date}}   </ion-item>
+
+  <ion-item > <b>Sales Person Name: </b>&nbsp; {{ this.paymentDetails?.salesPersonName}}   </ion-item>
+  <ion-item *ngIf="this.paymentDetails?.salesOfficerNote"> <b>Sales Officer Note: </b>&nbsp; {{ this.paymentDetails?.salesOfficerNote}}   </ion-item>
+  <ion-item *ngIf="this.paymentDetails?.accountantNote"> <b>Accountant Note: </b>&nbsp; {{ this.paymentDetails?.accountantNote}}   </ion-item>
+  <ion-item *ngFor="let img of imagesPaths; let i = index">
+    <div class="imageDisplay"  >
+      <img [src]="s3path + img?.filePath"></div></ion-item>
+</ion-card>
+
+
+
+
+
+<ion-card *ngIf="approvalStatus ==='PENDING'">
+
+<ion-card-header>Update Details</ion-card-header>
+
+  <ion-item >
+    <ion-label>Business Category</ion-label>
+    <ionic-selectable #selectComponentProduct item-content [(ngModel)]="businessCategory" itemValueField="_id" itemTextField="name"
+    [items]="businessCategories" [canSearch]="true"
+     (onChange)="onChangeCategory($event)"
+     searchFailText="No Category found. Please check!!">
+    </ionic-selectable>
+  </ion-item>
+
+
+  <form [formGroup]="modelForm" (ngSubmit)="onUpdateChallan()">
+    <ion-item button="true" id="open-date-input">
+      <ion-label class="ion-padding-left">Payment received Date</ion-label>
+      <ion-text slot="end">{{ modelForm.value.paymentReceivedDate | date }}</ion-text>
+      <ion-popover trigger="open-date-input" show-backdrop="false" positionSide="top" class="ion-popover-pop" *ngIf="!contentUpdateDeactivate">
+        <ng-template >
+          <ion-datetime #popoverDatetime presentation="date"
+            (ionChange)="dateOfPayment = formatDate(popoverDatetime.value)" size="cover" show-default-title="true"
+            showDefaultButtons="true" min="2022-03-14"></ion-datetime>
+        </ng-template>
+      </ion-popover>
+    </ion-item>
+
+    <ion-item class="formItem">
+          <ion-label class="ion-label" position="floating">Amount in Rs.<span class="reqired-field">*</span>
+          </ion-label>
+          <ion-input type="number" formControlName="amount" placeholder="Amount" [readonly]="contentUpdateDeactivate"
+          > </ion-input>
+          <ion-note *ngIf="
+          !modelForm.get('amount').valid && modelForm.get('amount').touched"
+            color="danger" position="floating" class="ion-padding">
+            Please provide valid Amount.
+          </ion-note>
+        </ion-item>
+
+
+
+
+
+
+        <!-- <ion-item class="formItem">
+          <ion-label class="ion-label" position="floating">Note by Sales Officer
+          </ion-label>
+          <ion-input type="text" formControlName="salesOfficerNote" placeholder="Note"
+          [readonly]="inactive || contentUpdateDeactivate" > </ion-input>
+          <ion-note *ngIf="
+          !modelForm.get('salesOfficerNote').valid && modelForm.get('salesOfficerNote').touched"
+            color="danger" position="floating" class="ion-padding">
+            Please provide valid Note.
+          </ion-note>
+        </ion-item> -->
+
+
+        <ion-item class="formItem">
+          <ion-label class="ion-label" position="floating">Note
+          </ion-label>
+          <ion-input type="text" formControlName="accountantNote" placeholder="Note"
+          [readonly]="contentUpdateDeactivate" > </ion-input>
+          <ion-note *ngIf="
+          !modelForm.get('accountantNote').valid && modelForm.get('accountantNote').touched"
+            color="danger" position="floating" class="ion-padding">
+            Please provide valid Note.
+          </ion-note>
+        </ion-item>
+
+<!-- display -->
+<ion-item *ngFor="let img of imagesPaths; let i = index">
+  <div class="imageDisplay"  >
+    <img [src]="s3path + img?.filePath"></div>
+<div *ngIf="approvalStatus ==='PENDING'">
+    <ion-fab-button  color="danger" size="small" horizontal="end" slot="fixed" (click)="deleteImage(i)">
+      <ion-icon name="trash-outline"></ion-icon>
+    </ion-fab-button></div>
+</ion-item>
+<!-- display end -->
+
+
+<label for="uploadImage">
+<div class="initImgMain" *ngIf="approvalStatus ==='PENDING'">
+<!-- <span class="material-icons"> icon </span> -->
+<ion-icon class="icon-size" size="small" name="image-outline"></ion-icon>
+<p>Add Image</p>
+</div>
+</label>
+<input type="file" name="uploadImage" id="uploadImage" (change)="uploadFileToS3($event)"
+accept=".png, .jpg, .jpeg" />
+<!--  -->
+
+
+
+
+
+</form>
+</ion-card>
+
+
+
+<!-- <ion-button  expand="block" fill="outline" class="ion-button-item" (click)="clearCart()">
+  <ion-icon name="add"></ion-icon>
+  <b>Save Data </b>
+  </ion-button> -->
+</ion-content>
+
+
+<ion-footer >
+  <ion-row *ngIf="approvalStatus === 'PENDING'">
+    <ion-col size="6" >
+      <ion-button type="submit" color="danger" class="ion-align-items-center" expand="full" (click)="onRejectPayment()">
+        Reject
+      </ion-button>
+    </ion-col>
+    <ion-col size="6" >
+    <form [formGroup]="modelForm" (ngSubmit)="onUpdateChallan()" novalidate>
+          <ion-button type="submit" color="primary" [disabled]="!modelForm.valid" class="ion-align-items-center" expand="full">
+            Approve
+          </ion-button>
+        </form>
+      </ion-col>
+      </ion-row>
+
+
+
+
+
+<div class="ion-align-items-center">
+         <ion-item
+         [ngClass]="{
+            'is-Reject': approvalStatus === 'REJECTED' ,
+            'is-Accept':approvalStatus === 'RECEIVED'
+             }"
+              *ngIf="approvalStatus ==='REJECTED' || approvalStatus === 'RECEIVED'"
+  ><b>Status - Payment {{approvalStatus.toLowerCase() }}</b></ion-item>
+            </div>
+</ion-footer>

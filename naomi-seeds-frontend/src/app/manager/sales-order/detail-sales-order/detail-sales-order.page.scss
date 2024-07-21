@@ -1,0 +1,86 @@
+.item-margin-left {
+  margin-left: 45px;
+ }
+
+ .card-margin-left {
+  margin-left:-32px;
+}
+
+.margin-left {
+  padding-left: -12px;
+}
+
+.header-margin-left {
+  padding-left: 11px;
+  padding-right: 8px;
+}
+
+.col-margin-right {
+  margin-right: -2em;
+}
+
+.padding-bottom {
+  padding-bottom: 10px
+}
+
+.padding-top {
+  padding-top: 10px;
+}
+
+.item-margins {
+  margin-top: -1.1em;
+  margin-bottom: -1.1em;
+  width: 121%;
+}
+
+.ion-padding-top {
+
+  padding-top: var(--ion-padding, 22px);
+}
+
+.ion-padding-top-refresh {
+  padding-top: var(--ion-padding, 76px);
+}
+
+.ion-padding {
+  padding-inline-start: var(--ion-padding, -32px);
+ }
+
+ .card-margin-bottom {
+  margin-bottom: -13px;
+ }
+
+ .ion-text-center {
+   margin-left: 0em;
+   display: flex;
+   align-items: center;
+   justify-content: center;
+ }
+
+ .ion-align-center-amount {
+  display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-content: stretch;
+    align-items: center;
+ }
+
+ .ion-item-center-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-content: stretch;
+  align-items: center;
+ }
+
+
+
+.pdf-buttons{
+  display: flex;
+  justify-content: space-around;
+}
+
+
+.ion-footer{
+  background-color: white;
+}

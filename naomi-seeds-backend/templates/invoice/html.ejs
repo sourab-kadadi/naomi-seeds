@@ -1,0 +1,571 @@
+<style>
+    .invoice-box {
+        max-width: 800px;
+        font-size: 11px;
+        line-height: 13px;
+        font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;
+        color: #555;
+        padding-left: 10px !important;
+        padding-right: 10px !important;
+
+    }
+
+    .invoice-box table {
+        width: 100%;
+        line-height: inherit;
+        text-align: left;
+        font-size: 10px;
+        border: 1px solid #eee;
+    }
+
+    .invoice-box table td {
+        padding: 5px;
+        vertical-align: top;
+        border: solid 1px #eee;
+    }
+
+    .invoice-box table tr.top table td {
+        padding-bottom: 20px;
+
+    }
+
+    .invoice-box table tr.top table td.title {
+        font-size: 45px;
+        line-height: 45px;
+        color: #333;
+
+    }
+
+    .invoice-box table tr.information table td {
+        padding-bottom: 40px;
+    }
+
+    .invoice-box table tr.heading td {
+        background: #eee;
+        border-bottom: 1px solid #ddd;
+        font-weight: bold;
+    }
+
+    .invoice-box table tr.details td {
+        padding-bottom: 20px;
+    }
+
+    .invoice-box table tr.item td {
+        border-bottom: 1px solid #eee;
+    }
+
+    .invoice-box table tr.item.last td {
+        border-bottom: none;
+    }
+
+    .invoice-box table tr.total td:nth-child(2) {
+        border-top: 2px solid #eee;
+        font-weight: bold;
+    }
+
+
+    .item-box {
+        max-width: 800px;
+        font-size: 11px;
+        line-height: 11px;
+        font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;
+        color: #555;
+        padding-left: 10px !important;
+        padding-right: 10px !important;
+    }
+
+    .item-box table {
+        width: 100%;
+        line-height: inherit;
+        text-align: left;
+        font-size: 10px;
+        border: 1px solid #eee !important;
+    }
+
+    .item-box-table-border {
+        border: 2px solid #eee;
+    }
+
+    .item-box-table-header-footer-inner-border {
+        border: 1px solid #eee !important;
+    }
+
+
+    .item-box table td {
+        padding: 5px;
+        vertical-align: top;
+        border-left: solid 1px #eee;
+        border-right: solid 1px #eee;
+    }
+
+    .item-box-blank {
+        padding: 5px;
+        vertical-align: top;
+        border-top: solid 0px #eee !important;
+    }
+
+    .item-box table tr.top table td {
+        padding-bottom: 20px;
+        border: solid 1px #eee;
+    }
+
+    .item-box table tr.top table td.title {
+        font-size: 45px;
+        line-height: 45px;
+        color: #333;
+
+    }
+
+    .item-box table tr.information table td {
+        padding-bottom: 40px;
+    }
+
+    .item-box table tr.heading td {
+        background: #eee;
+        border-bottom: 1px solid #ddd;
+        font-weight: bold;
+    }
+
+    .item-box table tr.details td {
+        padding-bottom: 20px;
+    }
+
+    .item-box table tr.item td {
+        border-left: 1px solid #eee;
+        border-right: 1px solid #eee;
+    }
+
+    .item-box table tr.item.last td {
+        border-bottom: none;
+    }
+
+    .item-box table tr.total td:nth-child(2) {
+        border-top: 2px solid #eee;
+        font-weight: bold;
+    }
+
+
+
+    .footer-box {
+        max-width: 800px;
+        font-size: 12px;
+        line-height: 15px;
+        font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;
+        color: #555;
+    }
+
+    .footer-box table {
+        width: 100%;
+        line-height: inherit;
+        text-align: left;
+        font-size: 10px;
+    }
+
+    .footer-box table td {
+        padding: 5px;
+        vertical-align: top;
+    }
+
+    .footer-box table tr.top table td {
+        padding-bottom: 20px;
+
+    }
+
+    .footer-box table tr.top table td.title {
+        font-size: 45px;
+        line-height: 45px;
+        color: #333;
+
+    }
+
+    .footer-box table tr.information table td {
+        padding-bottom: 40px;
+    }
+
+    .footer-box table tr.heading td {
+        background: #eee;
+        font-weight: bold;
+    }
+
+    .footer-box table tr.details td {
+        padding-bottom: 10px;
+    }
+
+    .footer-box table tr.footer.last td {
+        border-bottom: none;
+    }
+
+    .footer-box table tr.total td:nth-child(2) {
+        font-weight: bold;
+    }
+
+
+
+    @media only screen and (max-width: 600px) {
+        .invoice-box table tr.top table td {
+            width: 100%;
+            display: block;
+            text-align: center;
+        }
+
+        .invoice-box table tr.information table td {
+            width: 100%;
+            display: block;
+            text-align: center;
+        }
+    }
+</style>
+<div>
+
+
+
+    <div class="invoice-box">
+        <table style="border:0px; margin-bottom:0px;" cellpadding="0" cellspacing="0" class="item-box-table-border">
+            <tr>
+                <td colspan="2" style="border:0px; margin-bottom:0px;">
+                    <img src="https://naomiseeds.s3.ap-south-1.amazonaws.com/Naomi+seeds+logo.png" width="75px"
+                        height="75px"></img>
+                </td>
+                <td colspan="5" style="border:0px;">
+                    <h2
+                        style="text-align: left; font-size:19px; padding-top:12px; line-height:8px; padding-bottom:0px;">
+                        NAOMI SEEDS PRIVATE LIMITED</h2>
+                    <p style="text-align: left; line-height: 5px; padding-left:4px; padding-top:0px;">#205, VSS
+                        Nandadeep, N.H.-44, Beside RTA Office,
+                        Hyd-500 055 </p>
+                    <p style="text-align: left; line-height: 5px; padding-left:10px; margin-bottom:0px; font-size:10px">
+                        GSTIN/UIN: 36AAECN9743J1ZZ, CIN: U01119TG2011PTC076500
+                    </p>
+
+                    <p style="text-align: left; line-height: 5px; padding-left:20px; margin-bottom:0px;">
+                        Office: +91 96662 68384, E-mail: contact@naomiseeds.com
+                    </p>
+
+                </td>
+            </tr>
+            <tr style="margin-top:0px; line-height:0px; padding-bottom:0px;">
+
+                <td colspan="9" style="border:0px; font-size:12px; line-height: 0px;">
+
+                    <h3 style="text-align: center; border:0px; padding-top:4px; margin-top:0px; line-height: 0px;">
+                        INVOICE</h3>
+                </td>
+            </tr>
+        </table>
+
+
+        <table cellpadding="0" cellspacing="0" style="border:0px; padding-top:0px; margin-top:0px;">
+
+            <tr>
+                <td colspan="3" rowspan="6" style="line-height:10px; line-height:9px">
+                    <p><b>Consignee (Ship To)</b></p>
+                    <p>To, M/s <strong>
+                        <%= invoice.toDistributorName %>
+                        </strong></p>
+                        <p> <%= invoice.toDistributorInfoTxn.address1 %></p>
+                        <p><%= invoice.toDistributorInfoTxn.address2 %>, </p>
+                        <p>City: <%= invoice.toDistributorInfoTxn.city %>, State: <%= invoice.toDistributorInfoTxn.state %> </p>
+                        <p>Pincode: <%= invoice.toDistributorInfoTxn.pincode %></p>
+                        <p>M.No. <strong><%= invoice.toDistributorInfoTxn.phoneNo %></strong></p>
+                        <p>GSTIN/UIN: <%= invoice.toDistributorInfoTxn.gstin %></p>
+                </td>
+                </tr>
+            <tr>
+                <td colspan="1" style="width:fit-content;">
+                    <p>Invoice No. </p>
+                </td>
+                <td colspan="3" style="color: red">
+                    <%= invoice.uniqueNumber %>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="1" style="width:fit-content;">
+                    <p>Invoice Date. </p>
+                </td>
+                <td colspan="3" style="color: red">
+                    <%= invoice.salesOrderDate.toDateString().split(' ').slice(1).join(' ') %>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="1" style="width:fit-content;">
+                    <p>Reference No. & Date. </p>
+                </td>
+                <td colspan="3">
+                    <p>sales Order no. & date</p>
+                </td>
+            </tr>
+
+            <tr>
+                <td colspan="1" style="width:fit-content;">
+                    <p>Other References. </p>
+                </td>
+                <td colspan="3" style="color: red">
+                    <p></p>
+                </td>
+            </tr>
+
+            <tr>
+                <td colspan="1" style="width:fit-content;">
+                    <p>Buyer's Order No and Date. </p>
+                </td>
+                <td colspan="3" style="color: red">
+                    <p></p>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td colspan="3" rowspan="4" style="line-height:10px">
+                    <p><b> Consignee (Bill To)</b></p>
+                    <p>To, M/s <strong>
+                            <%= invoice.toDistributorName %>
+                        </strong></p>
+                        <p>City: <%= invoice.toDistributorInfoTxn.city %></p>
+                        <p>GSTIN/UIN: <%= invoice.toDistributorInfoTxn.gstin %></p>
+                        <p>State: <%= invoice.toDistributorInfoTxn.state %>, Pincode: <%= invoice.toDistributorInfoTxn.pincode %> </p>
+
+                </td>
+            </tr>
+
+
+            <tr>
+                <td colspan="1" style="width:fit-content;">
+                    <p>Dispatched Through. </p>
+                </td>
+                <td colspan="3" style="color: red">
+                    <p></p>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="4" style="width:fit-content;">
+                    <p>Mode/Terms of Payment </p>
+                </td>
+            </tr>
+
+            <tr>
+                <td colspan="4" style="width:fit-content;">
+                    <p>Terms of Delivery </p>
+                </td>
+            </tr>
+
+
+        </table>
+    </div>
+
+    <div class="item-box" style="padding-top:2px;">
+        <table cellpadding="0" cellspacing="0" style="border:0px;">
+
+            <thead>
+                <tr class="item-box-table-header-footer-inner-border">
+                    <td colspan="1" style="width:2px; border: 1px solid #eee;"><b>S.<br>No</b></td>
+                    <td colspan="2" style="width:max-content; text-align:center; border: 1px solid #eee;"><b>Description of Goods</b></td>
+                    <td colspan="1" style="width:50px; text-align:center; border: 1px solid #eee;"><b>HSN/SAC</b></td>
+                    <td colspan="1" style="width:70px; text-align:center; border: 1px solid #eee;"><b>Quantity</b></td>
+                    <td colspan="1" style="width:70px; text-align:center; border: 1px solid #eee;"><b>Rate<br>&#8377</b></td>
+                    <td colspan="1" style="width:10px; text-align:center; border: 1px solid #eee;"><b>Per</b></td>
+                    <td colspan="1" style="width:10px; text-align:center; border: 1px solid #eee;"><b>Disc<br>%</b></td>
+                    <td colspan="1" style="width:90px; text-align:center; border: 1px solid #eee;"><b>Amount <br>&#8377</b></td>
+                </tr>
+            </thead>
+
+            <tbody>
+
+
+                <% invoice.items.forEach((item,index)=> {%>
+                    <tr>
+                        <td colspan="1" style="width:2px; text-align:center;">
+                            <%= index+1 %>
+                        </td>
+                        <td colspan="2" style="width:190px; text-align:center;">
+
+                            <%= item.productName %> <br>
+                                (<%= item.crop %>) <br>
+                                    Batch: <%= item.lotNumber %>
+
+                        </td>
+                        <td colspan="1" style="width:50px; text-align:center;">
+                            <%= item.hnsNumber %>
+                        </td>
+                        <td colspan="1" style="width:70px; text-align:center;">
+                            <%= item.quantity.toLocaleString("en-IN") +' '+item.unit%> 
+                        </td>
+                        <td colspan="1" style="width:70px; text-align:center;">
+                            <%= item.rate.toLocaleString("en-IN") %>
+                        </td>
+                        <td colspan="1" style="width:30px; text-align:center;">
+                            <%= item.unit %>
+                        </td>
+                        <td colspan="1" style="width:30px; text-align:center;">
+                            
+                        </td>
+                        <td colspan="1" style="width:90px; text-align:center;">
+                            <%= item.amount.toLocaleString("en-IN") %>
+                        </td>
+                    </tr>
+
+                    <% }); %>
+
+                    
+            <% if (invoice.items.length==1) {%>
+                <tr>
+                    <td colspan="1" style="width:2px;" class="item-box-blank"></td>
+                    <td colspan="2" style="width:190px; text-align:center;" class="item-box-blank">
+                        <br><br><br>
+                        <br><br><br>
+                        <br><br><br>
+                        <br><br><br>
+                        <br><br><br>
+                        <br><br>
+                        
+                    </td>
+                    <td colspan="1" style="width:50px; text-align:center;" class="item-box-blank"></td>
+                    <td colspan="1" style="width:70px; text-align:center;" class="item-box-blank"></td>
+                    <td colspan="1" style="width:70px; text-align:center;" class="item-box-blank"></td>
+                    <td colspan="1" style="width:30px; text-align:center;" class="item-box-blank"></td>
+                    <td colspan="1" style="width:30px; text-align:center;" class="item-box-blank"></td>
+                    <td colspan="1" style="width:90px; text-align:center;" class="item-box-blank"></td>
+                </tr>
+            <% }%>
+
+
+
+            <% if (invoice.items.length==2) {%>
+            <tr>
+                <td colspan="1" style="width:2px;" class="item-box-blank"></td>
+                <td colspan="2" style="width:190px; text-align:center;" class="item-box-blank">
+                    <br><br><br>
+                    <br><br><br>
+                    <br><br><br>
+                    <br><br><br>
+                    <br>
+                    
+                </td>
+                <td colspan="1" style="width:50px; text-align:center;" class="item-box-blank"></td>
+                <td colspan="1" style="width:70px; text-align:center;" class="item-box-blank"></td>
+                <td colspan="1" style="width:70px; text-align:center;" class="item-box-blank"></td>
+                <td colspan="1" style="width:30px; text-align:center;" class="item-box-blank"></td>
+                <td colspan="1" style="width:30px; text-align:center;" class="item-box-blank"></td>
+                <td colspan="1" style="width:90px; text-align:center;" class="item-box-blank"></td>
+            </tr>
+            <% }%>
+
+            <% if (invoice.items.length==3) {%>
+                <tr>
+                    <td colspan="1" style="width:2px;" class="item-box-blank"></td>
+                    <td colspan="2" style="width:190px; text-align:center;" class="item-box-blank">
+                        <br><br><br>
+                        <br><br><br>
+                        <br><br><br>
+                        <br>                   
+                    </td>
+                    <td colspan="1" style="width:50px; text-align:center;" class="item-box-blank"></td>
+                    <td colspan="1" style="width:70px; text-align:center;" class="item-box-blank"></td>
+                    <td colspan="1" style="width:70px; text-align:center;" class="item-box-blank"></td>
+                    <td colspan="1" style="width:30px; text-align:center;" class="item-box-blank"></td>
+                    <td colspan="1" style="width:30px; text-align:center;" class="item-box-blank"></td>
+                    <td colspan="1" style="width:90px; text-align:center;" class="item-box-blank"></td>
+                </tr>
+            <% }%>
+
+            <% if (invoice.items.length==4) {%>
+                <tr>
+                    <td colspan="1" style="width:2px;" class="item-box-blank"></td>
+                    <td colspan="2" style="width:190px; text-align:center;" class="item-box-blank">
+                        <br><br><br>
+                        <br><br><br>
+                           
+                    </td>
+                    <td colspan="1" style="width:50px; text-align:center;" class="item-box-blank"></td>
+                    <td colspan="1" style="width:70px; text-align:center;" class="item-box-blank"></td>
+                    <td colspan="1" style="width:70px; text-align:center;" class="item-box-blank"></td>
+                    <td colspan="1" style="width:30px; text-align:center;" class="item-box-blank"></td>
+                    <td colspan="1" style="width:30px; text-align:center;" class="item-box-blank"></td>
+                    <td colspan="1" style="width:90px; text-align:center;" class="item-box-blank"></td>
+                </tr>
+            <% }%>
+
+            <% if (invoice.items.length==5) {%>
+                <tr>
+                    <td colspan="1" style="width:2px;" class="item-box-blank"></td>
+                    <td colspan="2" style="width:190px; text-align:center;" class="item-box-blank">
+                        <br><br>
+                           
+                    </td>
+                    <td colspan="1" style="width:50px; text-align:center;" class="item-box-blank"></td>
+                    <td colspan="1" style="width:70px; text-align:center;" class="item-box-blank"></td>
+                    <td colspan="1" style="width:70px; text-align:center;" class="item-box-blank"></td>
+                    <td colspan="1" style="width:30px; text-align:center;" class="item-box-blank"></td>
+                    <td colspan="1" style="width:30px; text-align:center;" class="item-box-blank"></td>
+                    <td colspan="1" style="width:90px; text-align:center;" class="item-box-blank"></td>
+                </tr>
+            <% }%>
+
+
+
+            <tr>
+            <td colspan="4" style="text-align:center; width:320px; border: 1px solid #eee;">
+            Total
+            </td>
+
+            <td colspan="1" style="width:70px; text-align:center; border: 1px solid #eee;">
+            <%= invoice.totalQuantity.toLocaleString("en-IN") %> Kgs
+            </td>
+            <td colspan="3" style="width:70px; text-align:center; border: 1px solid #eee;">
+            
+            </td>
+            <td colspan="1" style="width:60px; text-align:center; border: 1px solid #eee;">&#8377
+            <%= invoice.totalValue.toLocaleString("en-IN") %>/-</td>
+            </tr>
+    </tbody>
+    
+    <tr>
+        <td colspan="6" rowspan="2" style="border-right:0px; border-bottom:0px; font-size: 10px;">
+            <p>Amount Chargeable (in Words) </p>
+            <p><b><%= amountInWords %> </b></p>
+        </td>
+        <td colspan="3" style="border-left:0px; border-bottom:0px; text-align: right;">
+            <p><i>E. & O.E </i></p>
+        </td>
+
+    </tr>
+<tr>
+        <br>
+        <br>
+        <br>
+</tr>
+
+<tr>
+    <td colspan="9" style="border-right:0px; font-size: 8px;">
+        <br>
+        <p>Company's PAN: AABCE4074A</p>
+       </td>
+</tr>
+
+<tr>
+    <td colspan="5" rowspan="3" style="font-size: 8px; line-height:8px; text-align: left;">
+        <p><b><u>Declaration</u></b></p>
+        <p>We declare that this invoice shows the actual price of the goods<br> 
+        described and that all particulars are true and correct</p>
+       </td>
+</tr>
+
+<tr>
+    <td colspan="5" rowspan="3" style="font-size: 8px; line-height:8px; text-align: right; border: 1px solid #eee;">
+        <p><b>For NAOMI SEEDS PVT LTD</b></p> 
+        <br>
+        <p>Authorised Signatory</p>
+       </td>
+</tr>
+
+
+        </table>
+
+    <div style="text-align:center; font-size:8px;">
+        <tr >
+                This is a Computer Generated Invoice
+        </tr>
+        
+    </div>
+
+
+</div>

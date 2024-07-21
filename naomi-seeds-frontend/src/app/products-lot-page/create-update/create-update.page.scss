@@ -1,0 +1,107 @@
+.productImagePosition {
+    position: absolute;
+    top: 115px;
+    z-index: 996;
+    left: 5%;
+    background-color: #fff;
+  }
+  
+  .imageSection {
+    margin-bottom: 50px;
+  }
+  
+  .drop-down-form {
+    margin-top: 25px;
+  }
+  
+  
+  .Form-Item {
+    margin-left: 7px;
+    margin-right: 0px;
+  }
+  
+  .padding-card {
+   padding-bottom: 15px;
+  }
+  
+  .ion-label {
+    padding-top: 3px;
+  }
+  
+  .card-title-padding {
+    margin-top: 20px;
+    padding-left: 30px;
+   }
+  
+   ion-toggle {
+    // --handle-spacing: 0px;
+    // --handle-height: 100%;
+    margin-left: 30px;
+  }
+  
+  .status-design {
+    margin-top: 20px;
+  }
+  
+  
+  .buttom-margin-left {
+    margin-left: 25%;
+    margin-right: auto;
+  }
+  
+  
+  .ion-padding {
+    padding-left: unset;
+    padding-right: unset;
+    padding-inline-start: var(--ion-padding, 0.2em);
+    padding-inline-end: var(--ion-padding, 0.8em);
+    padding-top: 1px;
+  }
+  
+  .bottom-border {
+    border-bottom: 1px solid rgba(68, 68, 68, 0.877);
+    margin-top: 15px;
+    // margin-bottom: 15px;
+  }
+  
+  // .ion-popover-pop {
+    // position: fixed !important;
+    // top: 29% !important;
+    // left: 50% !important;
+    // margin-top: -454px !important;
+    // margin-left: -145px !important;
+    // height: 539px !important;
+    // padding-left: 20px;
+    // // --background: #fff; /* Set the background color of the popover */
+    // --box-shadow: none; /* Remove the default box-shadow */
+    // display: flex;
+    // justify-content: center;
+    // align-items: center;
+
+    // position: fixed;
+    // top: -6%;
+    // left: 0%;
+    // right: -1%;
+    // align-items: end;
+
+    // translate: 32% -51%;
+  // }
+
+ 
+  .ion-padding-left{
+    padding-left: 7px;
+  }
+  
+  .ion-text-center {
+    margin-left: 0em;
+  }
+  
+  .min-height-adjust {
+    --min-height: 28px;
+  }
+
+  .row-margin-left {
+    margin-left: 15px;
+    display: flex;
+    flex-wrap: nowrap;
+}

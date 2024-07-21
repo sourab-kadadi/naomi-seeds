@@ -1,0 +1,30 @@
+.header-width {
+    width:100%;
+   }
+   
+   .col-max-width{
+     // width:88%;
+     max-width: calc(calc(4 / var(--ion-grid-columns, 12)) * 88%);
+   }
+   
+   .ion-text-center {
+     margin-left: -3em;
+   }
+   
+   .product-not-selected {
+    display: flex;
+    align-items: center;  
+    justify-content: center;
+    // flex-direction: column;
+    margin-top: 10rem;
+   }
+
+   .color-select-product {
+    color: red;
+   }
+
+   .top-padding-post-sticky-header {
+    margin-top: 79px;
+   }
+
+   

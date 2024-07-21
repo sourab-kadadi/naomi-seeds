@@ -1,0 +1,39 @@
+variables:
+  DOCKER_REGISTRY: 780136786457.dkr.ecr.ap-south-1.amazonaws.com
+  APP_NAME: naomi-seeds-backend
+  AWS_DEFAULT_REGION: ap-south-1
+  DOCKER_HOST: tcp://docker:2375
+
+publish:
+  image:
+    name: amazon/aws-cli
+    entrypoint: [""]
+  services:
+    - docker:dind
+  before_script:
+    - amazon-linux-extras install docker
+    - aws --version
+    - docker --version
+  script:
+    - aws ecr get-login-password --region ap-south-1 | docker login --username AWS --password-stdin $DOCKER_REGISTRY
+    - docker build -t $DOCKER_REGISTRY/$APP_NAME:latest -t $DOCKER_REGISTRY/$APP_NAME:$CI_PIPELINE_IID .
+    - docker push $DOCKER_REGISTRY/$APP_NAME:$CI_PIPELINE_IID
+  only: ["main"]
+
+# Job Two for deploy build to server
+deploy_master:
+  stage: deploy
+  image: alpine
+  before_script:
+    - apk add openssh-client
+    - eval $(ssh-agent -s)
+    - echo "$PRIVATE_KEY" | tr -d '\r' | ssh-add - > /dev/null
+    - mkdir -p ~/.ssh
+    - chmod 700 ~/.ssh
+  script:
+    - ssh -o StrictHostKeyChecking=no ubuntu@$SERVER_IP "sudo docker stop $APP_NAME; sudo docker rm $APP_NAME; aws ecr get-login-password --region ap-south-1 | sudo docker login --username AWS --password-stdin $DOCKER_REGISTRY;
+      sudo docker pull $DOCKER_REGISTRY/$APP_NAME:$CI_PIPELINE_IID; sudo docker run --name $APP_NAME -itd --net="host" $DOCKER_REGISTRY/$APP_NAME:$CI_PIPELINE_IID;sudo docker image prune -a --force"
+    # - ssh -o StrictHostKeyChecking=no ubuntu@$SERVER_IP "aws ecr get-login-password --region ap-south-1 | sudo docker login --username AWS --password-stdin $DOCKER_REGISTRY && sudo docker pull $DOCKER_REGISTRY/$APP_NAME:$CI_PIPELINE_IID && sudo docker run --name $APP_NAME -p 80:80 -d -itd --net="host" $DOCKER_REGISTRY/$APP_NAME:$CI_PIPELINE_IID && sudo docker image prune -a --force"
+
+  only: ["main"]
+

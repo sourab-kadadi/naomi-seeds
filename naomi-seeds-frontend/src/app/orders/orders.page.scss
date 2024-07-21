@@ -1,0 +1,67 @@
+.card-margin-left {
+    margin-left:-32px;
+  }
+  
+  .ion-margin-top {
+      margin-top: 10px;
+  }
+  
+  .ion-padding-top-refresh {
+    padding-top: var(--ion-padding, 76px);
+  }
+  
+  .ion-padding {
+    padding-inline-start: var(--ion-padding, 9px);
+   }
+  
+  
+   .item-margin-left {
+    margin-left: 45px;
+   }
+  
+   .card-margin-bottom {
+    margin-bottom: -13px;
+   }
+  
+   .ion-text-center {
+     margin-left: -2em;
+   }
+  
+
+
+
+
+
+ion-row {
+  &.margin-bottom {
+    margin-bottom: 9px;
+  }
+}
+
+
+.header-display-end {
+  margin-left: auto;
+}
+
+.button-size-adjust {
+  width: 26px;
+  height: 21px;
+  margin-right: 5px;
+}
+
+
+
+
+.list-container::after {
+  content: "";
+  display: block;
+  height: 50px; /* adjust to match the height of the top-div */
+  margin-top: -50px; /* negative margin to move the list up */
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+

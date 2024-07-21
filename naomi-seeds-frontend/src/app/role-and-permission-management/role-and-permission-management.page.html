@@ -1,0 +1,86 @@
+
+<ion-header >
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+    <ion-menu-button></ion-menu-button>   
+  </ion-buttons>
+    <ion-title class="ion-text-center header-margin-left">Roles & Permissions</ion-title>
+  </ion-toolbar>
+
+</ion-header>
+
+<ion-content fullscreen>
+
+<!-- <ion-split-pane></ion-split-pane> -->
+  <!-- <ngx-ui-loader [loaderId]="'loader-product-1'"></ngx-ui-loader> -->
+  <!-- <div *ngIf="isLoading" class="ion-padding-top">
+    <ion-card *ngFor="let number of [0,1,2,3,4,5,6,7,8,9,10]">
+      <ion-item>
+        <ion-thumbnail slot="start" style="width: 100px; height: 60px">
+          <ion-skeleton-text animated="true" style="width: 100px; height: 60px"></ion-skeleton-text>
+        </ion-thumbnail>
+        <ion-label>
+          <h3>
+            <ion-skeleton-text animated style="width: 60%"></ion-skeleton-text>
+          </h3>
+          <h2>
+            <ion-skeleton-text animated style="width: 70%"></ion-skeleton-text>
+          </h2>
+          <h2>
+            <ion-skeleton-text animated style="width: 45%"></ion-skeleton-text>
+          </h2>
+        </ion-label>
+      </ion-item>
+    </ion-card>
+  </div> -->
+
+  
+  <ion-refresher slot="fixed" pullFactor="0.9" pullMin="60" pullMax="200" (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content pullingIcon="chevron-down-circle-outline" pullingText="Pull to refresh"
+      refreshingSpinner="circles" refreshingText="Refreshing..." class="ion-padding-top-refresh">
+    </ion-refresher-content>
+  </ion-refresher>
+
+
+
+  <ion-toolbar slot="fixed">
+    <ion-grid>
+      <ion-row class="display-flex padding-right">
+        <ion-col size="2"><h6><b>Level</b></h6></ion-col>
+        <ion-col size="4"><h6><b>Role Group</b></h6></ion-col>
+        <ion-col size="4"><h6><b>Role Category</b></h6></ion-col>
+        <ion-col size="2"> <h6><b>Option</b></h6></ion-col>
+      </ion-row>
+      </ion-grid>
+    </ion-toolbar>
+
+
+    <div class="ion-padding-top">
+<ion-grid>
+  <!-- <ion-row class="display-flex">
+    <ion-col size="1"></ion-col>
+    <ion-col size="5"><h5><b>Role Group</b></h5></ion-col>
+    <ion-col size="3"><h5><b>Role Category</b></h5></ion-col>
+    <ion-col size="3"> <h5><b>Option</b></h5></ion-col>
+  </ion-row> -->
+  <ion-row  class ="display-flex padding-right" *ngFor="let role of userRoleGroups" routerDirection="forward" [routerLink]="['./', 'update', role._id]">
+    <ion-col size="2">{{role?.roleSeniorityLevel}}</ion-col>
+    <ion-col size="4">{{role?.roleName.replaceAll('_', ' ')}}</ion-col>
+    <ion-col size="4">{{role?.userTypeInternalOrExternal.replaceAll('_', ' ')}}</ion-col>
+    <ion-col size="2"><ion-button>Edit</ion-button></ion-col>
+  </ion-row>
+</ion-grid>
+</div>
+
+
+
+
+
+
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed" routerLink="./create" >
+    <!-- <ion-fab vertical="bottom" horizontal="end" slot="fixed" routerLink="./product-add" defaultHref="/admin/products/product-add"> -->
+    <ion-fab-button>
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+</ion-content>

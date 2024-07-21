@@ -1,0 +1,301 @@
+/*
+ * App Global CSS
+ * ----------------------------------------------------------------------------
+ * Put style rules here that you want to apply globally. These styles are for
+ * the entire app and not just one component. Additionally, this file can be
+ * used as an entry point to import other CSS/Sass files to be included in the
+ * output CSS.
+ * For more information on global stylesheets, visit the documentation:
+ * https://ionicframework.com/docs/layout/global-stylesheets
+ */
+
+/* Core CSS required for Ionic components to work properly */
+@import "~@ionic/angular/css/core.css";
+
+/* Basic CSS for apps built with Ionic */
+@import "~@ionic/angular/css/normalize.css";
+@import "~@ionic/angular/css/structure.css";
+@import "~@ionic/angular/css/typography.css";
+@import '~@ionic/angular/css/display.css';
+
+/* Optional CSS utils that can be commented out */
+@import "~@ionic/angular/css/padding.css";
+@import "~@ionic/angular/css/float-elements.css";
+@import "~@ionic/angular/css/text-alignment.css";
+@import "~@ionic/angular/css/text-transformation.css";
+@import "~@ionic/angular/css/flex-utils.css";
+
+@import '~swiper/swiper-bundle.css';
+// input[type=file] {
+//     display: none;
+// }
+
+// .upload-pic {
+//     position: absolute;
+//     width: 100%;
+//     height: 100%;
+//     top: 0;
+// }
+
+// .posRelative {
+//     position: relative;
+// }
+
+.reqired-field {
+  color: red;
+  font-weight: bold;
+  // font-size: 20px;
+}
+
+
+
+// ion-item {
+//     --padding-start: 0px !important;
+// }
+
+.overview-header {
+  margin-top: 18px;
+  padding: 3px;
+  padding-left: 22px;
+  background: var(--custome-title-background);
+  color: var(--ion-color-primary-contrast);
+  border-radius: 0px 10px 0px 10px;
+  width: 50%;
+}
+
+.overview-content {
+  margin-top: 0px;
+  padding: 3px;
+  padding-left: 22px;
+  padding-right: 20px;
+  background: var(--custome-title-background);
+  color: var(--ion-color-primary-contrast);
+  border-radius: 0px 10px 0px 10px;
+  width: fit-content;
+}
+
+.form-action-button {
+  margin-top: 30px;
+}
+
+.form-action-button ion-button {
+  margin: 6px;
+}
+
+.background-light {
+  background: var(--custom-background-light);
+}
+
+.my-custom-class {
+  --background: #fffcfc !important;
+  --color: #180e0e !important;
+  --border-radius: 10px !important;
+  text-align: center !important;
+}
+
+
+.is-Reject {
+  color: red;
+}
+
+.is-Accept {
+  color: #3a4636;
+}
+
+.ion-align-items-center {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+}
+
+
+.ion-padding-form {
+  padding-bottom: 10px;
+}
+
+.ion-padding-form-data-not-entered {
+  padding-top: 0px;
+  padding-bottom: 4px;
+  color: red;
+}
+
+.ion-padding-top-refresh {
+  margin-top: 55px;
+}
+
+.font-total-indication {
+  margin-left: 12px;
+  font-weight: bold;
+  opacity: 47%;
+}
+
+
+.sticky {
+  position: fixed;
+  top: 57px;
+  width: 99%;
+}
+
+// @font-face {
+//   font-family: 'Google Sans';
+//   src: url('../assets/font/GoogleSans-Italic.woff2') format('woff2'),
+//       url('../assets/font/GoogleSans-Italic.woff') format('woff');
+//   font-weight: normal;
+//   font-style: italic;
+// }
+
+// @font-face {
+//   font-family: 'Google Sans';
+//   src: url('../assets/font/GoogleSans-Regular.woff2') format('woff2'),
+//       url('../assets/font/GoogleSans-Regular.woff') format('woff');
+//   font-weight: normal;
+//   font-style: normal;
+// }
+
+// @font-face {
+//   font-family: 'Google Sans';
+//   src: url('../assets/font/GoogleSans-BoldItalic.woff2') format('woff2'),
+//       url('../assets/font/GoogleSans-BoldItalic.woff') format('woff');
+//   font-weight: bold;
+//   font-style: italic;
+// }
+
+// @font-face {
+//   font-family: 'Google Sans';
+//   src: url('../assets/font/GoogleSans-Bold.woff2') format('woff2'),
+//       url('../assets/font/GoogleSans-Bold.woff') format('woff');
+//   font-weight: bold;
+//   font-style: normal;
+// }
+
+// @font-face {
+//   font-family: 'Google Sans';
+//   src: url('../assets/font/GoogleSans-MediumItalic.woff2') format('woff2'),
+//       url('../assets/font/GoogleSans-MediumItalic.woff') format('woff');
+//   font-weight: 500;
+//   font-style: italic;
+// }
+
+// @font-face {
+//   font-family: 'Google Sans';
+//   src: url('../assets/font/GoogleSans-Medium.woff2') format('woff2'),
+//       url('../assets/font/GoogleSans-Medium.woff') format('woff');
+//   font-weight: 500;
+//   font-style: normal;
+// }
+
+
+
+// *,
+// body,
+// html,
+// p,
+// span,
+// h1,
+// h2,
+// h3,
+// h4,
+// h5,
+// h6,
+// strong,
+// li,
+// ion-label {
+//   --ion-font-family: 'Google Sans';
+//   font-family: 'Google Sans';
+// }
+
+// .zmdi {
+//   font: normal normal normal 14px/1 'Material-Design-Iconic-Font';
+// }
+
+.display_flex_center {
+  display: flex;
+  align-items: center;
+ }
+
+
+//  .card {
+//   border-radius: 8px;
+//   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+//   background-color: #fff;
+//   transform: translate3d(0, -4px, 0);
+//   width: calc(100% - 10px);
+//   margin: 5px auto auto auto;
+// }
+
+
+.card-ionic-selectable-dropdown {
+  border-radius: 8px;
+  box-shadow: 0 2px 7px rgba(0, 0, 0, 0.15);
+  background-color: #fff;
+  transform: translate3d(0, -4px, 0);
+  width: calc(100% - 10px);
+  margin: 5px auto auto auto;
+  display: flex;
+  align-items: center;
+  margin-bottom: -2px;
+  ion-label {
+    width: 100%;
+    margin-left: 14px;
+  }
+  ionic-selectable {
+    margin-right: 14px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: flex-end;
+  }
+  
+}
+
+
+.ion-select-card {
+  border-radius: 8px;
+  box-shadow: 0 4px 7px rgba(0, 0, 0, 0.19);
+  background-color: #fff;
+  transform: translate3d(0, -4px, 0);
+  width: calc(100% - 10px);
+  margin: 5px auto auto auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-right: 4px;
+  padding-left: 8px;
+
+}
+
+.card-datetime-filter {
+  border-radius: 8px;
+  box-shadow: 0 4px 7px rgba(0, 0, 0, 0.19);
+  background-color: #fff;
+  transform: translate3d(0, -4px, 0);
+  width: calc(100% - 22px);
+  margin: 5px auto auto auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-right: 4px;
+  padding-left: 8px;
+  height: 40px;
+}
+
+.element-flex-center {
+  display: flex;
+    justify-content: center;
+}
+
+.full-width {
+  width: 100%;
+}
+
+.cursor-hover-change-to-pointer:hover {
+  cursor: pointer;
+}
+
+
+.card-header-align-centre {
+  display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: bolder;
+    font-size: large;
+}

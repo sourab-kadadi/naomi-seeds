@@ -1,0 +1,42 @@
+.ion-popover-pop {
+    // position: fixed !important;
+    // top: 29% !important;
+    // left: 50% !important;
+    // margin-top: -454px !important;
+    // margin-left: -145px !important;
+    // // height: 539px !important;
+    // // padding-left: 20px;
+    --box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    /* position: fixed; */
+    top: 0%;
+    left: 15%;
+  }
+  
+  .ionic-selectable {
+    display: block;
+    max-width: 67%;
+  }
+  
+  .button-item-delete {
+   margin-left:-11px;
+  }
+  
+  .ion-align-center-amount {
+    display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-content: stretch;
+      align-items: center;
+   }
+  
+
+   .card-datetime-filter {
+    width: calc(100% - 12px);
+   }
+
+
+   
+.display-flex {
+  display: flex !important;
+}
+

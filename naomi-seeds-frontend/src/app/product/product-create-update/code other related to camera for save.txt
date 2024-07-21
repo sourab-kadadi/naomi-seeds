@@ -1,0 +1,172 @@
+HTML code        
+        
+            <!-- camera and image component -->
+            <!-- <ion-button (click)="selectImage()">
+              select image
+            </ion-button>
+            <div *ngIf="active" class="imageMain"> -->
+            <!-- <img width="100%" height="100%" src="{{ tempImage }}" /> -->
+            <!-- <ion-img [src]="tempImage"></ion-img> -->
+            <!-- </div> -->
+            <!-- <ion-button (change)="uploadFileToS3($event)">
+              select image
+              <input type="file" name="uploadImage" id="uploadImage" (change)="uploadFileToS3($event)" accept=".png, .jpg, .jpeg" />
+            </ion-button> -->
+            <!-- <h3 *ngIf="images.length === 0" class="ion-padding ion-text-center"> Please Select image</h3>
+              <ion-list>
+                <ion-item *ngFor="let file of images; let i = index">
+                  <ion-thumbnail slot="start">
+                    <ion-img [src]="file.data"></ion-img>
+                  </ion-thumbnail>
+                  <ion-label class="ion-text-wrap">
+                    {{ file.name }}
+                  </ion-label>
+                  <ion-button slot="end" fill="clear" (click)="startUpload(file)">
+                    <ion-icon slot="icon-only" name="cloud-upload"></ion-icon>
+                  </ion-button>
+                  <ion-button slot="end" fill="clear" (click)="deleteImage(file)">
+                    <ion-icon slot="icon-only" name="trash"></ion-icon>
+                  </ion-button>
+                </ion-item>
+              </ion-list> -->
+            <!-- camera and storage part -->
+            <!-- <ion-img src="../../assets/tomato.jpeg"></ion-img> -->
+
+
+
+
+       
+TS code
+
+            import { Camera, CameraResultType, CameraSource, Photo } from '@capacitor/camera';
+import { Directory, Filesystem } from '@capacitor/filesystem';
+
+
+  // Functions for using camera and loading images from local storage
+  //   async loadFiles() {
+  //     this.images = [];
+  //     //add a loader
+  //     // this.ngxUiLoader.startLoader('loader-product-add-1');
+  //     // above loader has no effect!! check/////
+  //     // loader till here
+  //     Filesystem.readdir({
+  //       directory: Directory.Data,
+  //       path: IMAGE_DIR
+  //     }).then(result => {
+  //       console.log('imagedir_result', result);
+  //       this.loadFileData(result.files);
+  //     }, async error => {
+  //       // this.ngxUiLoader.stopLoader('loader-product-add-1');
+  //       console.log('error', error);
+  //       await Filesystem.mkdir({
+  //         directory: Directory.Data,
+  //         path: IMAGE_DIR
+  //       });
+  //     }).then(_ => {
+  //       // loading.dismiss();
+  //       // this.ngxUiLoader.stopLoader('loader-product-add-1');
+  //     });
+  //   }
+  
+  //   async loadFileData(fileNames: string[]) {
+  //     for (let f of fileNames) {
+  //       const filePath = `${IMAGE_DIR}/${f}`;
+  //       const readFile = await Filesystem.readFile({
+  //         directory: Directory.Data,
+  //         path: filePath
+  //       });
+  //       this.images.push({
+  //         name: f,
+  //         path: filePath,
+  //         data: `data:image/jpeg;base64,${readFile.data}`
+  //       });
+  //       console.log('reasult load file data', filePath, readFile);
+  //     }
+  //   }
+  //   async selectImage() {
+  //     const image = await Camera.getPhoto({
+  //       quality: 90,
+  //       // allowedEditing: false,
+  //       resultType: CameraResultType.DataUrl,
+  //       //for using files stored in local storage use this
+  //       // source: CameraSource.Photos
+  //       //for camera use below this also has a icon in the side to select from gallery
+  //       source: CameraSource.Camera,
+  //     });
+  //     console.log('image', image);
+  //     if (image) {
+  //       // this.saveImages(image);
+  //
+  //       this.tempImage = image.webPath;
+  //       this.saveImages(image);
+  //     }
+  //   }
+  
+  //   async saveImages(photo: Photo) {
+  //     const base64Data = await this.readAsBase64(photo);
+  //     console.log('base64Data', base64Data);
+  //     const fileName = new Date().getTime() + '.jpeg';
+  //     const savedFile = await Filesystem.writeFile({
+  //       directory: Directory.Data,
+  //       path: `${IMAGE_DIR}/${fileName}`,
+  //       data: base64Data
+  //     });
+  //     console.log('savedfile', savedFile);
+  //   }
+  
+  //   async readAsBase64(photo: Photo) {
+  //     if (this.platform.is('hybrid')) {
+  //       const file = await Filesystem.readFile({
+  //         path: photo.path
+  //       });
+  //       return file.data;
+  //     }
+  //     else {
+  //       const response = await fetch(photo.webPath);
+  //       const blob = await response.blob();
+  //       return await this.convertBlobToBase64(blob) as string
+  //     }
+  
+  //   }
+  
+  //   convertBlobToBase64 = (blob: Blob) => new Promise((resolve, reject) => {
+  //     const reader = new FileReader();
+  //     reader.onerror = reject;
+  //     reader.onload = () => {
+  //       resolve(reader.result);
+  //     };
+  //     reader.readAsDataURL(blob);
+  //   });
+  
+  //   async startUpload(file: LocalFile) {
+  //     const response = await fetch(file.data);
+  //     console.log(response);
+  //     const blob = await response.blob();
+  //     console.log('blob', blob);
+  //     const formData = new FormData();
+  //     formData.append('file', blob, file.name);
+  //     this.uploadData(formData);
+  //     // this.uploadFileToS3(formData);
+  //     console.log(blob);
+  //   }
+  
+  //   async uploadData(formData: FormData) {
+  //     // loader
+  //     // await loading.present();
+  //     // const url =
+  //     //     this.http.post(url, formData).pipe(
+  //     //       finalize(_ => {
+  //     //       })
+  //     //     ).subscribe(res => {
+  //     //       console.log(res);
+  //     //     });
+  //   }
+  //   async deleteImage(file: LocalFile) {
+  //     await Filesystem.deleteFile({
+  //       directory: Directory.Data,
+  //       path: file.path
+  //     });
+  //     this.loadFiles();
+  //   }
+  // // till here for using native camera function and managing storage and upload
+  

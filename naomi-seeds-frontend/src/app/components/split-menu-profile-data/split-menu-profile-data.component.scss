@@ -1,0 +1,35 @@
+.profile-pic {
+  margin-right: 25px
+}
+
+.profile-item {
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+
+ion-img {
+  flex: 1;
+  width: 50px;
+  height: 110px;
+  margin: 10px;
+}
+
+.profile-content {
+  padding-bottom:1px;
+  padding-top:1px;
+}
+
+ion-item.selected {
+  --color: var(--ion-color-primary);
+}
+
+ion-item{
+    --background: var(--ion-color-primary) !important;
+      --color: #FFFFFF !important;
+      ion-icon{ padding-right: 10px !important; }
+}
+
+.h2 {
+  font-size: 1.05rem;
+}

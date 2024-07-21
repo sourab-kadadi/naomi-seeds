@@ -1,0 +1,402 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="app/product"></ion-back-button>
+    </ion-buttons>
+    <ion-title class="ion-text-center header-margin-left">Add Product</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ngx-ui-loader [loaderId]="'loader-add-product'" class="full"></ngx-ui-loader>
+  <ion-grid *ngIf="isActive">
+    <form [formGroup]="productForm" (ngSubmit)="onSave()">
+      <ion-row>
+        <ion-col size="12">
+          <ion-card class="padding-card">
+
+
+
+            <!-- display -->
+            <ion-item *ngFor="let img of imagesPaths; let i = index">
+              <div class="imageDisplay">
+                <img [src]="s3path + img.filePath">
+              </div>
+              <div>
+                <ion-fab-button color="danger" size="small" horizontal="end" slot="fixed" (click)="deleteImage(i)">
+                  <ion-icon name="trash-outline"></ion-icon>
+                </ion-fab-button>
+              </div>
+            </ion-item>
+            <!-- display end -->
+
+
+            <label for="uploadImage">
+              <div class="initImgMain">
+                <!-- <span class="material-icons"> icon </span> -->
+                <ion-icon class="icon-size" size="small" name="image-outline"></ion-icon>
+                <p>Add Product Image</p>
+              </div>
+            </label>
+            <input type="file" name="uploadImage" id="uploadImage" (change)="uploadFileToS3($event)"
+              accept=".png, .jpg, .jpeg" />
+            <!--  -->
+
+            <ion-item class="Form-Item">
+              <ion-label class="ion-label" position="floating">Product Name<span class="reqired-field">*</span>
+              </ion-label>
+              <ion-input type="text" formControlName="name" placeholder="Product Name"></ion-input>
+              <ion-note *ngIf="
+                !productForm.get('name').valid && productForm.get('name').touched" color="danger" position="fixed"
+                class="ion-padding">
+                please enter data.
+              </ion-note>
+            </ion-item>
+
+            <ion-item class="margin-crop">
+              <ion-label>Select Crop</ion-label>
+              <ionic-selectable #selectComponentCrop item-content [(ngModel)]="productCategory" itemValueField="_id"
+                itemTextField="cropName" [items]="productCategories" [canSearch]="true"
+                (onChange)="onChangeProductCategory($event)" [ngModelOptions]="{standalone: true}"
+                class="max-width-selectable">
+              </ionic-selectable>
+            </ion-item>
+
+            <ion-item class="Form-Item" *ngIf="this.productForm.get('cropType').value">
+              <ion-label>Crop Type: {{this.productForm.get('cropType').value}}</ion-label>
+            </ion-item>
+
+            <ion-item class="Form-Item">
+              <ion-label class="ion-label" position="floating">HSN Code<span class="reqired-field">*</span></ion-label>
+              <ion-input type="text" formControlName="hsnCode" placeholder="HSN Code"></ion-input>
+              <ion-note *ngIf="
+                !productForm.get('hsnCode').valid && productForm.get('hsnCode').touched" color="danger"
+                position="floating" class="ion-padding">
+                please enter HSN Code.
+              </ion-note>
+            </ion-item>
+          </ion-card>
+
+          <ion-card class="padding-card" text-wrap>
+            <ion-card-subtitle class="ion-text-center ion-padding-top">
+              <h5><b>Morphological Characters</b></h5>
+            </ion-card-subtitle>
+            <div *ngIf="morfActive">
+              <ion-item class="ion-row remove-margin ion-padding-left"
+                *ngFor="let item of this.morphologicalCharacters; let i = index">
+                <ion-list>
+                  <ion-card-content text-wrap class="remove-padding-bottom"> <b> {{item?.key || null}}</b>
+                  </ion-card-content>
+                  <ion-card-content text-wrap class="remove-padding-bottom"> {{item?.value || null}} </ion-card-content>
+                </ion-list>
+                <ion-button size="small" color="danger" fill="clear" (click)="onDeleteMorf(i)" slot="end">
+                  <ion-icon name="close-circle-outline"></ion-icon>
+                </ion-button>
+              </ion-item>
+            </div>
+
+            <form [formGroup]="morphologicalItem" (ngSubmit)="onAddMorphological()">
+              <ion-row>
+                <ion-col size="6" size-md="6">
+                  <ion-item class="Form-Item remove-margin">
+                    <ion-label class="ion-label" position="floating">Title</ion-label>
+                    <ion-input type="string" formControlName="key" placeholder="Enter Title"></ion-input>
+                    <!-- <ion-note *ngIf="
+                          !morphologicalItem.get('key').valid && morphologicalItem.get('key').touched" color="danger"
+                      position="floating" class="ion-padding">
+                      please provide valid Data.
+                    </ion-note> -->
+                  </ion-item>
+                </ion-col>
+
+
+                <ion-col size="6" size-md="6">
+                  <ion-item class="Form-Item remove-margin">
+                    <ion-label class="ion-label" position="floating">Data</ion-label>
+                    <ion-input type="string" formControlName="value" placeholder="Enter Data"></ion-input>
+                    <!-- <ion-note *ngIf="
+                    !morphologicalItem.get('value').valid && morphologicalItem.get('value').touched" color="danger"
+                      position="floating" class="ion-padding">
+                      please provide valid Data.
+                    </ion-note> -->
+                  </ion-item>
+                </ion-col>
+              </ion-row>
+
+              <ion-row>
+                <ion-col size="6" size-md="6">
+                  <ion-button class="buttom-margin-left" (click)="resetmorf()" color="danger" *ngIf="resetMorfButton">
+                    <ion-icon name="close-outline" slot="icon-only"></ion-icon>
+                    Reset
+                  </ion-button>
+                </ion-col>
+                <ion-col size="6" size-md="6">
+                  <ion-button type="submit" [disabled]="!morphologicalItem.valid" class="buttom-margin-left"
+                    *ngIf="resetMorfButton">
+                    <ion-icon name="checkmark" slot="icon-only"> </ion-icon>
+                    Add
+                  </ion-button>
+                </ion-col>
+              </ion-row>
+              <ion-button type="submit" [disabled]="!morphologicalItem.valid" class="buttom-margin-left"
+                *ngIf="!resetMorfButton">
+                <ion-icon name="checkmark" slot="icon-only"> </ion-icon>
+                Add Details
+              </ion-button>
+            </form>
+          </ion-card>
+
+          <ion-card class="padding-card">
+            <ion-card-subtitle class="ion-text-center ion-padding-top">
+              <h5><b>Special Features/USP's</b></h5>
+            </ion-card-subtitle>
+            <div *ngIf="featureActive">
+              <ion-item class="ion-row" *ngFor="let item of this.specialFeaturesUSPS; let i = index"
+                class="line-divider">
+
+                <ion-icon name="caret-forward-outline"></ion-icon>
+                <!-- <ion-icon name="arrow-forward-outline"></ion-icon> -->
+                <ion-label class="ion-padding-left"> {{item?.name || null}}</ion-label>
+                <ion-button size="small" color="danger" fill="clear" (click)="onDeleteItem(i)" slot="end">
+                  <ion-icon name="close-circle-outline"></ion-icon>
+                </ion-button>
+              </ion-item>
+            </div>
+
+            <form [formGroup]="featureItem" (ngSubmit)="onAddItem()">
+              <!-- <ion-card-subtitle ><b>Crop: </b>  {{ productForm.specialFeaturesUSPS }}</ion-card-subtitle> -->
+              <ion-item class="Form-Item">
+                <ion-label class="ion-label" position="floating">Enter Special Features</ion-label>
+                <ion-input type="string" formControlName="name" placeholder="features"></ion-input>
+                <!-- <ion-note *ngIf="
+                        !productForm.get('price').valid && productForm.get('price').touched" color="danger" position="floating"
+                        class="ion-padding">
+                        please provide a valid Selling Price.
+                      </ion-note> -->
+              </ion-item>
+              <ion-row>
+                <ion-col size="6" size-md="6">
+                  <ion-button class="buttom-margin-left" (click)="resetFeatures()" color="danger"
+                    *ngIf="resetFeatureButton">
+                    <ion-icon name="close-outline" slot="icon-only"></ion-icon>
+                    Reset
+                  </ion-button>
+                </ion-col>
+                <ion-col size="6" size-md="6">
+                  <ion-button type="submit" [disabled]="!featureItem.valid" class="buttom-margin-left"
+                    *ngIf="resetFeatureButton">
+                    <ion-icon name="checkmark" slot="icon-only"> </ion-icon>
+                    Add
+                  </ion-button>
+                </ion-col>
+
+              </ion-row>
+              <ion-button type="submit" [disabled]="!featureItem.valid" class="buttom-margin-left"
+                *ngIf="!resetFeatureButton">
+                <ion-icon name="checkmark" slot="icon-only"> </ion-icon>
+                Add Feature
+              </ion-button>
+            </form>
+          </ion-card>
+
+          <ion-card class="padding-card">
+            <ion-card-subtitle class="ion-text-center ion-padding-top">
+              <h5><b>Truthful Label</b></h5>
+            </ion-card-subtitle>
+
+            <ng-container formGroupName="truthfulLabel">
+              <ion-row>
+                <ion-col size="12" size-md="6">
+                  <ion-item>
+                    <ion-label position="floating">Germination (MIN.) in % <span
+                        class="reqired-field">*</span></ion-label>
+                    <ion-input type="number" formControlName="germinationInPercentageMin"></ion-input>
+                  </ion-item>
+                  <!-- <span class="error ion-padding" *ngIf="isSubmitted && userForm.get('profile').get('addressDetails').get('address1').hasError('required')">
+                  Address 1 is required.
+                 </span> -->
+                </ion-col>
+                <ion-col size="12" size-md="6">
+                  <ion-item>
+                    <ion-label position="floating">Genetic Purity (MIN.) in %<span
+                        class="reqired-field">*</span></ion-label>
+                    <ion-input type="number" formControlName="geneticPurityInPercentageMin"></ion-input>
+                  </ion-item>
+                  <!-- <span class="error ion-padding" *ngIf="isSubmitted && userForm.get('profile').get('addressDetails').get('address2').hasError('required')">
+                  Address 2 is required.
+                 </span> -->
+                </ion-col>
+
+                <ion-col size="12" size-md="6">
+                  <ion-item>
+                    <ion-label position="floating">Physical Purity (MIN.) in %<span
+                        class="reqired-field">*</span></ion-label>
+                    <ion-input type="number" formControlName="physicalPuritySeedInPercentageMin"></ion-input>
+                  </ion-item>
+                  <!-- <span class="error ion-padding" *ngIf="isSubmitted && userForm.get('profile').get('addressDetails').get('address2').hasError('required')">
+                  Address 2 is required.
+                 </span> -->
+                </ion-col>
+
+                <ion-col size="12" size-md="6">
+                  <ion-item>
+                    <ion-label position="floating">Inert Matter (MAX.) in %<span
+                        class="reqired-field">*</span></ion-label>
+                    <ion-input type="number" formControlName="inertMatterNotMoreThanPercentMax"></ion-input>
+                  </ion-item>
+                  <!-- <span class="error ion-padding" *ngIf="isSubmitted && userForm.get('profile').get('addressDetails').get('address2').hasError('required')">
+                  Address 2 is required.
+                 </span> -->
+                </ion-col>
+
+                <ion-col size="12" size-md="6">
+                  <ion-item>
+                    <ion-label position="floating">Moisture (MAX.) in %<span class="reqired-field">*</span></ion-label>
+                    <ion-input type="number" formControlName="moistureInPercentageMax"></ion-input>
+                  </ion-item>
+                  <!-- <span class="error ion-padding" *ngIf="isSubmitted && userForm.get('profile').get('addressDetails').get('address2').hasError('required')">
+                  Address 2 is required.
+                 </span> -->
+                </ion-col>
+
+                <ion-col size="12" size-md="6">
+                  <ion-item>
+                    <ion-label position="floating">Other Crop Seeds (MAX.) per Kg<span
+                        class="reqired-field">*</span></ion-label>
+                    <ion-input type="number" formControlName="otherCropSeedsNotMoreThanPerKgMax"></ion-input>
+                  </ion-item>
+                  <!-- <span class="error ion-padding" *ngIf="isSubmitted && userForm.get('profile').get('addressDetails').get('address2').hasError('required')">
+                  Address 2 is required.
+                 </span> -->
+                </ion-col>
+
+                <ion-col size="12" size-md="6">
+                  <ion-item>
+                    <ion-label position="floating">Weed Seeds (MAX.) per Kg<span
+                        class="reqired-field">*</span></ion-label>
+                    <ion-input type="number" formControlName="weedSeedsPerKgMax"></ion-input>
+                  </ion-item>
+                  <!-- <span class="error ion-padding" *ngIf="isSubmitted && userForm.get('profile').get('addressDetails').get('address2').hasError('required')">
+                  Address 2 is required.
+                 </span> -->
+                </ion-col>
+
+                <ion-col size="12" size-md="6">
+                  <ion-item>
+                    <ion-label position="floating">Male seed used<span class="reqired-field">*</span></ion-label>
+                    <ion-input type="string" formControlName="maleSeedUsed"></ion-input>
+                  </ion-item>
+                  <!-- <span class="error ion-padding" *ngIf="isSubmitted && userForm.get('profile').get('addressDetails').get('address2').hasError('required')">
+                  Address 2 is required.
+                 </span> -->
+                </ion-col>
+                <ion-col size="12" size-md="6">
+                  <ion-item>
+                    <ion-label position="floating">Female seed used <span class="reqired-field">*</span></ion-label>
+                    <ion-input type="string" formControlName="femaleSeedUsed"></ion-input>
+                  </ion-item>
+                  <!-- <span class="error ion-padding" *ngIf="isSubmitted && userForm.get('profile').get('addressDetails').get('address2').hasError('required')">
+                  Address 2 is required.
+                 </span> -->
+                </ion-col>
+
+              </ion-row>
+
+            </ng-container>
+          </ion-card>
+
+
+          <ion-card class="padding-card">
+            <div class="ion-text-center">
+              <ion-card-subtitle class="card-title-padding">
+                <h5><b>Product Status</b></h5>
+              </ion-card-subtitle>
+            </div>
+
+            <ion-item size="12" class="status-design Form-Item">
+              Product available for current season ?
+              <ion-toggle formControlName="productAvailableForCurrentSeason" color="primary" ></ion-toggle>
+            </ion-item>
+
+            <ion-item size="12" class="status-design Form-Item">
+              Product Active ?
+              <ion-toggle formControlName="status" color="primary" ></ion-toggle>
+            </ion-item>
+          </ion-card>
+        </ion-col>
+      </ion-row>
+
+      <ion-row>
+        <!-- <ion-col size="6" size-md="6">
+            <ion-button color="danger" class="buttom-margin-left"> -->
+        <!-- <ion-icon name="checkmark" slot="icon-only"> </ion-icon> -->
+        <!-- Reset Form
+            </ion-button>
+          </ion-col> -->
+
+        <ion-col>
+          <!-- <ion-button type="submit" [disabled]="!productForm.valid" expand="full"> -->
+          <ion-button type="submit" expand="full">
+            <!-- <ion-icon name="checkmark" slot="icon-only"> </ion-icon> -->
+            Save Product
+          </ion-button>
+        </ion-col>
+      </ion-row>
+    </form>
+  </ion-grid>
+
+  <!-- [(ngModel)]="location" -->
+
+  <!-- <app-image-upload [imageData]="image" (onSave)="saveImage($event)" ></app-image-upload> -->
+
+</ion-content>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- till here -->
+
+
+
+
+
+
+
+<!-- </ion-col>
+      </ion-row> -->
+<!-- <ion-row>
+        <ion-col size-sm="6" offset-sm="3">
+          <ion-item>
+            <ion-label position="floating">Short Description</ion-label>
+            <ion-input rows="3" formControlName="description"></ion-input>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+      <ion-row
+        *ngIf="
+          !form.get('description').valid && form.get('description').touched
+        "
+      >
+        <ion-col size-sm="6" offset-sm="3">
+          <p>Description must be between 1 and 180 characters.</p>
+        </ion-col>
+      </ion-row> -->
+<!-- <ion-row>
+        <ion-col size-sm="6" offset-sm="3">
+          <ion-item>
+            <ion-label position="floating">Price</ion-label>
+            <ion-input type="number" formControlName="price"></ion-input>
+          </ion-item>
+
+        </ion-col>
+      </ion-row> -->

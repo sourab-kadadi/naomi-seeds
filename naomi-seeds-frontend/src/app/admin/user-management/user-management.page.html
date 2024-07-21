@@ -1,0 +1,107 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-menu-button slot="start"></ion-menu-button>
+    <ion-title class="ion-text-center header-margin-left">Registered Users </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content fullscreen>
+
+  <ion-toolbar slot="fixed" class="ion-hide-sm-down">
+    <ion-grid>
+    <ion-row>
+      <ion-col size="8">
+      <ion-searchbar #search placeholder="Search for Name, Distributor" enterkeyhint="enter" (ionChange)="onSearchChange($event)"
+      debounce="200"></ion-searchbar>
+  </ion-col>
+  <ion-col size="4">
+    <ion-card class="Form-Item">
+      <ion-select placeholder="Filter by Role" (ionChange)="onDropdownSelection($event)">
+      <ion-select-option value="ADMIN">Admin</ion-select-option>
+      <ion-select-option value="MANAGER">Manager</ion-select-option>
+      <ion-select-option value="SALES_OFFICER">Sales Officer</ion-select-option>
+      <ion-select-option value="ACCOUNTANT">Accountant</ion-select-option>
+      <ion-select-option value="DISTRIBUTOR">Distributor</ion-select-option>
+      <ion-select-option value="ALL USERS">All Users</ion-select-option>
+    </ion-select>
+  </ion-card>
+    </ion-col>
+    </ion-row>
+    </ion-grid>
+  </ion-toolbar>
+
+  <ion-toolbar slot="fixed" class="ion-hide-sm-up">
+      <ion-searchbar #search placeholder="Search for Name,Distributor" enterkeyhint="enter" (ionChange)="onSearchChange($event)"
+      debounce="200"></ion-searchbar>
+      <ion-card class="Form-Item">
+          <ion-select placeholder="Filter by Role" (ionChange)="onDropdownSelection($event)">
+          <ion-select-option value="ADMIN">Admin</ion-select-option>
+          <ion-select-option value="MANAGER">Manager</ion-select-option>
+          <ion-select-option value="SALES_OFFICER">Sales Officer</ion-select-option>
+          <ion-select-option value="ACCOUNTANT">Accountant</ion-select-option>
+          <ion-select-option value="DISTRIBUTOR">Distributor</ion-select-option>
+          <ion-select-option value="PLANT_MANAGER">Plant Manager</ion-select-option>
+          <ion-select-option value="ALL USERS">All Users</ion-select-option>
+        </ion-select>
+      </ion-card>
+  </ion-toolbar>
+
+
+  <ngx-ui-loader [loaderId]="'loader-user-1'"></ngx-ui-loader>
+  <div *ngIf="isLoading" class="ion-padding-top">
+    <ion-card *ngFor="let number of [0,1,2,3,4,5,6,7,8,9,10]">
+      <ion-item>
+        <ion-thumbnail slot="start" style="width: 100px; height: 60px">
+          <ion-skeleton-text animated="true" style="width: 100px; height: 60px"></ion-skeleton-text>
+        </ion-thumbnail>
+        <ion-label>
+          <h3>
+            <ion-skeleton-text animated style="width: 60%"></ion-skeleton-text>
+          </h3>
+          <h2>
+            <ion-skeleton-text animated style="width: 70%"></ion-skeleton-text>
+          </h2>
+          <h2>
+            <ion-skeleton-text animated style="width: 45%"></ion-skeleton-text>
+          </h2>
+        </ion-label>
+      </ion-item>
+    </ion-card>
+  </div>
+
+  <ion-refresher slot="fixed" pullFactor="0.9" pullMin="60" pullMax="200" (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content pullingIcon="chevron-down-circle-outline" pullingText="Pull to refresh"
+      refreshingSpinner="circles" refreshingText="Refreshing..." class="ion-padding-top-refresh">
+    </ion-refresher-content>
+  </ion-refresher>
+
+  <div class="ion-padding-top" *ngIf="!inActive">
+      <ion-item *ngFor="let user of users" routerDirection="forward" [routerLink]="['./', user._id]" lines="full" class="card-margin-bottom" >
+        <!-- <div *ngIf="user.image && user.image.filePath" class="image-margin-right">
+          <ion-img src="{{ s3path + user?.image?.filePath }}"></ion-img>
+        </div>
+        <div *ngIf="!user.image || !user.image.filePath || user.image.filePath === 'string' || user.image.filePath === null" class="dummyImage-Style">
+          <ion-img src="../../../../assets/image-not-found.svg"></ion-img>
+        </div> -->
+
+      <ion-label text-wrap class="margin-left">
+        <h2>{{ user?.userData?.firstName +" "+ user?.userData?.lastName}}</h2>
+        <h3>{{ user?.companyName}}</h3>
+        <h3>{{ user?.userData?.email}}</h3>
+        <p>{{ user?.userData?.phoneNo}}</p>
+        </ion-label>
+        <ion-badge color="primary" >{{ user?.roles[0] }}</ion-badge>
+    </ion-item>
+  </div>
+
+  <ion-infinite-scroll threshold="25%" position="bottom" (ionInfinite)="getAllProductsOnScroll(true, $event)">
+    <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="Loading more data...">
+    </ion-infinite-scroll-content>
+  </ion-infinite-scroll>
+
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed" routerLink="./add-user" >
+    <ion-fab-button>
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+</ion-content>

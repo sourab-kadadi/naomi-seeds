@@ -1,0 +1,411 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="app/products-lot-page"></ion-back-button>
+    </ion-buttons>
+    <ion-title *ngIf="this.mode==='create'" class="ion-text-center header-margin-left">Add Lot Data</ion-title>
+    <ion-title *ngIf="this.mode==='update'" class="ion-text-center header-margin-left">Edit Lot Data</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+
+
+<ion-content [fullscreen]="true">
+  <ngx-ui-loader [loaderId]="'loader-product-lot-create-update'" class="full"></ngx-ui-loader>
+  <ion-grid *ngIf="active">
+    <!-- <ion-grid > -->
+
+    <ion-row *ngIf="this.mode === 'create'">
+      <ion-col size="12">
+        <ion-card>
+          <ion-item>
+            <ion-label>Select Product</ion-label>
+            <ionic-selectable #selectComponentProduct item-content [(ngModel)]="product" itemValueField="_id"
+              itemTextField="name" [items]="products" [canSearch]="true" (onChange)="onProductSelection($event)">
+            </ionic-selectable>
+          </ion-item>
+        </ion-card></ion-col>
+    </ion-row>
+
+    <ion-row *ngIf="this.mode === 'create'">
+      <ion-col size="12">
+        <ion-card>
+          <ion-item>
+            <ion-label>Select Packing Size</ion-label>
+            <ionic-selectable item-content #selectComponentProductPackingSize item-content
+              [(ngModel)]="productPackingSize" itemValueField="_id" itemTextField="packingQty"
+              [items]="productPackingSizeList" [canSearch]="true" (onChange)="onProductPackingSizeSelection($event)">
+              <ng-template ionicSelectableValueTemplate let-productPackingSize="value">
+                {{productPackingSize.packingQty}} {{productPackingSize.packingUnit}}
+              </ng-template>
+            </ionic-selectable>
+          </ion-item>
+        </ion-card></ion-col>
+    </ion-row>
+
+
+
+    <ion-card>
+      <ion-card-subtitle class="ion-text-center">
+        <h5><b>Product Details</b> </h5>
+      </ion-card-subtitle>
+      <ion-row class="row-margin-left">
+        <ion-col size="6" size-md="6">
+          <ion-card-subtitle><b> Product Name:</b></ion-card-subtitle>
+        </ion-col>
+        <ion-col size="6" size-md="6">
+          <ion-card-subtitle> {{this.productName }}</ion-card-subtitle>
+        </ion-col>
+      </ion-row>
+      <ion-row class="row-margin-left">
+        <ion-col size="6" size-md="6">
+          <ion-card-subtitle><b> Packing Size:</b></ion-card-subtitle>
+        </ion-col>
+        <ion-col size="6" size-md="6">
+          <ion-card-subtitle>{{this.productPackingSize?.packingQty}}
+            {{this.productPackingSize?.packingUnit}}</ion-card-subtitle>
+        </ion-col>
+      </ion-row>
+      <ion-row class="row-margin-left">
+        <ion-col size="6" size-md="6">
+          <ion-card-subtitle><b> Packet Invoice Price:</b></ion-card-subtitle>
+        </ion-col>
+        <ion-col size="6" size-md="6">
+          <ion-card-subtitle> &#8377;
+            {{this.productPackingSize?.packetInvoicePrice?.toLocaleString("en-IN")}}</ion-card-subtitle>
+        </ion-col>
+      </ion-row>
+      <ion-row class="row-margin-left">
+        <ion-col size="6" size-md="6">
+          <ion-card-subtitle><b>Effective rate per Kg:</b></ion-card-subtitle>
+        </ion-col>
+        <ion-col size="6" size-md="6">
+          <ion-card-subtitle>&#8377; {{this.productPackingSize?.effectiveRatePerKg?.toLocaleString("en-IN")
+            }}</ion-card-subtitle>
+        </ion-col>
+      </ion-row>
+      <ion-row class="row-margin-left">
+        <ion-col size="6" size-md="6">
+          <ion-card-subtitle><b> MRP price of the packet:</b></ion-card-subtitle>
+        </ion-col>
+        <ion-col size="6" size-md="6">
+          <ion-card-subtitle>&#8377; {{this.productPackingSize?.packetMRPPrice?.toLocaleString("en-IN") }}
+          </ion-card-subtitle>
+        </ion-col>
+      </ion-row>
+    </ion-card>
+
+
+
+
+
+
+
+
+    <ion-card>
+      <ion-accordion-group>
+        <ion-accordion value="colors">
+          <ion-item slot="header" class="ion-item-margin">
+            <ion-card-subtitle class="ion-text-center">
+              <h5><b>Truthful Label</b> </h5>
+            </ion-card-subtitle>
+          </ion-item>
+
+          <ion-list slot="content" lines="none" class="ion-item-margin">
+            <ion-item class="ion-item-margin min-height-adjust">
+              <ion-col size="8" size-md="6">
+                <ion-card-subtitle><b> Germination (MIN.) in %:</b></ion-card-subtitle>
+              </ion-col>
+              <ion-col size="8" size-md="6">
+                <ion-card-subtitle> {{this.productTruthfulLabel?.germinationInPercentageMin }}</ion-card-subtitle>
+              </ion-col>
+            </ion-item>
+
+            <ion-item class="ion-item-margin min-height-adjust">
+              <ion-col size="8" size-md="6">
+                <ion-card-subtitle><b> Genetic Purity (MIN.) in %:</b></ion-card-subtitle>
+              </ion-col>
+              <ion-col size="8" size-md="6">
+                <ion-card-subtitle> {{this.productTruthfulLabel?.geneticPurityInPercentageMin }}</ion-card-subtitle>
+              </ion-col>
+            </ion-item>
+
+            <ion-item class="ion-item-margin min-height-adjust">
+              <ion-col size="8" size-md="6">
+                <ion-card-subtitle><b> Physical Purity (MIN.) in %:</b></ion-card-subtitle>
+              </ion-col>
+              <ion-col size="8" size-md="6">
+                <ion-card-subtitle> {{this.productTruthfulLabel?.physicalPuritySeedInPercentageMin
+                  }}</ion-card-subtitle>
+              </ion-col>
+            </ion-item>
+
+            <ion-item class="ion-item-margin min-height-adjust">
+              <ion-col size="8" size-md="6">
+                <ion-card-subtitle><b>Inert Matter (MAX.) in %:</b></ion-card-subtitle>
+              </ion-col>
+              <ion-col size="8" size-md="6">
+                <ion-card-subtitle> {{this.productTruthfulLabel?.inertMatterNotMoreThanPercentMax }}</ion-card-subtitle>
+              </ion-col>
+            </ion-item>
+
+            <ion-item class="ion-item-margin min-height-adjust">
+              <ion-col size="8" size-md="6">
+                <ion-card-subtitle><b> Moisture (MAX.) in %:</b></ion-card-subtitle>
+              </ion-col>
+              <ion-col size="8" size-md="6">
+                <ion-card-subtitle> {{this.productTruthfulLabel?.moistureInPercentageMax }} </ion-card-subtitle>
+              </ion-col>
+            </ion-item>
+
+            <ion-item class="ion-item-margin min-height-adjust">
+              <ion-col size="8" size-md="6">
+                <ion-card-subtitle><b> Other Crop Seeds (MAX.) per Kg:</b></ion-card-subtitle>
+              </ion-col>
+              <ion-col size="8" size-md="6">
+                <ion-card-subtitle> {{this.productTruthfulLabel?.otherCropSeedsNotMoreThanPerKgMax
+                  }}</ion-card-subtitle>
+              </ion-col>
+            </ion-item>
+
+            <ion-item class="ion-item-margin min-height-adjust">
+              <ion-col size="8" size-md="6">
+                <ion-card-subtitle><b> Weed Seeds (MAX.) per Kg:</b></ion-card-subtitle>
+              </ion-col>
+              <ion-col size="8" size-md="6">
+                <ion-card-subtitle> {{this.productTruthfulLabel?.weedSeedsPerKgMax }}</ion-card-subtitle>
+              </ion-col>
+            </ion-item>
+
+            <ion-item class="ion-item-margin min-height-adjust">
+              <ion-col size="8" size-md="6">
+                <ion-card-subtitle><b> Male seed used:</b></ion-card-subtitle>
+              </ion-col>
+              <ion-col size="8" size-md="6">
+                <ion-card-subtitle> {{this.productTruthfulLabel?.maleSeedUsed }}</ion-card-subtitle>
+              </ion-col>
+            </ion-item>
+
+            <ion-item class="ion-item-margin min-height-adjust">
+              <ion-col size="8" size-md="6">
+                <ion-card-subtitle><b> Female seed used:</b></ion-card-subtitle>
+              </ion-col>
+              <ion-col size="8" size-md="6">
+                <ion-card-subtitle> {{this.productTruthfulLabel?.femaleSeedUsed }}</ion-card-subtitle>
+              </ion-col>
+            </ion-item>
+          </ion-list>
+        </ion-accordion>
+      </ion-accordion-group>
+    </ion-card>
+
+    <form [formGroup]="productLotDataForm" (ngSubmit)="onSave()">
+      <ion-card class="padding-card">
+        <ion-row>
+          <ion-col size="12" size-md="6">
+            <ion-item class="Form-Item">
+              <ion-label class="ion-label" position="floating">Lot Number
+                <span class="reqired-field">*</span></ion-label>
+              <ion-input type="string" formControlName="lotNo" placeholder="Lot Number"></ion-input>
+              <ion-note *ngIf="!productLotDataForm.get('lotNo').valid && productLotDataForm.get('lotNo').touched"
+                color="danger" position="fixed" class="ion-padding">
+                please enter data.
+              </ion-note>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+
+        <ng-container formGroupName="lotProductionDetails">
+          <ion-row>
+            <ion-col size="12" size-md="6">
+              <ion-item>
+                <ion-label position="floating">Processing Plant Number <span class="reqired-field">*</span></ion-label>
+                <ion-input type="string" formControlName="processingPlantNo" [readonly]=readonly></ion-input>
+              </ion-item>
+              <!-- <span class="error ion-padding"
+                *ngIf=" !productLotDataForm.get('lotProductionDetails').get('processingPlantNo').hasError('required')">
+                Please enter valid Data.
+              </span> -->
+            </ion-col>
+
+            <ion-col size="12" size-md="6">
+              <ion-item>
+                <ion-label position="floating">Total Quantity of Lots in Kgs <span
+                    class="reqired-field">*</span></ion-label>
+                <ion-input type="string" formControlName="totalQtyOfLotsInKgs"></ion-input>
+              </ion-item>
+              <span class="error ion-padding"
+                *ngIf=" !productLotDataForm.get('lotProductionDetails').get('totalQtyOfLotsInKgs').hasError('required')">
+                Please enter valid Data.
+              </span>
+            </ion-col>
+            <ion-col size="12" size-md="6">
+              <ion-item button="true" id="open-date-input">
+                <ion-label>Date Of Test <span class="reqired-field">*</span></ion-label>
+                <ion-text slot="end">{{ this.productLotDataForm?.value.lotProductionDetails?.dateOfTest }}</ion-text>
+                <ion-popover trigger="open-date-input" show-backdrop="false" positionSide="top" class="ion-popover-pop">
+                  <ng-template>
+                    <ion-datetime [showDefaultTitle]="false" #popoverDatetime presentation="date"
+                      [showDefaultButtons]="false" (ionChange)="formatDate(popoverDatetime.value)"
+                      min="2022"></ion-datetime>
+                  </ng-template>
+                </ion-popover>
+              </ion-item>
+            </ion-col>
+            <ion-col size="12" size-md="6">
+              <ion-item button="true" id="open-date-input-1">
+                <ion-label class="ion-padding-left">Date of Packing<span class="reqired-field">*</span></ion-label>
+                <ion-text slot="end">{{ this.productLotDataForm?.value.lotProductionDetails?.dateOfPacking }}</ion-text>
+                <ion-popover trigger="open-date-input-1" show-backdrop="false" positionSide="top"
+                  class="ion-popover-pop">
+                  <ng-template>
+                    <ion-datetime [showDefaultTitle]="false" #popoverDatetime1 presentation="date"
+                      [showDefaultButtons]="false" (ionChange)="formatDate1(popoverDatetime1.value)"
+                      min="2022" show-default-title="true" showDefaultButtons="true"></ion-datetime>
+                  </ng-template>
+                </ion-popover>
+              </ion-item>
+            </ion-col>
+            <ion-col size="12" size-md="6">
+              <ion-item button="true" id="open-date-input-2">
+                <ion-label class="ion-padding-left">Valid Upto<span class="reqired-field">*</span></ion-label>
+                <ion-text slot="end">{{ this.productLotDataForm?.value.lotProductionDetails?.validUpto }}</ion-text>
+                <ion-popover trigger="open-date-input-2" show-backdrop="false" positionSide="top"
+                  class="ion-popover-pop">
+                  <ng-template>
+                    <ion-datetime [showDefaultTitle]="false" #popoverDatetime2 presentation="date"
+                      [showDefaultButtons]="false" (ionChange)="formatDate2(popoverDatetime2.value)"
+                      min="2022" show-default-title="true" showDefaultButtons="true"></ion-datetime>
+                  </ng-template>
+                </ion-popover>
+              </ion-item>
+            </ion-col>
+            <ion-col size="12" size-md="6">
+              <ion-item>
+                <ion-label position="floating">Number of Packets produced <span
+                    class="reqired-field">*</span></ion-label>
+                <ion-input type="number" formControlName="numberOfPackets"></ion-input>
+              </ion-item>
+              <span class="error ion-padding"
+                *ngIf=" !productLotDataForm.get('lotProductionDetails').get('numberOfPackets').hasError('required')">
+                Please enter valid Data.
+              </span>
+            </ion-col>
+            <ion-col size="12" size-md="6">
+              <ion-item>
+                <ion-label position="floating">Label From <span class="reqired-field">*</span></ion-label>
+                <ion-input type="string" formControlName="lableNoFrom"></ion-input>
+              </ion-item>
+              <span class="error ion-padding"
+                *ngIf=" !productLotDataForm.get('lotProductionDetails').get('lableNoFrom').hasError('required')">
+                Please enter valid Data.
+              </span>
+            </ion-col>
+            <ion-col size="12" size-md="6">
+              <ion-item>
+                <ion-label position="floating">Label To <span class="reqired-field">*</span></ion-label>
+                <ion-input type="string" formControlName="labelNoTo"></ion-input>
+              </ion-item>
+              <span class="error ion-padding"
+                *ngIf=" !productLotDataForm.get('lotProductionDetails').get('labelNoTo').hasError('required')">
+                Please enter valid Data.
+              </span>
+            </ion-col>
+            <ion-col size="12" size-md="6">
+              <ion-item>
+                <ion-label position="floating">Missing Number </ion-label>
+                <ion-input type="string" formControlName="missingNo"></ion-input>
+              </ion-item>
+              <!-- <span class="error ion-padding"
+                *ngIf="!productLotDataForm.get('lotProductionDetails').get('missingNo').hasError('required')">
+                Please enter valid Data.
+              </span> -->
+            </ion-col>
+
+          </ion-row>
+
+          <ion-row>
+            <ion-col size="12" size-md="6">
+              <ion-item>
+                <ion-label position="floating">Seed Grower Name and Address <span
+                    class="reqired-field">*</span></ion-label>
+                <ion-input type="string" formControlName="seedGrowerNameAndAddress"></ion-input>
+              </ion-item>
+              <span class="error ion-padding"
+                *ngIf=" !productLotDataForm.get('lotProductionDetails').get('seedGrowerNameAndAddress').hasError('required')">
+                Please enter valid Data.
+              </span>
+            </ion-col>
+            <ion-col size="12" size-md="6">
+              <ion-item>
+                <ion-label position="floating">Seed Purchased From <span class="reqired-field">*</span></ion-label>
+                <ion-input type="string" formControlName="seedPurchasedFrom"></ion-input>
+              </ion-item>
+              <span class="error ion-padding"
+                *ngIf=" !productLotDataForm.get('lotProductionDetails').get('seedPurchasedFrom').hasError('required')">
+                Please enter valid Data.
+              </span>
+            </ion-col>
+            <ion-col size="12" size-md="6">
+              <ion-item>
+                <ion-label position="floating">Sowing Season <span class="reqired-field">*</span></ion-label>
+                <ion-input type="string" formControlName="sowingSeason"></ion-input>
+              </ion-item>
+              <span class="error ion-padding"
+                *ngIf=" !productLotDataForm.get('lotProductionDetails').get('sowingSeason').hasError('required')">
+                Please enter valid Data.
+              </span>
+            </ion-col>
+            <ion-col size="12" size-md="6">
+              <ion-item>
+                <ion-label position="floating">Seed Production Supervisor <span
+                    class="reqired-field">*</span></ion-label>
+                <ion-input type="string" formControlName="seedProductionSupervisor"></ion-input>
+              </ion-item>
+              <span class="error ion-padding"
+                *ngIf=" !productLotDataForm.get('lotProductionDetails').get('seedProductionSupervisor').hasError('required')">
+                Please enter valid Data.
+              </span>
+            </ion-col>
+            <ion-col size="12" size-md="6">
+              <ion-item>
+                <ion-label position="floating">Seed Processing Supervisor <span
+                    class="reqired-field">*</span></ion-label>
+                <ion-input type="string" formControlName="seedProcessingSupervisor"></ion-input>
+              </ion-item>
+              <span class="error ion-padding"
+                *ngIf=" !productLotDataForm.get('lotProductionDetails').get('seedProcessingSupervisor').hasError('required')">
+                Please enter valid Data.
+              </span>
+            </ion-col>
+          </ion-row>
+        </ng-container>
+
+
+        <ion-row>
+          <ion-col size="12">
+            <ion-item size="12" class="status-design Form-Item">
+              Lot Validity available ?
+              <ion-toggle formControlName="lotValidityAvailable" color="primary"></ion-toggle>
+            </ion-item>
+          </ion-col>
+          <ion-col size="12">
+            <ion-item size="12" class="status-design Form-Item">
+              Status ?
+              <ion-toggle formControlName="status" color="primary"></ion-toggle>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+      </ion-card>
+    </form>
+  </ion-grid>
+</ion-content>
+<ion-footer>
+  <ion-button type="submit" [disabled]="!productLotDataForm.valid" expand="full" (click)="onSave()">
+    <ion-icon name="checkmark" slot="icon-only"> </ion-icon>
+    Save Lot Details
+  </ion-button>
+</ion-footer> 
+
+
+<!-- *ngIf="this.lotDataEditable" -->

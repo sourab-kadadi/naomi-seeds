@@ -1,0 +1,23 @@
+export const LOT_DATA_FIND_MANY_PROJECTION_LIST =  {
+    lotNo: 1,
+    productId: 1, 
+    productName: 1,
+    cropId: 1, 
+    cropName: 1,
+    cropType: 1,
+    productPackingSizeId: 1, 
+    // productData: 1,
+    // hsnCode: 1,
+    // lotProductionDetails: 1,
+    // truthfulLabel: 1,
+    productPackingSizeInfo: 1,
+    // packingQty: 1,
+    // packingUnit: 1,
+    // effectiveRatePerKg: 1,
+    // packetInvoicePrice: 1,
+    // packetMRPPrice: 1,
+    lotValidityAvailable: 1,
+    lotDataEditable: 1,
+    status: 1,
+    createdAt: 1
+}

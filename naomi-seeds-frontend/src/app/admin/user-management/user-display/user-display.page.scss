@@ -1,0 +1,54 @@
+// ion-card {
+//   vertical-align:top !important;
+//   height: 90%;
+//   width: 90%;
+//   margin: 13px auto;
+//   float: none; /* Added */
+//   margin-bottom: 10px; /* Added */
+// }
+
+
+.dummyImage-Style {
+  opacity: 6%;
+  margin-left: 28%;
+  margin-top:10%;
+  width: 30%;
+
+}
+
+@media only screen and (max-width: 767px) {
+  ion-card[_ngcontent-xer-c142] {
+    vertical-align: top !important;
+    height: 90%;
+    width: 90%;
+    margin: 13px auto;
+    float: none;
+    margin-bottom: 10px;
+  }
+
+  .ion-margin-col {
+    margin-top: 0px;
+    margin-bottom: 0px;
+  }
+
+  .header-margin-top {
+    margin-top:-4%;
+    margin-bottom: -4%;
+  }
+
+  .ion-width-col {
+    width: 40%;
+  }
+
+  .header-margin-left{
+    margin-left: -3rem;
+  }
+
+  .dummyImage-Style {
+    opacity: 6%;
+    margin-left: 28%;
+    margin-top:10%;
+    width: 50%;
+  }
+}
+

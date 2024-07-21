@@ -1,0 +1,83 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+      <!-- <ion-back-button [defaultHref]="/app/role-and-permissions-management"></ion-back-button> -->
+    </ion-buttons>
+    <ion-title class="ion-text-center header-margin-left">Add/Update Crop</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ngx-ui-loader [loaderId]="'loader-product-category-add-edit'"></ngx-ui-loader>
+  <ion-grid>
+    <form [formGroup]="productCategoryForm" (ngSubmit)="save()">
+
+
+      <ion-row class="imageSection">
+        <ion-col>
+          <app-image-upload class="logoImagePosition" 
+            [title]="'logo'"
+            [icon]="'image'"
+            [imageData]="this.productCategoryImage"
+            (onSave)="productCategoryImageData($event)"
+          ></app-image-upload>
+
+
+                  <!-- <div *ngIf="this.productCategoryImage" class="image-margin-right">
+          <ion-img src="{{ s3path + this.productCategoryImage }}"></ion-img>
+        </div>
+
+        <div *ngIf="!this.productCategoryImage" class="image-margin-right" style="opacity: 6%" >
+          <ion-img src="../../../../assets/image-not-found.svg"></ion-img>
+        </div> -->
+
+
+        </ion-col>
+      </ion-row>
+
+
+<ion-item class="Form-Item">
+  <ion-label class="ion-label" position="floating">Crop Name<span class="reqired-field">*</span>
+  </ion-label>
+  <ion-input type="text" formControlName="cropName" placeholder="Crop Name"></ion-input>
+  <ion-note *ngIf="!productCategoryForm.get('cropName').valid && productCategoryForm.get('cropName').touched" color="danger" position="fixed"
+    class="ion-padding-form">
+    Please enter data.
+  </ion-note>
+</ion-item>
+
+<ion-item class="Form-Item">
+  <ion-label>Crop Type</ion-label>
+  <ion-select placeholder="Select One" formControlName="cropType">
+    <!-- <ion-select placeholder="Select One" (ionChange)="ionChange($event)" formControlName="cropType"> -->
+    <ion-select-option value="Field Crops">Field Crops</ion-select-option>
+    <ion-select-option value="Vegetable Crops">Vegetable Crops</ion-select-option>
+  </ion-select>
+  <ion-note *ngIf="
+    !productCategoryForm.get('cropType').valid && productCategoryForm.get('cropType').touched" color="danger"
+    position="floating" class="ion-padding">
+    please select Crop Type.
+  </ion-note>
+</ion-item>
+
+
+
+
+
+
+
+
+
+</form>
+
+  </ion-grid>
+
+
+</ion-content>
+<ion-footer>
+  <ion-button type="submit" [disabled]="!productCategoryForm.valid" expand="block" (click)="save()">
+    <ion-icon name="checkmark" slot="icon-only"> </ion-icon>
+    Save
+  </ion-button>
+</ion-footer>

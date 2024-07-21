@@ -1,0 +1,202 @@
+<ion-header fullscreen>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title class="ion-text-center"> {{ product?.name }}</ion-title>
+
+    <ion-buttons slot="primary">
+      <ion-button (click)="onEdit(product._id)">
+        <ion-icon name="create-sharp" slot="icon-only"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+
+
+
+  </ion-toolbar>
+</ion-header>
+
+
+<ion-content fullscreen>
+  <ngx-ui-loader [loaderId]="'loader-product-display'"></ngx-ui-loader>
+  <ion-grid>
+    <div *ngIf="isLoading" class="ion-padding-top">
+      <ion-card *ngFor="let number of [0]">
+        <ion-item>
+          <ion-img class="dummyImage-Style" src="../../../../assets/image-not-found.svg">
+          </ion-img>
+        </ion-item>
+        <ion-item>
+          <ion-label>
+            <h3>
+              <ion-skeleton-text animated style="width: 80%"></ion-skeleton-text>
+            </h3>
+          </ion-label>
+        </ion-item>
+      </ion-card>
+      <ion-card *ngFor="let number of [0,1,2,3,4,5,6]">
+        <ion-item>
+          <ion-label>
+            <h3>
+              <ion-skeleton-text animated style="width: 100%"></ion-skeleton-text>
+            </h3><br>
+            <h3>
+              <ion-skeleton-text animated style="width: 50%"></ion-skeleton-text>
+            </h3><br>
+            <h3>
+              <ion-skeleton-text animated style="width: 60%"></ion-skeleton-text>
+            </h3>
+          </ion-label>
+        </ion-item>
+      </ion-card>
+    </div>
+
+    <ion-refresher slot="fixed" pullFactor="0.9" pullMin="60" pullMax="200" (ionRefresh)="doRefresh($event)">
+      <ion-refresher-content pullingIcon="chevron-down-circle-outline" pullingText="Pull to refresh"
+        refreshingSpinner="circles" refreshingText="Refreshing..." class="ion-padding-top-refresh">
+      </ion-refresher-content>
+    </ion-refresher>
+
+
+    <div *ngIf="!inActive">
+      <ion-card>
+
+
+        <div *ngIf="imagePresent">
+          <swiper #swiper [config]="config" [zoom]="true" [centeredSlides]="true">
+            <ng-template swiperSlide *ngFor="let img of product?.image">
+              <div class="swiper-zoom-container">
+                <img [src]="s3path + img?.filePath">
+              </div>
+            </ng-template>
+          </swiper>
+
+        </div>
+
+
+        <div *ngIf="!imagePresent" class="dummyImage-Style">
+          <ion-img src="../../../../assets/image-not-found.svg"></ion-img>
+        </div>
+
+        <ion-card-header>
+          <ion-card-subtitle>
+            <h4> <b> Product Name: {{ product?.name }}</b></h4>
+          </ion-card-subtitle>
+        </ion-card-header>
+      </ion-card>
+
+      <ion-card>
+        <ion-card-header class="header-margin-top">
+          <ion-card-subtitle class="ion-text-center">
+            <h5> <b>Product Details</b></h5>
+          </ion-card-subtitle>
+        </ion-card-header>
+        <ion-row>
+          <ion-col size="4" size-md="6">
+            <ion-card-subtitle><b>Crop: </b> </ion-card-subtitle>
+          </ion-col>
+          <ion-col size="8" size-md="6">
+            <ion-card-subtitle> {{ product?.crop }}</ion-card-subtitle>
+          </ion-col>
+        </ion-row>
+
+        <ion-row>
+          <ion-col size="4" size-md="6">
+            <ion-card-subtitle><b>Crop Type: </b> </ion-card-subtitle>
+          </ion-col>
+          <ion-col size="8" size-md="6">
+            <ion-card-subtitle> {{ product?.cropType }}</ion-card-subtitle>
+          </ion-col>
+        </ion-row>
+
+        <ion-row>
+          <ion-col size="4" size-md="6">
+            <ion-card-subtitle><b>HSN Number: </b> </ion-card-subtitle>
+          </ion-col>
+          <ion-col size="8" size-md="6">
+            <ion-card-subtitle> {{ product?.hsnCode }}</ion-card-subtitle>
+          </ion-col>
+        </ion-row>
+        <br>
+      </ion-card>
+
+
+      <ion-card class="padding-card" *ngIf="product?.morphologicalCharacters[0]">
+        <ion-card-header class="header-margin-top">
+          <ion-card-subtitle class="ion-text-center">
+            <h5> <b>Morphological Characters</b></h5>
+          </ion-card-subtitle>
+        </ion-card-header>
+        <ion-item class="ion-row" *ngFor="let item of product?.morphologicalCharacters; let i = index"
+          class="line-divider">
+          <ion-card-subtitle class="ion-width-col">
+            <b> {{item?.key }}</b>
+          </ion-card-subtitle>
+          <ion-card-content>
+            <p> {{item?.value || null}}</p>
+          </ion-card-content>
+        </ion-item>
+      </ion-card>
+
+      <ion-card class="padding-card" *ngIf="product?.specialFeaturesUSPS && product?.specialFeaturesUSPS[0]">
+        <ion-card-header class="header-margin-top">
+          <ion-card-subtitle class="ion-text-center">
+            <h5> <b>Special Features/USPs</b></h5>
+          </ion-card-subtitle>
+        </ion-card-header>
+
+        <ion-item class="ion-row" *ngFor="let item of product?.specialFeaturesUSPS; let i = index" class="line-divider">
+          <ion-icon name="arrow-forward-outline"></ion-icon>
+          <ion-label> {{item?.name || null}}</ion-label>
+        </ion-item>
+      </ion-card>
+
+      <ion-card>
+        <ion-card-header class="header-margin-top">
+          <ion-card-subtitle class="ion-text-center">
+            <h5> <b>Truthful Label</b></h5>
+          </ion-card-subtitle>
+        </ion-card-header>
+        <ion-card-header>
+          <ion-card-subtitle class="padding-top-bottom"><b>
+              Germination (MIN.) in %:</b> {{ product?.truthfulLabel?.germinationInPercentageMin }}%
+          </ion-card-subtitle>
+          <ion-card-subtitle class="padding-top-bottom"><b>
+              Genetic Purity (MIN.) in %:</b> {{ product?.truthfulLabel?.geneticPurityInPercentageMin }}%
+          </ion-card-subtitle>
+          <ion-card-subtitle class="padding-top-bottom"><b>
+              Physical Purity (MIN.) in %:</b> {{ product?.truthfulLabel?.physicalPuritySeedInPercentageMin }}%
+          </ion-card-subtitle>
+          <ion-card-subtitle class="padding-top-bottom"><b>
+              Inert Matter (MAX.) in %:</b> {{ product?.truthfulLabel?.inertMatterNotMoreThanPercentMax }}%
+          </ion-card-subtitle>
+          <ion-card-subtitle class="padding-top-bottom"><b>
+              Moisture (MAX.) in %:</b> {{ product?.truthfulLabel?.moistureInPercentageMax }}%
+          </ion-card-subtitle>
+          <ion-card-subtitle class="padding-top-bottom"><b>
+              Other Crop Seeds (MAX.) per Kg:</b> {{ product?.truthfulLabel?.otherCropSeedsNotMoreThanPerKgMax }}/Kg
+          </ion-card-subtitle>
+          <ion-card-subtitle class="padding-top-bottom"><b>
+              Weed Seeds (MAX.) per Kg:</b> {{ product?.truthfulLabel?.weedSeedsPerKgMax }}/Kg
+          </ion-card-subtitle>
+          <ion-card-subtitle class="padding-top-bottom"><b>
+              Male seed used:</b> {{ product?.truthfulLabel?.maleSeedUsed }}
+          </ion-card-subtitle>
+          <ion-card-subtitle class="padding-top-bottom"><b>
+              Female seed used:</b> {{ product?.truthfulLabel?.femaleSeedUsed }} 
+          </ion-card-subtitle>
+        </ion-card-header>
+      </ion-card>
+    </div>
+
+<!--qwe add packing sizes info here later -->
+<!-- qwe hide truthful label to distributors -->
+
+
+
+
+
+
+
+  </ion-grid>
+</ion-content>

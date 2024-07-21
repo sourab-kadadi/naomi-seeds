@@ -1,0 +1,89 @@
+.ion-popover-pop {
+  position: fixed !important;
+  top: 29% !important;
+  left: 50% !important;
+  margin-top: -454px !important;
+  margin-left: -145px !important;
+  // height: 539px !important;
+  // padding-left: 20px;
+}
+
+.ionic-selectable {
+  display: block;
+  max-width: 67%;
+}
+
+.button-item-delete {
+ margin-left:-11px;
+}
+
+.ion-align-center-amount {
+  display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-content: stretch;
+    align-items: center;
+ }
+
+ .ion-text-center {
+  margin-left: -2em;
+}
+
+//image component
+
+.initImgMain, .imageMain {
+  height: 78px;
+  width: 100%;
+  display: flex;
+  justify-content: space-evenly;
+  flex-direction: row;
+  align-items: center;
+  cursor: pointer;
+  border: 2px dashed gainsboro;
+  position: relative;
+  padding: 30px;
+}
+
+.icon-inner {
+  width: 84%;
+}
+
+.imageDisplay {
+  width: 90%;
+  height: 100%;
+  // position: relative;
+  display: flex;
+  justify-content: space-around;
+}
+
+.full {
+  height: 900px;
+}
+.initImgSpan {
+  font-size: 150px;
+  color: gainsboro;
+}
+
+input[type="file"] {
+  display: none;
+  cursor: pointer;
+}
+
+.cancelButton{
+  position: absolute;
+  top: 0;
+  right: 0;
+
+}
+
+.productImagePosition {
+  position: absolute;
+  top: 115px;
+  z-index: 996;
+  left: 5%;
+  background-color: #fff;
+}
+
+.imageSection {
+  margin-bottom: 50px;
+}

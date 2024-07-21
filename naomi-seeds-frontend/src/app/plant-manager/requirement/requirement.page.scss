@@ -1,0 +1,184 @@
+.card-margin-left {
+  margin-left:-32px;
+}
+
+// .ion-padding-top {
+
+//   padding-top: var(--ion-padding, 6.2em);
+// }
+
+.ion-padding-top-refresh {
+  padding-top: var(--ion-padding, 76px);
+}
+
+.ion-padding {
+  padding-inline-start: var(--ion-padding, 9px);
+ }
+
+
+ .item-margin-left {
+  margin-left: 45px;
+ }
+
+ .card-margin-bottom {
+  margin-bottom: -13px;
+ }
+
+ .ion-text-center {
+   margin-left: -2em;
+ }
+
+.font-size-small {
+  font-size: small;
+}
+
+
+
+ion-header {
+  ion-segment {
+      border: none !important;
+      background: var(--none) !important;
+      border-radius: 0px;
+      margin: 0;
+      padding-top: 0px;
+      position: relative;
+      padding-bottom: 0px;
+      margin-top: -1px;
+      margin-bottom: -1px;
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+      &::-webkit-scrollbar {
+          display: none;
+      }
+      ion-segment-button {
+          background: white !important;
+          position: relative;
+          font-size: .9rem;
+          font-weight: 500;
+          text-transform: uppercase !important;
+          letter-spacing: .7px;
+          --background-checked: var(--transparent) !important;
+          --background-focused: var(--transparent) !important;
+          --border-width: 0 !important;
+          --border-radius: 0 !important;
+          --indicator-color: var(--transparent) !important;
+          --indicator-box-shadow: none !important;
+          --ripple-color: var(--transparent) !important;
+          --color: var(--text-light) !important;
+          --color-checked: var(--text-light) !important;
+          --color-hover: var(--text-light) !important;
+          --background-hover: var(--transparent) !important;
+          --padding-start: 19px;
+          --padding-end: 19px;
+          padding: 0;
+          width: 100%;
+          min-width: auto;
+          z-index: 9;
+          &::after {
+              content: '';
+              position: absolute;
+              bottom: 0;
+              left: 0;
+              right: 0;
+              width: 0;
+              height: 3px;
+              background: var(--primary);
+              margin: 0 auto;
+              transition: all .3s;
+          }
+          ion-label {
+              margin: 11px 0;
+              width: 100%;
+          }
+          &.segment-button-checked {
+              color: #3a4636 !important;
+              opacity: 1;
+              &::after {
+                  width: 40px;
+              }
+              font-weight: 750 !important;
+              background-color: #f6f6f6 !important;
+            }
+          &:first-child {
+              --padding-start: 20px;
+          }
+          &:last-child {
+              --padding-end: 20px;
+          }
+      }
+  }
+}
+
+
+.date-time-item{
+  font-size: 1.101em;
+  padding-top: 1.4rem;
+  display: flex;
+}
+
+.date-padding-right {
+  padding-right: 20px;
+}
+
+.ion-popover-pop {
+  --offset-x: 51px;
+  --width: 290px;
+}
+
+.ion-text-center {
+  margin-left: -2em;
+}
+
+ion-slides {
+    ion-slide {
+        display: block;
+        // min-height: calc(100vh - 215px);
+        // max-height: calc(104vh - 215px);
+        overflow: hidden;
+        overflow-y: auto;
+        text-align: initial;
+        position: relative;
+        padding-bottom: 58px;
+    }
+}
+
+.text-center {
+  display: flex;
+  justify-content: center;
+}
+
+.row-padding {
+  padding-top: 10px;
+  padding-bottom: 10px;
+  border-top: 1px solid #2f2f2f;
+}
+
+// .row-item-divider {
+  // border-top: 1px solid #737373;
+  // border-bottom: 1px solid black;
+  // border-top: 1px solid #c10000;
+  // border-bottom: 1px solid #c10000;
+// }
+
+.title-padding {
+  padding-top: 22px;
+  padding-bottom: 15px;
+}
+
+.row-item-divider-end {
+  border-top: 1px solid #c10000;
+  // border-bottom: 1px solid #c10000;
+  color: #c10000;
+}
+
+.align-right-number {
+  display: flex;
+  align-items: end;
+  justify-content: flex-end;
+  padding-right: 2.3em;
+}
+
+.searchbar-input.sc-ion-searchbar-md {
+    width: 120%;
+    padding-inline-end: 3px;
+}

@@ -1,0 +1,340 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="./invoice"></ion-back-button>
+    </ion-buttons>
+    <ion-title class="ion-text-center"> Create Sales Order </ion-title>
+
+
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+
+
+<!-- <ion-grid> -->
+<ion-card>
+
+  <ion-item>
+    <ion-label>From Distributor</ion-label>
+    <ionic-selectable item-content [(ngModel)]="distributor" itemValueField="id" itemTextField="companyName"
+    [items]="distributors" [canSearch]="true"
+     (onChange)="fromDistributorChange($event)">
+    </ionic-selectable>
+  </ion-item>
+
+  <ion-item>
+    <ion-label>To Distributor</ion-label>
+    <ionic-selectable item-content [(ngModel)]="toDistributor" itemValueField="id" itemTextField="companyName"
+    [items]="toDistributors" [canSearch]="true"
+     (onChange)="toDistributorChange($event)">
+    </ionic-selectable>
+  </ion-item>
+
+
+
+  <!-- <ion-item>
+    <ion-label>Sales Person</ion-label>
+    <ionic-selectable item-content [(ngModel)]="salesPerson" itemValueField="id" itemTextField="_id"
+    [items]="salesPersons" [canSearch]="true"
+     (onChange)="salesPersonChange($event)">
+    </ionic-selectable>
+
+
+  </ion-item> -->
+
+
+
+
+
+  <!-- <ion-row> -->
+
+<!-- <ion-col size="12" size-md="6"> -->
+  <!-- <ion-item> -->
+    <!-- <ion-label>Distributor Name</ion-label> -->
+    <!-- <ionic-selectable
+      item-content
+      [(ngModel)]="distributor"
+      itemValueField="id"
+      itemTextField="name"
+      [items]="distributors"
+      [canSearch]="true"
+      (onSearch)="searchDistributors($event)">
+    </ionic-selectable> -->
+  <!-- </ion-item> -->
+<!-- </ion-col> -->
+
+<!-- </ion-row> -->
+
+<!-- formControlName="challanDate" -->
+
+
+  <ion-item button="true" id="open-date-input" >
+    <ion-label>Sales Order Date*</ion-label>
+    <ion-text slot="end">{{ modelForm?.value.salesOrderDate }}</ion-text>
+    <ion-popover trigger="open-date-input" show-backdrop="false" positionSide="top" class="ion-popover-pop">
+      <ng-template >
+        <ion-datetime
+          #popoverDatetime
+          presentation="date"
+          (ionChange)="dateValue = formatDate(popoverDatetime.value)"
+        min="2018"
+        show-default-title="true"
+        showDefaultButtons="true"
+          ></ion-datetime>
+      </ng-template>
+    </ion-popover>
+  </ion-item>
+
+</ion-card>
+<!-- </ion-grid> -->
+
+
+<ion-card>
+
+
+
+  <ion-button routerLink="./add-item" expand="block" fill="outline" class="ion-button-item" >
+    <ion-icon name="add"></ion-icon>
+    <b>Add Line Items </b>
+    </ion-button>
+
+
+<ion-grid>
+  <ion-row class="ion-row" >
+    <ion-col size="5" offset="1">
+<b>Items</b>
+    </ion-col>
+    <!-- <ion-col>
+Rate <br>
+(&#8377;/Kg)
+    </ion-col> -->
+    <ion-col size="2">
+<b>      Qty </b>
+<br> Kg
+    </ion-col>
+    <ion-col size="4" class="ion-align-center">
+      <b>      Amount </b>
+      <br>&#8377;
+    </ion-col>
+  </ion-row>
+
+
+<!--
+  <ion-row class="ion-row">
+    <ion-col size="6">
+<b>Naomi 88</b>
+    </ion-col>
+    <ion-col>
+100
+
+    </ion-col>
+    <ion-col >
+<b>      1,000 </b>
+
+    </ion-col>
+    <ion-col>
+      10,00,000
+
+    </ion-col>
+  </ion-row> -->
+
+
+
+
+
+
+
+
+
+
+  <ion-row class="ion-row" *ngFor="let item of loadedItems; let i = index">
+  <!-- <ion-item *ngFor="let product of model?.products; let i = index"> -->
+    <!-- <ion-text color="success"> -->
+      <!-- <span class="dotStyle">&#9679;</span> -->
+    <!-- </ion-text> -->
+
+    <!-- (click)="deleteItem()" -->
+
+    <ion-button size="small" color="danger" fill="clear" (click)="onDeleteItem(i)">
+      <ion-icon name="close-circle-outline" ></ion-icon>
+    </ion-button>
+
+    <ion-col size="4" >
+    <ion-label class="ion-text-wrap">
+     <b> {{item?.productName}}</b>
+
+      <br>
+      <b> (Lot - {{item?.lotNumber}})</b>
+      <br>
+      &#8377;{{item?.rate}}/Kg
+    </ion-label>
+    </ion-col>
+
+    <ion-col size="2">
+    {{item?.quantity}}
+  </ion-col>
+
+
+
+
+  <ion-col size="4" >
+    <!-- <ion-text slot="end" color="dark" class="price ion-text-right"> -->
+      {{(item?.amount) | number: '0.2-2'}}
+    <!-- </ion-text> -->
+
+  </ion-col>
+<!-- </ion-item> -->
+
+
+
+
+</ion-row>
+
+
+
+
+  <ion-row>
+
+
+   <ion-col size="5" offset="1">
+<b>Total(&#8377;)</b>
+    </ion-col>
+    <ion-col>
+      {{model.totalQuantity}}
+    </ion-col>
+
+
+    <ion-col>
+{{model.totalPrice | number: '0.2-2'}}
+
+    </ion-col>
+
+  </ion-row>
+</ion-grid>
+
+
+
+
+
+
+</ion-card>
+
+
+
+
+
+
+
+
+
+<!-- <ion-button  expand="block" fill="outline" class="ion-button-item" (click)="clearCart()">
+  <ion-icon name="add"></ion-icon>
+  <b>Save Data </b>
+  </ion-button> -->
+
+
+
+
+  <ion-card class="padding-card">
+
+  <form [formGroup]="modelForm" (ngSubmit)="onCreateChallan()">
+
+
+
+
+    <ion-row>
+      <ion-col size="12" size-md="6">
+
+
+
+
+
+
+
+
+
+        <ion-item class="formItem">
+          <ion-label class="ion-label" position="floating">RR number<span class="reqired-field">*</span>
+          </ion-label>
+          <ion-input type="text" formControlName="rrOrLrNum" placeholder="RR Number"></ion-input>
+          <!-- <ion-note *ngIf="
+            !productForm.get('name').valid && productForm.get('name').touched" color="danger" position="floating"
+            class="ion-padding">
+            please provide a valid title.
+          </ion-note> -->
+        </ion-item>
+
+
+        <ion-item class="formItem">
+          <ion-label class="ion-label" position="floating">Vehicle Number<span class="reqired-field">*</span>
+          </ion-label>
+          <ion-input type="text" formControlName="vehicleNo" placeholder="Vehicle Number"></ion-input>
+          <!-- <ion-note *ngIf="
+            !productForm.get('name').valid && productForm.get('name').touched" color="danger" position="floating"
+            class="ion-padding">
+            please provide a valid title.
+          </ion-note> -->
+        </ion-item>
+
+        <ion-item class="formItem">
+          <ion-label class="ion-label" position="floating">Transport Name<span class="reqired-field">*</span>
+          </ion-label>
+          <ion-input type="text" formControlName="transport" placeholder="Transport Name"></ion-input>
+          <!-- <ion-note *ngIf="
+            !productForm.get('name').valid && productForm.get('name').touched" color="danger" position="floating"
+            class="ion-padding">
+            please provide a valid title.
+          </ion-note> -->
+        </ion-item>
+
+        <ion-item class="formItem">
+          <ion-label class="ion-label" position="floating">Freight Total<span class="reqired-field">*</span>
+          </ion-label>
+          <ion-input type="text" formControlName="freightTotal" placeholder="Freight Total"></ion-input>
+          <!-- <ion-note *ngIf="
+            !productForm.get('name').valid && productForm.get('name').touched" color="danger" position="floating"
+            class="ion-padding">
+            please provide a valid title.
+          </ion-note> -->
+        </ion-item>
+
+        <ion-item class="formItem">
+          <ion-label class="ion-label" position="floating">Freight Advance Paid<span class="reqired-field">*</span>
+          </ion-label>
+          <ion-input type="text" formControlName="frightPaidAdvance" placeholder="Freight Advance Paid"></ion-input>
+          <!-- <ion-note *ngIf="
+            !productForm.get('name').valid && productForm.get('name').touched" color="danger" position="floating"
+            class="ion-padding">
+            please provide a valid title.
+          </ion-note> -->
+        </ion-item>
+
+        <ion-item class="formItem">
+          <ion-label class="ion-label" position="floating">Freight to pay
+            <span class="reqired-field">*</span>
+          </ion-label>
+          <ion-input type="text" formControlName="frightToPay" placeholder="Freight to Pay"></ion-input>
+          <!-- <ion-note *ngIf="
+            !productForm.get('name').valid && productForm.get('name').touched" color="danger" position="floating"
+            class="ion-padding">
+            please provide a valid title.
+          </ion-note> -->
+        </ion-item>
+
+</ion-col>
+</ion-row>
+<ion-button type="submit" [disabled]="!modelForm.valid" class="buttom-margin-left">
+  <!-- <ion-icon name="checkmark" slot="icon-only"> </ion-icon> -->
+  Save form
+</ion-button>
+</form>
+<ion-item>
+<!-- {{lineItem.value}} -->
+</ion-item>
+</ion-card>
+
+
+
+</ion-content>

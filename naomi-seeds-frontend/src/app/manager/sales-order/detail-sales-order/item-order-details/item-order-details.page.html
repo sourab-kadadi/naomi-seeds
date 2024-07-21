@@ -1,0 +1,389 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="./salesOrderId"></ion-back-button>
+    </ion-buttons>
+    <!-- <ion-menu-button slot="start"></ion-menu-button> -->
+    <ion-title>Item Details</ion-title>
+
+  </ion-toolbar>
+</ion-header>
+
+<ion-content fullscreen>
+
+  <ngx-ui-loader [loaderId]="'loader-item-detail'"></ngx-ui-loader>
+
+  <div *ngIf="isLoading" class="ion-padding-top">
+    <ion-card>
+      <ion-item>
+        <ion-col size="3" size-md="6">
+          <ion-card-header class="ion-padding">
+            <ion-label>
+              <h3>
+                <ion-skeleton-text animated style="width: 60%"></ion-skeleton-text>
+              </h3>
+              <p>
+                <ion-skeleton-text animated style="width: 75%"></ion-skeleton-text>
+              </p>
+              <p>
+                <ion-skeleton-text animated style="width: 78%"></ion-skeleton-text>
+              </p>
+              <p>
+                <ion-skeleton-text animated style="width: 69%"></ion-skeleton-text>
+              </p>
+              <p>
+                <ion-skeleton-text animated style="width: 89%"></ion-skeleton-text>
+              </p>
+              <p>
+                <ion-skeleton-text animated style="width: 95%"></ion-skeleton-text>
+              </p>
+              <p>
+                <ion-skeleton-text animated style="width: 60%"></ion-skeleton-text>
+              </p>
+            </ion-label>
+          </ion-card-header>
+        </ion-col>
+        <ion-col size="9" size-md="6" class="card-margin-left">
+          <ion-card-header class="ion-padding">
+            <ion-label>
+              <h3>
+                <ion-skeleton-text animated style="width: 90%"></ion-skeleton-text>
+              </h3>
+              <p>
+                <ion-skeleton-text animated style="width: 90%"></ion-skeleton-text>
+              </p>
+              <p>
+                <ion-skeleton-text animated style="width: 40%"></ion-skeleton-text>
+              </p>
+              <p>
+                <ion-skeleton-text animated style="width: 45%"></ion-skeleton-text>
+              </p>
+              <p>
+                <ion-skeleton-text animated style="width: 60%"></ion-skeleton-text>
+              </p>
+              <p>
+                <ion-skeleton-text animated style="width: 60%"></ion-skeleton-text>
+              </p>
+              <p>
+                <ion-skeleton-text animated style="width: 60%"></ion-skeleton-text>
+              </p>
+            </ion-label>
+          </ion-card-header>
+        </ion-col>
+      </ion-item>
+    </ion-card>
+  </div>
+
+  <ion-refresher slot="fixed" pullFactor="0.9" pullMin="60" pullMax="200" (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content pullingIcon="chevron-down-circle-outline" pullingText="Pull to refresh"
+      refreshingSpinner="circles" refreshingText="Refreshing..." class="ion-padding-top-refresh">
+    </ion-refresher-content>
+  </ion-refresher>
+
+  <ion-card *ngIf="!inActive">
+    <ion-card-header class="header-margin-left">
+      <!-- <ion-item lines="none"> -->
+      <ion-card-subtitle class="align-text">
+        <h5><b> {{item?.productName}}</b></h5>
+      </ion-card-subtitle>
+      <!-- </ion-item> -->
+
+      <ion-item lines="none" class="item-margins">
+        <ion-col size="4" size-md="6" class="col-margin-left">
+          <ion-card-subtitle>
+            <b> Crop: </b>
+          </ion-card-subtitle>
+        </ion-col>
+        <ion-col size="10" size-md="6" class="col-margin-left col-flex">
+          <ion-card-subtitle>
+            {{item?.crop}}
+          </ion-card-subtitle>
+        </ion-col>
+      </ion-item>
+
+      <ion-item lines="none" class="item-margins">
+        <ion-col size="4" size-md="6" class="col-margin-left">
+          <ion-card-subtitle>
+            <b> HSN Code: </b>
+          </ion-card-subtitle>
+        </ion-col>
+        <ion-col size="10" size-md="6" class="col-margin-left col-flex">
+          <ion-card-subtitle>
+            {{item?.hnsNumber}}
+          </ion-card-subtitle>
+        </ion-col>
+      </ion-item>
+
+      <ion-item lines="none" class="item-margins">
+        <ion-col size="4" size-md="6" class="col-margin-left">
+          <ion-card-subtitle>
+            <b> Lot Number: </b>
+          </ion-card-subtitle>
+        </ion-col>
+        <ion-col size="10" size-md="6" class="col-margin-left col-flex">
+          <ion-card-subtitle>
+            {{item?.lotNumber}}
+          </ion-card-subtitle>
+        </ion-col>
+      </ion-item>
+
+      <ion-item lines="none" class="item-margins">
+        <ion-col size="4" size-md="6" class="col-margin-left">
+          <ion-card-subtitle>
+            <b> Quantity: </b>
+          </ion-card-subtitle>
+        </ion-col>
+        <ion-col size="10" size-md="6" class="col-margin-left col-flex">
+          <ion-card-subtitle>
+            {{item?.quantity.toLocaleString("en-IN") }} Kgs
+          </ion-card-subtitle>
+        </ion-col>
+      </ion-item>
+
+      <ion-item lines="none" class="item-margins">
+        <ion-col size="4" size-md="6" class="col-margin-left">
+          <ion-card-subtitle>
+            <b> No. of Packets: </b>
+          </ion-card-subtitle>
+        </ion-col>
+        <ion-col size="10" size-md="6" class="col-margin-left col-flex">
+          <ion-card-subtitle>
+            {{ item?.numberOfPacketsOrdered.toLocaleString("en-IN") }}
+          </ion-card-subtitle>
+        </ion-col>
+      </ion-item>
+
+      <ion-item lines="none" class="item-margins">
+        <ion-col size="4" size-md="6" class="col-margin-left">
+          <ion-card-subtitle>
+            <b> Amount: </b>
+          </ion-card-subtitle>
+        </ion-col>
+        <ion-col size="10" size-md="6" class="col-margin-left col-flex">
+          <ion-card-subtitle>
+            (&#8377;) {{ item?.amount.toLocaleString("en-IN") }}
+          </ion-card-subtitle>
+        </ion-col>
+      </ion-item>
+
+    </ion-card-header>
+  </ion-card>
+
+  <ion-card *ngIf="isLoading">
+    <ion-skeleton-text animated style="width: 45%"></ion-skeleton-text>
+  </ion-card>
+
+
+  <ion-card *ngIf="!inActive">
+    <ion-accordion-group>
+      <ion-accordion value="colors">
+        <ion-item slot="header" class="ion-item-margin">
+          <ion-card-subtitle class="ion-text-center">
+            <h5><b>Lot Data</b> </h5>
+          </ion-card-subtitle>
+        </ion-item>
+
+        <ion-list slot="content" lines="none" class="ion-item-margin">
+          <ion-item class="ion-item-margin">
+            <ion-col size="6" md="6">
+              <ion-card-subtitle><b> Date Of Test:</b></ion-card-subtitle>
+            </ion-col>
+            <ion-col size="6" md="6">
+              <ion-card-subtitle> {{item?.lotDetails?.dateOfTest | date}}</ion-card-subtitle>
+            </ion-col>
+          </ion-item>
+
+          <ion-item class="ion-item-margin">
+            <ion-col size="6" md="6">
+              <ion-card-subtitle><b> Date of Packing:</b></ion-card-subtitle>
+            </ion-col>
+            <ion-col size="6" md="6">
+              <ion-card-subtitle> {{item?.lotDetails?.dateOfPacking | date}}</ion-card-subtitle>
+            </ion-col>
+          </ion-item>
+
+          <ion-item class="ion-item-margin">
+            <ion-col size="6" md="6">
+              <ion-card-subtitle><b> Valid Upto:</b></ion-card-subtitle>
+            </ion-col>
+            <ion-col size="6" md="6">
+              <ion-card-subtitle> {{item?.lotDetails?.validUpto | date}}</ion-card-subtitle>
+            </ion-col>
+          </ion-item>
+
+          <ion-item class="ion-item-margin">
+            <ion-col size="6" md="6">
+              <ion-card-subtitle><b> Processing Plant Number:</b></ion-card-subtitle>
+            </ion-col>
+            <ion-col size="6" md="6">
+              <ion-card-subtitle> {{item?.lotDetails?.processingPlantNo }}</ion-card-subtitle>
+            </ion-col>
+          </ion-item>
+
+          <ion-item class="ion-item-margin">
+            <ion-col size="6" md="6">
+              <ion-card-subtitle><b> Total Quantity of Lot in Kgs:</b></ion-card-subtitle>
+            </ion-col>
+            <ion-col size="6" md="6">
+              <ion-card-subtitle> {{item?.lotDetails?.totalQtyOfLotsInKgs.toLocaleString("en-IN")}} </ion-card-subtitle>
+            </ion-col>
+          </ion-item>
+
+          <ion-item class="ion-item-margin">
+            <ion-col size="6" md="6">
+              <ion-card-subtitle><b> Packing Size in Kg:</b></ion-card-subtitle>
+            </ion-col>
+            <ion-col size="6" md="6">
+              <ion-card-subtitle> {{item?.packingSizeinKg.toLocaleString("en-IN") }}</ion-card-subtitle>
+            </ion-col>
+          </ion-item>
+
+          <ion-item class="ion-item-margin">
+            <ion-col size="6" md="6">
+              <ion-card-subtitle><b> Label From:</b></ion-card-subtitle>
+            </ion-col>
+            <ion-col size="6" md="6">
+              <ion-card-subtitle> {{item?.lotDetails?.lableNoFrom.toLocaleString("en-IN") }}</ion-card-subtitle>
+            </ion-col>
+          </ion-item>
+
+          <ion-item class="ion-item-margin">
+            <ion-col size="6" md="6">
+              <ion-card-subtitle><b> Label To:</b></ion-card-subtitle>
+            </ion-col>
+            <ion-col size="6" md="6">
+              <ion-card-subtitle> {{item?.lotDetails?.labelNoTo.toLocaleString("en-IN") }}</ion-card-subtitle>
+            </ion-col>
+          </ion-item>
+
+          <ion-item class="ion-item-margin">
+            <ion-col size="6" md="6">
+              <ion-card-subtitle><b> Missing Numbers:</b></ion-card-subtitle>
+            </ion-col>
+            <ion-col size="6" md="6">
+              <ion-card-subtitle> {{item?.lotDetails?.missingNo.toLocaleString("en-IN") }}</ion-card-subtitle>
+            </ion-col>
+          </ion-item>
+        </ion-list>
+      </ion-accordion>
+    </ion-accordion-group>
+  </ion-card>
+
+  <ion-card *ngIf="isLoading">
+    <ion-skeleton-text animated style="width: 45%"></ion-skeleton-text>
+  </ion-card>
+
+  <ion-card *ngIf="!inActive">
+    <ion-accordion-group>
+      <ion-accordion value="colors">
+        <ion-item slot="header" class="ion-item-margin">
+          <ion-card-subtitle class="ion-text-center">
+            <h5><b>Seed Details</b> </h5>
+          </ion-card-subtitle>
+        </ion-item>
+
+        <ion-list slot="content" lines="none" class="ion-item-margin">
+          <ion-item class="ion-item-margin">
+            <ion-col size="6" md="6">
+              <ion-card-subtitle><b> Pure Seed(%):</b></ion-card-subtitle>
+            </ion-col>
+            <ion-col size="6" md="6">
+              <ion-card-subtitle> {{item?.lotDetails?.pureSeedInPercentage }}</ion-card-subtitle>
+            </ion-col>
+          </ion-item>
+
+          <ion-item class="ion-item-margin">
+            <ion-col size="6" md="6">
+              <ion-card-subtitle><b> Inert Matter Not More Than(%):</b></ion-card-subtitle>
+            </ion-col>
+            <ion-col size="6" md="6">
+              <ion-card-subtitle> {{item?.lotDetails?.inertMatterNotMoreThanPercent }}</ion-card-subtitle>
+            </ion-col>
+          </ion-item>
+
+          <ion-item class="ion-item-margin">
+            <ion-col size="6" md="6">
+              <ion-card-subtitle><b> Other Crop Seeds not more than per Kg:</b></ion-card-subtitle>
+            </ion-col>
+            <ion-col size="6" md="6">
+              <ion-card-subtitle> {{item?.lotDetails?.otherCropSeedsNotMoreThanPerKg }}</ion-card-subtitle>
+            </ion-col>
+          </ion-item>
+
+          <ion-item class="ion-item-margin">
+            <ion-col size="6" md="6">
+              <ion-card-subtitle><b> Genetic Purity(%):</b></ion-card-subtitle>
+            </ion-col>
+            <ion-col size="6" md="6">
+              <ion-card-subtitle> {{item?.lotDetails?.geneticPurityInPercentage }}</ion-card-subtitle>
+            </ion-col>
+          </ion-item>
+
+          <ion-item class="ion-item-margin">
+            <ion-col size="6" md="6">
+              <ion-card-subtitle><b> Seed Grower Name and Address:</b></ion-card-subtitle>
+            </ion-col>
+            <ion-col size="6" md="6">
+              <ion-card-subtitle> {{item?.lotDetails?.seedGrowerNameAndAddress }} </ion-card-subtitle>
+            </ion-col>
+          </ion-item>
+
+          <ion-item class="ion-item-margin">
+            <ion-col size="6" md="6">
+              <ion-card-subtitle><b> Seed Purchased From:</b></ion-card-subtitle>
+            </ion-col>
+            <ion-col size="6" md="6">
+              <ion-card-subtitle> {{item?.lotDetails?.seedPurchasedFrom }}</ion-card-subtitle>
+            </ion-col>
+          </ion-item>
+
+          <ion-item class="ion-item-margin">
+            <ion-col size="6" md="6">
+              <ion-card-subtitle><b> Male Seed Used:</b></ion-card-subtitle>
+            </ion-col>
+            <ion-col size="6" md="6">
+              <ion-card-subtitle> {{item?.lotDetails?.maleSeedUsed }}</ion-card-subtitle>
+            </ion-col>
+          </ion-item>
+
+          <ion-item class="ion-item-margin">
+            <ion-col size="6" md="6">
+              <ion-card-subtitle><b> Sowing Season:</b></ion-card-subtitle>
+            </ion-col>
+            <ion-col size="6" md="6">
+              <ion-card-subtitle> {{item?.lotDetails?.sowingSeason }}</ion-card-subtitle>
+            </ion-col>
+          </ion-item>
+
+          <ion-item class="ion-item-margin">
+            <ion-col size="6" md="6">
+              <ion-card-subtitle><b> Seed Production Supervisor:</b></ion-card-subtitle>
+            </ion-col>
+            <ion-col size="6" md="6">
+              <ion-card-subtitle> {{item?.lotDetails?.seedProductionSupervisor }}</ion-card-subtitle>
+            </ion-col>
+          </ion-item>
+          <ion-item class="ion-item-margin">
+            <ion-col size="6" md="6">
+              <ion-card-subtitle><b> Seed Processing Supervisor:</b></ion-card-subtitle>
+            </ion-col>
+            <ion-col size="6" md="6">
+              <ion-card-subtitle> {{item?.lotDetails?.seedProcessingSupervisor }}</ion-card-subtitle>
+            </ion-col>
+          </ion-item>
+        </ion-list>
+      </ion-accordion>
+    </ion-accordion-group>
+  </ion-card>
+
+
+
+
+
+
+
+
+
+
+
+</ion-content>

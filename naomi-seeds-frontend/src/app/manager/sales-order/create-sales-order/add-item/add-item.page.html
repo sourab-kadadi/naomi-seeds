@@ -1,0 +1,223 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/delivery-challan/create-delivery-challan"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Add Line Item</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" class="ion-padding">
+
+
+
+
+
+
+  <ion-item>
+    <ion-label>Product</ion-label>
+    <ionic-selectable item-content [(ngModel)]="item" itemValueField="id" itemTextField="name" [items]="items"
+      [canSearch]="true" (onChange)="itemChange($event)">
+    </ionic-selectable>
+  </ion-item>
+
+  <ion-item>
+    <ion-label>Lot Details</ion-label>
+    <ionic-selectable item-content [(ngModel)]="selectedLotData" itemValueField="id" itemTextField="lotNo"
+      [items]="inventoryItems" [canSearch]="true" (onChange)="itemChangeInventory($event)">
+    </ionic-selectable>
+  </ion-item>
+
+
+
+
+  <div *ngIf="!showPageDetails" class="margin-center">
+
+
+    <h6><b> Please Select Product and Lot Details </b></h6>
+  </div>
+
+
+
+  <div *ngIf="showPageDetails">
+
+
+    <!-- <div> -->
+    <ng-container>
+      <ion-card>
+        <!-- <ion-item > -->
+        <ion-row>
+          <ion-col size="12" size-md="6">
+
+            <!-- <ion-thumbnail slot="start">
+      <img [src]="item?.cover ? item.cover : 'assets/imgs/1.jpg'" />
+    </ion-thumbnail> -->
+            <ion-card-title class="ion-text-center">
+              <h5><b>Selected Product & Lot Details</b></h5>
+            </ion-card-title>
+            <ion-text>
+              <p> <b>Product Name: </b>{{this.lineItemForm?.value.productName}}
+              <p>
+              <p class="ion-text-wrap"> <b>Crop:</b> {{this.lineItemForm?.value.crop}}</p>
+              <p class="ion-text-wrap"> <b>Lot Number:</b> {{this.lineItemForm?.value.lotNumber}}</p>
+              <p class="ion-text-wrap"> <b>HSN Number:</b> {{this.lineItemForm?.value.hnsNumber}}</p>
+              <p class="ion-text-wrap"> <b>Packing Size(Kg):</b> {{this.lineItemForm?.value.packingSizeinKg | number:
+                '0.2-2'}}</p>
+            </ion-text>
+            <ion-text>
+              <p> <b>Price per Kg(₹) : </b>{{this.lineItemForm?.value.rate | number: '0.2-2'}}</p>
+            </ion-text>
+
+          </ion-col>
+        </ion-row>
+        <!-- </ion-item> -->
+      </ion-card>
+    </ng-container>
+
+
+
+    <!-- <ion-card class="padding-card">
+  <form [formGroup]="lineItemForm" (ngSubmit)="onAddQuantity()" novalidate>
+    <ion-row>
+      <ion-col size="12" size-md="6">
+        <ion-card-title class="ion-text-center" ><b>Item Details</b></ion-card-title>
+</ion-col>
+</ion-row>
+        <ion-row>
+          <ion-col size="7" size-md="6">
+          <ion-item class="formItem">
+            <ion-label class="ion-label" position="floating">Number of Packets<span class="reqired-field">*</span>
+            </ion-label>
+            <ion-input type="number" formControlName="numberOfPacketsOrdered" placeholder="number of packets" [disabled]="!inactive"></ion-input>
+            <ion-note *ngIf="
+              !lineItemForm.get('numberOfPacketsOrdered').valid && lineItemForm.get('numberOfPacketsOrdered').touched" color="danger" position="floating"
+              class="ion-padding">
+              Please provide valid number of Packets.
+            </ion-note>
+          </ion-item>
+        </ion-col>
+        <ion-col size="5" size-md="6"> -->
+    <!-- <ion-button type="submit"  class="buttom-margin-left" [disabled]="lineItemForm.pristine" [disabled]="!lineItemForm.valid" size="small"> -->
+    <!-- [disabled]="!lineItemForm.valid" -->
+    <!-- <ion-icon name="checkmark" slot="icon-only"> </ion-icon> -->
+    <!-- Save -->
+    <!-- </ion-button> -->
+
+    <!-- <ion-button type="submit" size="small" [disabled]="!lineItemForm.valid" (click)="changeStatus()" *ngIf="inactive">
+                     Save Item Detail
+                </ion-button>
+                <ion-button (click)="changeStatus()" *ngIf="!inactive" size="small">
+                  Edit Item Detail
+                </ion-button>
+                </ion-col>
+      </ion-row>
+
+      <h5> <b>Item Quantity (Kg): </b> {{this.lineItemForm?.value.quantity | number: '0.2-2'}}</h5>
+      <h5> <b>Item Amount (₹): </b> {{this.lineItemForm?.value.amount | number: '0.2-2'}}</h5>
+</form>
+</ion-card> -->
+
+
+
+
+
+    <ion-card class="padding-card">
+      <form [formGroup]="lotNumberOfPacketsData" (ngSubmit)="onAddQuantity()" novalidate>
+        <ion-row>
+          <ion-col size="12" size-md="6">
+            <ion-card-title class="ion-text-center"><b>Item Details</b></ion-card-title>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col size="7" size-md="6">
+            <ion-item class="formItem">
+              <ion-label class="ion-label" position="floating">Number of Packets<span class="reqired-field">*</span>
+              </ion-label>
+              <ion-input type="number" formControlName="lotNumberOfPackets" placeholder="number of packets"
+                [disabled]="!inactive"> </ion-input>
+              <ion-note *ngIf="
+              !lotNumberOfPacketsData.get('lotNumberOfPackets').valid && lotNumberOfPacketsData.get('lotNumberOfPackets').touched"
+                color="danger" position="floating" class="ion-padding">
+                Please provide valid number of Packets.
+              </ion-note>
+            </ion-item>
+          </ion-col>
+          <ion-col size="5" size-md="6">
+        <ion-button type="submit" size="small" [disabled]="!lotNumberOfPacketsData.valid"  *ngIf="inactive" color="primary">
+        Save Item Detail
+   </ion-button>
+   <ion-button (click)="changeStatus()" *ngIf="!inactive" size="small" color="danger">
+     Edit Item Detail
+   </ion-button>
+
+          </ion-col>
+        </ion-row>
+
+
+
+
+
+
+
+        <h5> <b>Item Quantity (Kg): </b> {{this.lineItemForm?.value.quantity | number: '0.2-2'}}</h5>
+      <h5> <b>Item Amount (₹): </b> {{this.lineItemForm?.value.amount | number: '0.2-2'}}</h5>
+      </form>
+    </ion-card>
+
+
+
+
+
+
+
+    <form [formGroup]="lineItemForm" (ngSubmit)="onAddLineItem()" novalidate>
+
+
+
+
+<div class="margin-center-line-item">
+
+
+
+      <ion-button type="submit" [disabled]="!lineItemForm.valid" class="ion-align-items-center" *ngIf="!inactive">
+
+        Save Line Item
+      </ion-button>
+
+    </div>
+
+
+
+
+    </form>
+
+
+
+
+
+
+  </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</ion-content>
