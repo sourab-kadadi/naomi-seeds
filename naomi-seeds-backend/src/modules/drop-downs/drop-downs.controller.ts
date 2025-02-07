@@ -183,7 +183,11 @@ export class DropDownsController {
 
 
 
-
+  @Get('findall')
+  async findall(@Res() Res: Response) {
+    let result = await this.Service.findAllTest();
+    Res.status(HttpStatus.OK).send(result);
+  }
 
 
 

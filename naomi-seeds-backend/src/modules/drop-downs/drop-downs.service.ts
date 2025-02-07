@@ -134,4 +134,26 @@ export class DropDownsService {
         }
       }
 
+
+      async findAllTest(): Promise<any> {
+        try {
+      const result = await this.Module.find();
+      debugger
+      if (result && result.length > 0) {
+        return {
+          status: true,
+          message: 'foundSuccess',
+          data: result,
+        };
+      } else {
+        return {
+          status: false,
+          message: 'notFound',
+          data: null,
+        };
+      }
+        } catch (error) {
+          throw new Error(`Error fetching data: ${error.message}`);
+        }
+      }
 }
